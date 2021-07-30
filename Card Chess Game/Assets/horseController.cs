@@ -64,13 +64,22 @@ public class horseController : MonoBehaviour
                 // in case of moving archer
                 Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot.prefab", typeof(GameObject));
 
-                GameObject dot = Instantiate(prefab) as GameObject;
-                dot.transform.SetParent(moveIndicator.transform, false);
-                GameObject dot_2 = Instantiate(prefab) as GameObject;
-                dot_2.transform.SetParent(moveIndicator.transform, false);
-                dot.transform.position = new Vector2(child.transform.position.x+160, child.transform.position.y);
-                dot_2.transform.position = new Vector2(child.transform.position.x, child.transform.position.y+160);
-                dragDrop.moved = false;
+                if(child.name == "test piece" || child.name == "test piece (1)") {
+                    GameObject dot = Instantiate(prefab) as GameObject;
+                    dot.transform.SetParent(moveIndicator.transform, false);
+                    GameObject dot_2 = Instantiate(prefab) as GameObject;
+                    dot_2.transform.SetParent(moveIndicator.transform, false);
+                    GameObject dot_3 = Instantiate(prefab) as GameObject;
+                    dot_3.transform.SetParent(moveIndicator.transform, false);
+                    GameObject dot_4 = Instantiate(prefab) as GameObject;
+                    dot_4.transform.SetParent(moveIndicator.transform, false);
+                    dot.transform.position = new Vector2(child.transform.position.x+160, child.transform.position.y);
+                    dot_2.transform.position = new Vector2(child.transform.position.x, child.transform.position.y+160);
+                    dot_3.transform.position = new Vector2(child.transform.position.x-160, child.transform.position.y);
+                    dot_4.transform.position = new Vector2(child.transform.position.x, child.transform.position.y-160);
+                    dragDrop.moved = false;
+                }
+
             }
         }
     }
