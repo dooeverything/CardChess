@@ -29,15 +29,6 @@ public class dragAndDropInGame : MonoBehaviour
             
             gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
         }
-        /*else {
-            if(trashCan.GetComponent<BoxCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
-                Debug.Log("Change Card");
-                Destroy(gameObject);
-                /*GameObject cardOther = Instantiate(card[num]) as GameObject;
-                cardOther.transform.position = new Vector3(firstPosX, 8.5f, 0);
-                createNewCard();
-            }
-        }*/
     }
 
     private void OnMouseDown() {

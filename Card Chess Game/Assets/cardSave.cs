@@ -49,7 +49,7 @@ public class cardSave : MonoBehaviour
                                    "Assets/Prefab/cardTest6.prefab",
                                    "Assets/Prefab/cardTest7.prefab"};
 
-    public static float[] positionBoard = { -321.3489f, -568f, 160 };
+    public static float[] positionBoard = { -320f, -570f, 160 };
 
     public static string[] piece = {"Assets/Prefab/test piece.prefab",
                                     "Assets/Prefab/chess_piece/Mage.prefab",
