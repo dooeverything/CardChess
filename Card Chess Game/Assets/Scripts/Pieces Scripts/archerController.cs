@@ -8,6 +8,7 @@ using UnityEditor;
 public class archerController : horseController {
     // Move: createDot for archer
     protected override void createDotMove(Object prefab) {
+        Debug.Log("createDotMove from archer");
         // 궁수-이동: 상하좌우 2칸
         for (int i = 0; i < 4; i++) {
             GameObject dot = Instantiate(prefab) as GameObject;
@@ -15,7 +16,11 @@ public class archerController : horseController {
             dot.transform.position = new Vector2(transform.position.x + cardSave.positionMove[i, 0] * 160 * 2, transform.position.y + cardSave.positionMove[i, 1] * 160 * 2);
             float x = dot.transform.position.x;
             float y = dot.transform.position.y;
-            if(x < -320 || x > 320) {
+            // Debug.Log("Xpos is: " + x);
+            // Debug.Log("recttransform is: " + dot.GetComponent<RectTransform>());
+            // Debug.Log("position is: " + new Vector2(transform.position.x + cardSave.positionMove[i, 0] * 160 * 2, transform.position.y + cardSave.positionMove[i, 1] * 160 * 2)); 
+            Debug.Log("x: " + (transform.position.x + cardSave.positionMove[i, 0] * 160 * 2));
+            if(x < 220 || x > 860) {
                 Destroy(dot);
             } 
         }     

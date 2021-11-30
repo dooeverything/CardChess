@@ -19,7 +19,7 @@ public class cardGenerator_InGame : MonoBehaviour
 
 
         for(int i=0; i<cardGenerator.result+2; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[cardSave.cardList[i]], typeof(GameObject));
+            Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[3], typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
             card.transform.SetParent(hands.transform, true); 
         }

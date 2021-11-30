@@ -31,6 +31,8 @@ public class cardSave : MonoBehaviour
                                             "Assets/Prefab/chess_card_mulligan/move/move_mage.prefab",
                                             "Assets/Prefab/chess_card_mulligan/move/move_Warrior.prefab",
                                             "Assets/Prefab/chess_card_mulligan/move/move_king.prefab"};
+    public static string board_cell_path = "Assets/Prefab/board/cell.prefab";
+
     // public static string[] pathInGame = {"Assets/Prefab/chess_card_InGame/attack/attack_archer_InGame.prefab", 
     //                                "Assets/Prefab/chess_card_InGame/attack/attack_mage_InGame.prefab",
     //                                "Assets/Prefab/chess_card_InGame/attack/attack_warrior_InGame.prefab",
@@ -57,4 +59,10 @@ public class cardSave : MonoBehaviour
     };
     public static int[] cardList = new int[3];
     public static bool playFirst = true;
+
+    public static int absoluteX0 = -320; // (0,0) x위치 
+    public static int absoluteX1 = 160;  // 1칸뛸때 더해주는 X거리
+    public static int absolutey0 = -160; //(0,0) y위치 
+    public static int absolutey2 = 160;  // 1칸뛸때 더해주는 Y거리
+
 }
