@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class cardSave : MonoBehaviour
 {
+
     public static GameObject[,] cells = new GameObject[5, 8];
 
-    public static int[,] pieces = {
-        {0, 1, 3, 1, 0},
-        {2, 2, 2, 2, 2}
+    public static Piece[,] pieces = {
+        {Piece.Archer, Piece.Mage, Piece.King, Piece.Mage, Piece.Archer},
+        {Piece.Warrior, Piece.Warrior, Piece.Warrior, Piece.Warrior, Piece.Warrior}
     };
     public enum Piece : ushort
     {

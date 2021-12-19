@@ -12,6 +12,10 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private GameObject pieces;
     public static string pieceName;
     public static string cardName;
+
+    public string pieceType; 
+    public string behaviour; 
+
     void Start() {
         canvas = GameObject.Find("Canvas");
         hands = GameObject.Find("Hands");
@@ -22,6 +26,24 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         Debug.Log("OnBeginDrag");
         transform.SetParent(canvas.transform);
         beingHeld = true;
+        switch(pieceType) {
+            case "archer": 
+                if(behaviour == "move") {
+                    List<GameObject> temp = Game_Manager.archerOnBoard_player1;  
+                    for(int i = 0; i < temp.Count; i++) {
+                        temp[i].GetComponent<PieceController>().createIndicator(); 
+                        // temp[i].
+                    }
+                } else {
+                    List<GameObject> temp = Game_Manager.archerOnBoard_player1;  
+                    for(int i = 0; i < temp.Count; i++) {
+                        temp[i].GetComponent<PieceController>().createIndicator(); 
+                        // temp[i].
+                    }              
+                }
+                break; 
+            default: return; 
+        }
     }
     public void OnDrag(PointerEventData eventData) {
         this.transform.position = eventData.position;

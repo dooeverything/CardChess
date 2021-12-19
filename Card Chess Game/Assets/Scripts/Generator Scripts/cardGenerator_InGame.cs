@@ -22,6 +22,8 @@ public class cardGenerator_InGame : MonoBehaviour
             Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[3], typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
             card.transform.SetParent(hands.transform, true); 
+            card.GetComponent<dragDrop>().pieceType = "archer"; 
+            card.GetComponent<dragDrop>().behaviour = "move";             
         }
 
     }

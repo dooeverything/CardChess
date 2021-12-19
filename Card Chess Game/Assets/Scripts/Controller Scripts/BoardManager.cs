@@ -43,13 +43,13 @@ public class BoardManager : MonoBehaviour
         }
 
         // Create a ChessPiece
-        for(int i=0; i<5; i++) {
+        for(int i=0; i<2; i++) {
+            for(int j = 0; j < 5; j++) {
             // Create a Warrior
-            ChessPiece warrior = new ChessPiece(cardSave.pieces[1,i], cardSave.cells[i,1], i, 1);
-            warrior.createPiece();
+            ChessPiece newPiece = ChessPiece.createDerivedChessPiece(cardSave.pieces[i,j], cardSave.cells[j, i], j, i);
+            newPiece.createPiece(cardSave.pieces[i,j]);
 
-            ChessPiece loyal = new ChessPiece(cardSave.pieces[0,i], cardSave.cells[i,0], i, 0);
-            loyal.createPiece();
+            }
         }
     }
 

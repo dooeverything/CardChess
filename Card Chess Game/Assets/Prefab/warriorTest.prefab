@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1072001404009137698}
   - component: {fileID: 2073436072650089151}
   - component: {fileID: -4423503631594941803}
-  - component: {fileID: -1382037349815604784}
   m_Layer: 5
   m_Name: warriorTest
   m_TagString: Untagged
@@ -115,15 +114,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &-1382037349815604784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1264681290873563085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fba25ad6bf5cdf4596f49c78295e3b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
