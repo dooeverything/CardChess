@@ -5,7 +5,12 @@ using UnityEngine.UI;
 
 public class cardSave : MonoBehaviour
 {
+    public static GameObject[,] cells = new GameObject[5, 8];
 
+    public static int[,] pieces = {
+        {0, 1, 3, 1, 0},
+        {2, 2, 2, 2, 2}
+    };
     public enum Piece : ushort
     {
         Archer = 0,
@@ -24,6 +29,8 @@ public class cardSave : MonoBehaviour
         MoveWarrior,
         MoveKing
     }
+
+    // Path for Prefab cards for *Mulligan*
     public static string[] pathMulligan = { "Assets/Prefab/chess_card_mulligan/attack/attack_archer.prefab",
                                             "Assets/Prefab/chess_card_mulligan/attack/attack_mage.prefab",
                                             "Assets/Prefab/chess_card_mulligan/attack/attack_warrior.prefab",
@@ -31,15 +38,11 @@ public class cardSave : MonoBehaviour
                                             "Assets/Prefab/chess_card_mulligan/move/move_mage.prefab",
                                             "Assets/Prefab/chess_card_mulligan/move/move_Warrior.prefab",
                                             "Assets/Prefab/chess_card_mulligan/move/move_king.prefab"};
+    
+    // Path for Prefab Board
     public static string board_cell_path = "Assets/Prefab/board/cell.prefab";
 
-    // public static string[] pathInGame = {"Assets/Prefab/chess_card_InGame/attack/attack_archer_InGame.prefab", 
-    //                                "Assets/Prefab/chess_card_InGame/attack/attack_mage_InGame.prefab",
-    //                                "Assets/Prefab/chess_card_InGame/attack/attack_warrior_InGame.prefab",
-    //                                "Assets/Prefab/chess_card_InGame/move/move_archer_InGame.prefab",
-    //                                "Assets/Prefab/chess_card_InGame/move/move_mage_InGame.prefab",
-    //                                "Assets/Prefab/chess_card_InGame/move/move_Warrior_InGame.prefab",
-    //                                "Assets/Prefab/chess_card_InGame/move/move_king_InGame.prefab"};
+
     public static string[] test = {"Assets/Prefab/cardTest.prefab",
                                    "Assets/Prefab/cardTest2.prefab",
                                    "Assets/Prefab/cardTest3.prefab",
@@ -57,6 +60,8 @@ public class cardSave : MonoBehaviour
     public static int[,] positionMove = {
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
     };
+
+
     public static int[] cardList = new int[3];
     public static bool playFirst = true;
 

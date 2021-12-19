@@ -30,16 +30,16 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public static int obj_id;
     public void OnEndDrag(PointerEventData eventData) {
         Debug.Log("OnEndDrag");
-        Debug.Log("hello world!"); 
-        foreach(Transform child in pieces.transform) {
-            if(child.GetComponent<CircleCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
-                Debug.Log(child.gameObject.name + " will move or attack");
-                pieceName = child.gameObject.name;
-                selected = true;
-                obj_id = child.GetInstanceID();
-                Destroy(gameObject);
-            }
-        }
+        // Debug.Log("hello world!"); 
+        // foreach(Transform child in pieces.transform) {
+        //     if(child.GetComponent<CircleCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
+        //         Debug.Log(child.gameObject.name + " will move or attack");
+        //         pieceName = child.gameObject.name;
+        //         selected = true;
+        //         obj_id = child.GetInstanceID();
+        //         Destroy(gameObject);
+        //     }
+        // }
         transform.SetParent(hands.transform);
         beingHeld = false;
     }
