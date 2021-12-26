@@ -16,7 +16,8 @@ public class cardGenerator : MonoBehaviour
 
     void OnEnable()
     {
-        result = PlayerPrefs.GetInt("result");
+        // result = PlayerPrefs.GetInt("result");
+        result = 1; 
     }
 
     void Start()
@@ -39,7 +40,9 @@ public class cardGenerator : MonoBehaviour
         int random = Random.Range(0, 7);
         Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[random], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
+
         dragAndDrop component = card.GetComponent<dragAndDrop>();
+        Game_Manager.card_ingame.Add(random);
         component.cardType = random;
         component.handPos = numCard;
 

@@ -66,7 +66,7 @@ public class ChessPiece
         return;
     }
 
-    protected virtual void createDotStrike(Object prefab) {
+    public virtual void createDotStrike() {
         return;
     }
 

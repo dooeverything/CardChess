@@ -35,6 +35,7 @@ public class dragAndDrop : MonoBehaviour
                 Debug.Log("Change Card");
                 Destroy(gameObject);
                 createNewCard();
+
             }
         }
         //onMouseUp();
@@ -42,6 +43,7 @@ public class dragAndDrop : MonoBehaviour
 
     private void createNewCard() {
         int index = Random.Range(0, 7); // 랜덤으로 새로 만든 카드
+        Game_Manager.card_ingame[handPos] = index;
         Debug.Log("Create new Card " + index);
         Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[index], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;

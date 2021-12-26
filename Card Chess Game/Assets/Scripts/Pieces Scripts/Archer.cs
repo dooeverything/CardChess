@@ -44,16 +44,38 @@ public class Archer : ChessPiece {
         }
     }
 
-    // protected override void createDotStrike(Object prefab) {
-    //     Debug.Log("striking from archer!!");
-    //     float[,] ratio = { {-320f, 0}, {0, -570f}, {320f, 0}, {0, 550f} };
-    //     // 궁수-공격: 상하좌우 전체
-    //     for(int i = 0; i < 4; i++) {
-    //         GameObject dot = Instantiate(prefab) as GameObject;
-    //         dot.transform.SetParent(moveIndicator.transform, false);
-    //         dot.transform.position = new Vector2(transform.position.x + ratio[i, 0], transform.position.y + ratio[i, 1]);
-    //     }
-    // }
+    public override void createDotStrike() {
+        Debug.Log("createDotMove from archer");
+        // 궁수-이동: 상하좌우 2칸
+        for (int i = 0; i < 4; i++) {
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+            int newIndexX = indexX + (cardSave.position[i,0]*4);
+            int newIndexY = indexY + (cardSave.position[i,1]*4);
+            if(newIndexX > 4 || newIndexX < 0) {
+                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                continue;
+            }
+            if(newIndexY > 7 || newIndexY < 0 ) {
+                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                continue;
+            }
+            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            
+            if(newCell.gameObject.transform.childCount > 0) {
+                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
+                continue;
+            }
+            //newCell.GetComponent<Image>().color = Color.black;
+            dot.transform.SetParent(newCell.transform, false);
+            dot.transform.position = newCell.transform.position;
+            Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
+            Game_Manager.dots.Add(dot);
+            Debug.Log( (i+1) + "th dot is added!");
+            //this.indexX = newIndexX;
+            //this.indexY = newIndexY;
+        }
+    }
 
     // void Update() {
     //     // if the piece has a child (if a piece has selected indicators), it is ready to move to different location

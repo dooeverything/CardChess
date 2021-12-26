@@ -45,12 +45,26 @@ public class PieceController : MonoBehaviour
                         piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX;
                         piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY;
                         Debug.Log("Dot list has " + Game_Manager.dots.Count);
-                        for(int i=0; i<Game_Manager.dots.Count; i++) {
-                            Game_Manager.dots[i].GetComponent<dotController>().destoryDot();
-                            Debug.Log((i+1) + " th dot is removed!");
+
+                        foreach (GameObject obj in Game_Manager.dots)
+                        {
+                            Destroy(obj); 
                         }
-                        Game_Manager.dots.Clear();
+                        // for(int i=0; i<Game_Manager.dots.Count; i++) {
+                        //     Game_Manager.dots[i].GetComponent<dotController>().destoryDot();
+                        //     Debug.Log((i+1) + " th dot is removed!");
+                        // }
+                        // Game_Manager.dots.Clear();
                         //Destroy(result.gameObject);
+                        foreach (GameObject obj in Game_Manager.cards_in_hand)
+                        {
+                            if(obj.GetInstanceID() == Game_Manager.selected_card.GetInstanceID()) {
+                                Game_Manager.cards_in_hand.Remove(obj);
+                                Destroy(obj); 
+                                Game_Manager.selected_card = null; 
+                                break; 
+                            }
+                        }                        
                     }
                     //  = result.gameObject.transform.position;
 
@@ -59,15 +73,19 @@ public class PieceController : MonoBehaviour
                     //     GameObject.Destroy(child.gameObject);
                     // }
                 }
-            }
+            }            
         }
     }
 
     public void createIndicator() {
         Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
         GameObject indicator = Instantiate(selected) as GameObject;
+        Game_Manager.indicator.Add(indicator); 
+        Debug.Log("indicator is: " + indicator.transform.position.x); 
         indicator.transform.SetParent(this.gameObject.transform);
         indicator.transform.position = transform.position;
+        // Destroy(indicator); 
+        Debug.Log("id is: " + indicator.GetInstanceID()); 
     }
 
     public void destroyIndicator() {
@@ -76,9 +94,13 @@ public class PieceController : MonoBehaviour
         }
     }
 
-    public void createDot(ChessPiece piece) {
+    public void createDot(ChessPiece piece, string behaviour) {
         //GameObject dot = Instantiate(prefab) as GameObject;
         this.piece = piece;
-        piece.createDotMove();
+        if(behaviour == "move") {
+            piece.createDotMove();
+        } else {
+            piece.createDotStrike();
+        }
     }
 }

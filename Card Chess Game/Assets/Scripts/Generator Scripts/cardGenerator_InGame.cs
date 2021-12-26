@@ -19,11 +19,12 @@ public class cardGenerator_InGame : MonoBehaviour
 
 
         for(int i=0; i<cardGenerator.result+2; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[3], typeof(GameObject));
+            Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[Game_Manager.card_ingame[i]], typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
             card.transform.SetParent(hands.transform, true); 
-            card.GetComponent<dragDrop>().pieceType = "archer"; 
-            card.GetComponent<dragDrop>().behaviour = "move";             
+            card.GetComponent<dragDrop>().pieceType = cardSave.test2[Game_Manager.card_ingame[i], 0];
+            card.GetComponent<dragDrop>().behaviour = cardSave.test2[Game_Manager.card_ingame[i], 1];
+            Game_Manager.cards_in_hand.Add(card);
         }
 
     }

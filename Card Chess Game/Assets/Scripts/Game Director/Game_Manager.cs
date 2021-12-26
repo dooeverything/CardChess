@@ -21,5 +21,11 @@ public class Game_Manager : MonoBehaviour
 
         public static List<GameObject> dots = new List<GameObject>();
 
+        public static List<GameObject> indicator = new List<GameObject>();
 
+        public static List<int> card_ingame = new List<int>(); 
+
+        public static List<GameObject> cards_in_hand = new List<GameObject>(); 
+
+        public static GameObject selected_card; 
 }
