@@ -12,8 +12,8 @@ public class ChessPiece
     
     protected float x;
     protected float y;
-    protected int indexX;
-    protected int indexY;
+    public int indexX;
+    public int indexY;
     public cardSave.Piece chessPieceType;
     protected GameObject canvas;
     protected GameObject indicator;
@@ -47,22 +47,22 @@ public class ChessPiece
     }
 
     // Spawning a Chess Piece
-    public Object createPiece(cardSave.Piece type) {
+    public GameObject createPiece(cardSave.Piece type) {
         Object prefabPiece = AssetDatabase.LoadAssetAtPath(cardSave.piece[(int) chessPieceType], typeof(GameObject));
         GameObject piece = GameObject.Instantiate(prefabPiece) as GameObject;
         //piece.transform.position = new Vector2(x, y);
         piece.transform.SetParent(parent.transform, false);
-        Debug.Log(x + " " + y);
-        switch(type) {
-            case cardSave.Piece.Archer: 
-                Game_Manager.archerOnBoard_player1.Add(piece); 
-                break; 
-        }
+        //Debug.Log(x + " " + y);
+        // switch(type) {
+        //     case cardSave.Piece.Archer: 
+        //         Game_Manager.archerOnBoard_player1.Add(piece); 
+        //         break; 
+        // }
         return piece;
     }
 
     // Abstract Method, (Overriding Function), To create a valid move indicator, which is different for each piece
-    protected virtual void createDotMove(Object prefab) {
+    public virtual void createDotMove() {
         return;
     }
 
@@ -83,7 +83,7 @@ public class ChessPiece
     }
 
     // To find the click area
-    protected virtual void clickToMove(GameObject obj) {
+    public virtual void clickToMove(GameObject obj) {
         if (Input.GetKey(KeyCode.Mouse0)) {
             //Set up the new Pointer Event
             var ped = new PointerEventData(null);
@@ -104,10 +104,10 @@ public class ChessPiece
                     //  = result.gameObject.transform.position;
                     GameObject.Destroy(indicator);
 
-                    foreach (Transform child in moveIndicator.transform)
-                    {
-                        GameObject.Destroy(child.gameObject);
-                    }
+                    // foreach (Transform child in moveIndicator.transform)
+                    // {
+                    //     GameObject.Destroy(child.gameObject);
+                    // }
                 }
             }
         }

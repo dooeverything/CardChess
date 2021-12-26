@@ -58,17 +58,11 @@ public class cardSave : MonoBehaviour
                                     "Assets/Prefab/mageTest.prefab",
                                     "Assets/Prefab//warriorTest.prefab",
                                     "Assets/Prefab/KingTest.prefab"};
-    public static int[,] positionMove = {
+    public static int[,] position = {
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
     };
 
 
     public static int[] cardList = new int[3];
     public static bool playFirst = true;
-
-    public static int absoluteX0 = -320; // (0,0) x위치 
-    public static int absoluteX1 = 160;  // 1칸뛸때 더해주는 X거리
-    public static int absolutey0 = -160; //(0,0) y위치 
-    public static int absolutey2 = 160;  // 1칸뛸때 더해주는 Y거리
-
 }
