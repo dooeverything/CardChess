@@ -69,7 +69,7 @@ public class cardSave : MonoBehaviour
                                     "Assets/Prefab//warriorTest.prefab",
                                     "Assets/Prefab/KingTest.prefab"};
     public static int[,] position = {
-        {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1}
+        {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
     };
 
 

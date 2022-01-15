@@ -12,7 +12,7 @@ public class Archer : ChessPiece {
 
     // Move: createDot for archer
     public override void createDotMove() {
-        Debug.Log("createDotMove from archer");
+        //Debug.Log("createDotMove from archer");
         // 궁수-이동: 상하좌우 2칸
         for (int i = 0; i < 4; i++) {
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
@@ -20,32 +20,32 @@ public class Archer : ChessPiece {
             int newIndexX = indexX + (cardSave.position[i,0]*2);
             int newIndexY = indexY + (cardSave.position[i,1]*2);
             if(newIndexX > 4 || newIndexX < 0) {
-                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             if(newIndexY > 7 || newIndexY < 0 ) {
-                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
                 continue;
             }
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
+            //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
             Game_Manager.dots.Add(dot);
-            Debug.Log( (i+1) + "th dot is added!");
+            //Debug.Log( (i+1) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;
         }
     }
 
     public override void createDotStrike() {
-        Debug.Log("createDotMove from archer");
+        //Debug.Log("createDotMove from archer");
         // 궁수-이동: 상하좌우 2칸
         for (int i = 0; i < 4; i++) {
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
@@ -53,25 +53,25 @@ public class Archer : ChessPiece {
             int newIndexX = indexX + (cardSave.position[i,0]*4);
             int newIndexY = indexY + (cardSave.position[i,1]*4);
             if(newIndexX > 4 || newIndexX < 0) {
-                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             if(newIndexY > 7 || newIndexY < 0 ) {
-                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
                 continue;
             }
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
+            //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
             Game_Manager.dots.Add(dot);
-            Debug.Log( (i+1) + "th dot is added!");
+            //Debug.Log( (i+1) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;
         }

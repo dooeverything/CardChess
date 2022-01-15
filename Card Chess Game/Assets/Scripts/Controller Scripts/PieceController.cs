@@ -35,27 +35,23 @@ public class PieceController : MonoBehaviour
                 //Debug.Log(result.gameObject.name);
                 if (result.gameObject.name == "dot_move(Clone)")
                 {
-                    Debug.Log(this.name);
+                    //Debug.Log(this.name);
                     if(this.transform.childCount > 0) {
-                        Destroy(this.transform.GetChild(0).gameObject);
+                        Destroy(this.transform.GetChild(0).gameObject); // Destory the selected indicator
                         
-                        this.transform.SetParent(result.gameObject.transform.parent);
+                        this.transform.SetParent(result.gameObject.transform.parent); // Set parent to destination cell
                         //result.gameObject.transform.parent.GetComponent<Image>().color = Color.white;
-                        this.transform.position = result.gameObject.transform.position;
-                        piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX;
-                        piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY;
-                        Debug.Log("Dot list has " + Game_Manager.dots.Count);
+                        this.transform.position = result.gameObject.transform.position; // Set position to destination cell
+                        piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX; // Set index X to cell X
+                        piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY; // Set indexY as CellY
+                        //Debug.Log("Dot list has " + Game_Manager.dots.Count);
 
                         foreach (GameObject obj in Game_Manager.dots)
                         {
-                            Destroy(obj); 
+                            Destroy(obj);  // Destory all dots
                         }
-                        // for(int i=0; i<Game_Manager.dots.Count; i++) {
-                        //     Game_Manager.dots[i].GetComponent<dotController>().destoryDot();
-                        //     Debug.Log((i+1) + " th dot is removed!");
-                        // }
-                        // Game_Manager.dots.Clear();
-                        //Destroy(result.gameObject);
+
+                        // Destroy Selected Card
                         foreach (GameObject obj in Game_Manager.cards_in_hand)
                         {
                             if(obj.GetInstanceID() == Game_Manager.selected_card.GetInstanceID()) {
@@ -64,14 +60,9 @@ public class PieceController : MonoBehaviour
                                 Game_Manager.selected_card = null; 
                                 break; 
                             }
-                        }                        
+                        }
+                        Debug.Log("DragDrop selectedPiece is " + dragDrop.selectedPiece);
                     }
-                    //  = result.gameObject.transform.position;
-
-                    // foreach (Transform child in moveIndicator.transform)
-                    // {
-                    //     GameObject.Destroy(child.gameObject);
-                    // }
                 }
             }            
         }
@@ -81,11 +72,11 @@ public class PieceController : MonoBehaviour
         Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
         GameObject indicator = Instantiate(selected) as GameObject;
         Game_Manager.indicator.Add(indicator); 
-        Debug.Log("indicator is: " + indicator.transform.position.x); 
+        //Debug.Log("indicator is: " + indicator.transform.position.x); 
         indicator.transform.SetParent(this.gameObject.transform);
         indicator.transform.position = transform.position;
         // Destroy(indicator); 
-        Debug.Log("id is: " + indicator.GetInstanceID()); 
+        //Debug.Log("id is: " + indicator.GetInstanceID()); 
     }
 
     public void destroyIndicator() {

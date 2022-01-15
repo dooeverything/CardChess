@@ -10,15 +10,72 @@ public class Warrior : ChessPiece {
     
     public Warrior(cardSave.Piece type, GameObject obj, int indexX, int indexY) : base(type, obj, indexX, indexY) {}
 
-    // protected override void createDotMove(Object prefab) {
-    //     // 이동/공격 상하좌우 1칸
-    //     for (int i = 0; i < 4; i++) {
-    //         GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-    //         dot.transform.SetParent(moveIndicator.transform, false);
-    //         GameObject cell = cardSave.cells[indexX+cardSave.positionMove[i,0], indexY+cardSave.positionMove[i,1]];
-    //         dot.transform.position = new Vector2(cell.transform.position.x, cell.transform.position.y);
-    //     }
-    // }
+    public override void createDotMove() {
+        //Debug.Log("createDotMove from Warrior");
+        // 검사-이동: 상하좌우 1칸
+        for (int i = 0; i < 4; i++) {
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+            int newIndexX = indexX + (cardSave.position[i,0]);
+            int newIndexY = indexY + (cardSave.position[i,1]);
+            if(newIndexX > 4 || newIndexX < 0) {
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                continue;
+            }
+            if(newIndexY > 7 || newIndexY < 0 ) {
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                continue;
+            }
+            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            
+            if(newCell.gameObject.transform.childCount > 0) {
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
+                continue;
+            }
+            //newCell.GetComponent<Image>().color = Color.black;
+            dot.transform.SetParent(newCell.transform, false);
+            dot.transform.position = newCell.transform.position;
+            //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
+            Game_Manager.dots.Add(dot);
+            //Debug.Log( (i+1) + "th dot is added!");
+            //this.indexX = newIndexX;
+            //this.indexY = newIndexY;
+        }
+    }
+
+    public override void createDotStrike() {
+        //Debug.Log("createDotStrike from Warrior");
+        // 검사-공격: 상하좌우 1칸
+        for (int i = 0; i < 4; i++) {
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+            int newIndexX = indexX + (cardSave.position[i,0]);
+            int newIndexY = indexY + (cardSave.position[i,1]);
+            if(newIndexX > 4 || newIndexX < 0) {
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                continue;
+            }
+            if(newIndexY > 7 || newIndexY < 0 ) {
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                continue;
+            }
+            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            
+            if(newCell.gameObject.transform.childCount > 0) {
+                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
+                continue;
+            }
+            //newCell.GetComponent<Image>().color = Color.black;
+            dot.transform.SetParent(newCell.transform, false);
+            dot.transform.position = newCell.transform.position;
+            //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
+            Game_Manager.dots.Add(dot);
+            //Debug.Log( (i+1) + "th dot is added!");
+            //this.indexX = newIndexX;
+            //this.indexY = newIndexY;
+        }
+    }
+
 
     // void Update() {
     //     // if the piece has a child (selected indicator)

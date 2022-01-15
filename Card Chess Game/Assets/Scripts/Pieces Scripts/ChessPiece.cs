@@ -72,44 +72,6 @@ public class ChessPiece
 
     void Start()
     {
-        //canvas = GameObject.Find("Canvas");
-        //moveIndicator = GameObject.Find("Move Indicator");
-
-        //gr = GetComponent<GraphicRaycaster>();
     }
 
-    protected virtual void movePiece() {
-
-    }
-
-    // To find the click area
-    public virtual void clickToMove(GameObject obj) {
-        if (Input.GetKey(KeyCode.Mouse0)) {
-            //Set up the new Pointer Event
-            var ped = new PointerEventData(null);
-            //Set the Pointer Event Position to that of the mouse position
-            ped.position = Input.mousePosition;
-
-            //Create a list of Raycast Results
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(ped, results);
-
-            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-            foreach (RaycastResult result in results) {
-                //Debug.Log(result.gameObject.name);
-                if (result.gameObject.name == "dot(Clone)")
-                {
-                    Debug.Log(obj.name);
-                    obj.transform.position = result.gameObject.transform.position;
-                    //  = result.gameObject.transform.position;
-                    GameObject.Destroy(indicator);
-
-                    // foreach (Transform child in moveIndicator.transform)
-                    // {
-                    //     GameObject.Destroy(child.gameObject);
-                    // }
-                }
-            }
-        }
-    }
 }

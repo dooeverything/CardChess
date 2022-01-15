@@ -17,11 +17,36 @@ public class cardGenerator : MonoBehaviour
     void OnEnable()
     {
         // result = PlayerPrefs.GetInt("result");
-        result = 1; 
+        result = 1;
     }
 
     void Start()
     {
+        for (int i = 0; i < 3; i++)
+        {
+            int km = 6;
+            int aa = 0;
+            int ma = 1;
+            Game_Manager.deck.Add(km);
+            Game_Manager.deck.Add(aa);
+            Game_Manager.deck.Add(ma);
+        }
+
+        for (int i = 0; i < 6; i++)
+        {
+            int am = 3;
+            int mm = 4;
+            int wa = 2;
+            Game_Manager.deck.Add(am);
+            Game_Manager.deck.Add(mm);
+            Game_Manager.deck.Add(wa);
+        }
+
+        for (int i = 0; i < 12; i++)
+        {
+            int wm = 5;
+            Game_Manager.deck.Add(wm);
+        }
         for (int i = 0; i < 3; i++)
         {
             createCard();
@@ -30,20 +55,25 @@ public class cardGenerator : MonoBehaviour
     }
 
     public void createCard()
-    {   
+    {
         // result가 0일때 선공
-        if (result == 0 && numCard >=2) return;
+        if (result == 0 && numCard >= 2) return;
         // result가 1일때 후공
         if (result == 1 && numCard >= 3) return;
 
-        //Debug.Log(result);
-        int random = Random.Range(0, 7);
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[random], typeof(GameObject));
+        Debug.Log(Game_Manager.myDeckCount);
+        Debug.Log(Game_Manager.deck.Count);
+
+        int randomIndex = Random.Range(0, Game_Manager.myDeckCount);
+        int randomCard = Game_Manager.deck[randomIndex];
+        Game_Manager.deck.RemoveAt(randomIndex);
+        Game_Manager.myDeckCount--;
+        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
 
         dragAndDrop component = card.GetComponent<dragAndDrop>();
-        Game_Manager.card_ingame.Add(random);
-        component.cardType = random;
+        Game_Manager.card_ingame.Add(randomCard);
+        component.cardType = randomCard;
         component.handPos = numCard;
 
         //if player1 is the second

@@ -42,15 +42,18 @@ public class dragAndDrop : MonoBehaviour
     }
 
     private void createNewCard() {
-        int index = Random.Range(0, 7); // 랜덤으로 새로 만든 카드
-        Game_Manager.card_ingame[handPos] = index;
-        Debug.Log("Create new Card " + index);
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[index], typeof(GameObject));
+        int randomIndex = Random.Range(0, Game_Manager.myDeckCount);
+        int randomCard = Game_Manager.deck[randomIndex];
+        Game_Manager.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
+        Game_Manager.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
+        Game_Manager.card_ingame[handPos] = randomCard;
+        Debug.Log("Create new Card " + randomCard);
+        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         dragAndDrop component = card.GetComponent<dragAndDrop>();
         card.transform.position = new Vector3( firstPosX, firstPosY, 0);
         component.canMove = false;
-        component.cardType = index; 
+        component.cardType = randomCard; 
         component.handPos = handPos; 
     }
 

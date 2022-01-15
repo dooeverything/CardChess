@@ -25,6 +25,8 @@ public class cardGenerator_InGame : MonoBehaviour
             card.GetComponent<dragDrop>().pieceType = cardSave.test2[Game_Manager.card_ingame[i], 0];
             card.GetComponent<dragDrop>().behaviour = cardSave.test2[Game_Manager.card_ingame[i], 1];
             Game_Manager.cards_in_hand.Add(card);
+            //Game_Manager.myDeckCount--;
+
         }
 
     }

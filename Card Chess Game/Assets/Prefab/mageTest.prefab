@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5334499719892402123}
   - component: {fileID: -5617139759981732597}
   - component: {fileID: 7663534670377056250}
+  - component: {fileID: 2851426303168314097}
   m_Layer: 5
   m_Name: mageTest
   m_TagString: Untagged
@@ -114,3 +115,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &2851426303168314097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044573672706043001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 566aaec97e36d23418af9b5b9bac0fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selected: 0
