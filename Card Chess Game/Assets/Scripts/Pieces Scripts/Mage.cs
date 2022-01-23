@@ -8,7 +8,7 @@ using UnityEditor;
 
 public class Mage : ChessPiece {
 
-    public Mage(cardSave.Piece type, GameObject obj, int indexX, int indexY) : base(type, obj, indexX, indexY) {}
+    public Mage(int player, cardSave.Piece type, GameObject obj, int indexX, int indexY) : base(player, type, obj, indexX, indexY) {}
 
     public override void createDotMove() {
         Debug.Log("createDotMove from Mage");
@@ -37,7 +37,7 @@ public class Mage : ChessPiece {
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
             Debug.Log( (i-3) + "th dot: " + newIndexX + " " + newIndexY);
-            Game_Manager.dots.Add(dot);
+            player_data.dots.Add(dot);
             Debug.Log( (i-3) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;
@@ -70,7 +70,7 @@ public class Mage : ChessPiece {
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
             //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
-            Game_Manager.dots.Add(dot);
+            player_data.dots.Add(dot);
             //Debug.Log( (i+1) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;

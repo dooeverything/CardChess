@@ -20,37 +20,44 @@ public class ChessPiece
     protected GameObject moveIndicator;
     protected GameObject child;
     protected Object prefab;
-
-    public static ChessPiece createDerivedChessPiece(cardSave.Piece type, GameObject obj, int indexX, int indexY) {
+    protected int player;
+    protected Game_Manager player_data;
+    public static ChessPiece createDerivedChessPiece(int player, cardSave.Piece type, GameObject obj, int indexX, int indexY) {
         switch(type) {
             case cardSave.Piece.Archer: 
-                return new Archer(type, obj, indexX, indexY);
+                return new Archer(player, type, obj, indexX, indexY);
             case cardSave.Piece.King: 
-                return new King(type, obj, indexX, indexY);
+                return new King(player, type, obj, indexX, indexY);
             case cardSave.Piece.Mage: 
-                return new Mage(type, obj, indexX, indexY);
+                return new Mage(player, type, obj, indexX, indexY);
             case cardSave.Piece.Warrior: 
-                return new Warrior(type, obj, indexX, indexY);
+                return new Warrior(player, type, obj, indexX, indexY);
         }
         return null; 
     }
 
 
     // Constructor
-    public ChessPiece(cardSave.Piece type, GameObject obj, int indexX, int indexY) {
+    public ChessPiece(int player, cardSave.Piece type, GameObject obj, int indexX, int indexY) {
+        this.player = player; 
         chessPieceType = type;
         parent = obj;
         //x = obj.GetComponent<RectTransform>().anchoredPosition.x;
         //y = obj.GetComponent<RectTransform>().anchoredPosition.y;
         this.indexX = indexX;
         this.indexY = indexY;
+        if(player == 1) {
+            player_data = Game_Manager.player1;
+        }else {
+            player_data = Game_Manager.player2;            
+        }
     }
 
     // Spawning a Chess Piece
-    public GameObject createPiece(cardSave.Piece type) {
+    public GameObject createPiece(int player) {
         Object prefabPiece = AssetDatabase.LoadAssetAtPath(cardSave.piece[(int) chessPieceType], typeof(GameObject));
         GameObject piece = GameObject.Instantiate(prefabPiece) as GameObject;
-        //piece.transform.position = new Vector2(x, y);
+        piece.GetComponent<PieceController>().player = player;
         piece.transform.SetParent(parent.transform, false);
         //Debug.Log(x + " " + y);
         // switch(type) {

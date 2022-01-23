@@ -8,17 +8,27 @@ using UnityEditor;
 
 public class endButtonController : MonoBehaviour
 {
-    GameObject hands;
 
+    // GameObject hands;
+    GameObject hands1;
+    GameObject hands2;
     // Start is called before the first frame update
     void Start()
     {
-        hands = GameObject.Find("Hands");
+        hands1 = GameObject.Find("Hands");
+        hands2 = GameObject.Find("Hands_Opponent");
     }
 
     // Update is called once per frame
     void Update()
     {
+                GameObject hands; 
+        if(Game_Manager.turn == 1) {
+            hands = hands1;
+        }else {
+            hands = hands2; 
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0)) {
             //Set up the new Pointer Event
             var ped = new PointerEventData(null);
@@ -30,24 +40,46 @@ public class endButtonController : MonoBehaviour
             EventSystem.current.RaycastAll(ped, results);
 
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-            // Result is a **dot_move(Clone)**
+            // Result is a **End**
             foreach (RaycastResult result in results) {
                 //Debug.Log(result.gameObject.name);
-                if (result.gameObject.name == "End") {
+                if (result.gameObject.name == "End") { // result --> timer
                     result.gameObject.transform.GetChild(0).GetComponent<timerController>().timer = 30;
-                    int randomIndex = Random.Range(0, Game_Manager.myDeckCount);
-                    int randomCard = Game_Manager.deck[randomIndex];
-                    Game_Manager.deck.RemoveAt(randomIndex);
-                    Game_Manager.myDeckCount--;
-                    Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[randomCard], typeof(GameObject));
-                    GameObject card = Instantiate(prefab) as GameObject;
-                    card.transform.SetParent(hands.transform, true); 
-                    card.GetComponent<dragDrop>().pieceType = cardSave.test2[randomCard, 0];
-                    card.GetComponent<dragDrop>().behaviour = cardSave.test2[randomCard, 1];
-                    Game_Manager.cards_in_hand.Add(card);
+                    switchTurn();
+                    Debug.Log("It is now player" + Game_Manager.turn + "'s !!");
+                    drawCard(hands);
                 }
                 
             }
+        }
+    }
+
+    public static void drawCard(GameObject hands) {
+        Game_Manager player_data;
+
+        if(Game_Manager.turn == 1) {
+            player_data = Game_Manager.player1;
+        }else {
+            player_data = Game_Manager.player2;
+        }
+        Debug.Log("player " + Game_Manager.turn + " has " + player_data.myDeckCount);
+        int randomIndex = Random.Range(0, player_data.myDeckCount);
+        int randomCard = player_data.deck[randomIndex];
+        player_data.deck.RemoveAt(randomIndex);
+        player_data.myDeckCount--;
+        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[randomCard], typeof(GameObject));
+        GameObject card = Instantiate(prefab) as GameObject;
+        card.transform.SetParent(hands.transform, true); 
+        card.GetComponent<dragDrop>().pieceType = cardSave.test2[randomCard, 0];
+        card.GetComponent<dragDrop>().behaviour = cardSave.test2[randomCard, 1];
+        player_data.cards_in_hand.Add(card);
+    }
+
+    public static void switchTurn() {
+        if(Game_Manager.turn == 1) {
+            Game_Manager.turn = 2;
+        }else {
+            Game_Manager.turn = 1;
         }
     }
 }

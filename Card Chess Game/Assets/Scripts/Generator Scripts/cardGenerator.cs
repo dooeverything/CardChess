@@ -27,9 +27,12 @@ public class cardGenerator : MonoBehaviour
             int km = 6;
             int aa = 0;
             int ma = 1;
-            Game_Manager.deck.Add(km);
-            Game_Manager.deck.Add(aa);
-            Game_Manager.deck.Add(ma);
+            Game_Manager.player1.deck.Add(km);
+            Game_Manager.player2.deck.Add(km);
+            Game_Manager.player1.deck.Add(aa);
+            Game_Manager.player2.deck.Add(aa);
+            Game_Manager.player1.deck.Add(ma);
+            Game_Manager.player2.deck.Add(ma);
         }
 
         for (int i = 0; i < 6; i++)
@@ -37,15 +40,20 @@ public class cardGenerator : MonoBehaviour
             int am = 3;
             int mm = 4;
             int wa = 2;
-            Game_Manager.deck.Add(am);
-            Game_Manager.deck.Add(mm);
-            Game_Manager.deck.Add(wa);
+            Game_Manager.player1.deck.Add(am);
+            Game_Manager.player1.deck.Add(mm);
+            Game_Manager.player1.deck.Add(wa);
+            Game_Manager.player2.deck.Add(am);
+            Game_Manager.player2.deck.Add(mm);
+            Game_Manager.player2.deck.Add(wa);
         }
 
         for (int i = 0; i < 12; i++)
         {
             int wm = 5;
-            Game_Manager.deck.Add(wm);
+            Game_Manager.player1.deck.Add(wm);
+            Game_Manager.player2.deck.Add(wm);
+
         }
         for (int i = 0; i < 3; i++)
         {
@@ -61,18 +69,18 @@ public class cardGenerator : MonoBehaviour
         // result가 1일때 후공
         if (result == 1 && numCard >= 3) return;
 
-        Debug.Log(Game_Manager.myDeckCount);
-        Debug.Log(Game_Manager.deck.Count);
+        Debug.Log(Game_Manager.player1.myDeckCount);
+        Debug.Log(Game_Manager.player1.deck.Count);
 
-        int randomIndex = Random.Range(0, Game_Manager.myDeckCount);
-        int randomCard = Game_Manager.deck[randomIndex];
-        Game_Manager.deck.RemoveAt(randomIndex);
-        Game_Manager.myDeckCount--;
+        int randomIndex = Random.Range(0, Game_Manager.player1.myDeckCount);
+        int randomCard = Game_Manager.player1.deck[randomIndex];
+        Game_Manager.player1.deck.RemoveAt(randomIndex);
+        Game_Manager.player1.myDeckCount--;
         Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
 
         dragAndDrop component = card.GetComponent<dragAndDrop>();
-        Game_Manager.card_ingame.Add(randomCard);
+        Game_Manager.player1.card_ingame.Add(randomCard);
         component.cardType = randomCard;
         component.handPos = numCard;
 
@@ -106,10 +114,4 @@ public class cardGenerator : MonoBehaviour
         }
 
     }
-
-    // public void printCardList() {
-    //     foreach(int card in cardList) {
-    //         Debug.Log(card);
-    //     }
-    // }
 }

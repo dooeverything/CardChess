@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class King : ChessPiece {
 
-    public King(cardSave.Piece type, GameObject obj, int indexX, int indexY) : base(type, obj, indexX, indexY) {}
+    public King(int player, cardSave.Piece type, GameObject obj, int indexX, int indexY) : base(player, type, obj, indexX, indexY) {}
 
 
     public override void createDotMove() {
@@ -36,7 +36,7 @@ public class King : ChessPiece {
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
             //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
-            Game_Manager.dots.Add(dot);
+            player_data.dots.Add(dot);
             //Debug.Log( (i+1) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;

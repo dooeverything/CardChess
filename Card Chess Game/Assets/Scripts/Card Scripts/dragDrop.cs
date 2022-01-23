@@ -20,8 +20,20 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private GameObject placeHolder = null;
 
     public static GameObject selectedPiece = null;
+
+    public int player = 1;
+    Game_Manager player_data;
     void Start()
     {
+        if (player == 1)
+        {
+            player_data = Game_Manager.player1;
+        }
+        else
+        {
+            player_data = Game_Manager.player2;
+        }
+
         cardName = this.gameObject.name;
         hand = this.transform.parent;
 
@@ -31,45 +43,45 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             case "archer":
                 if (behaviour == "move")
                 {
-                    temp = Game_Manager.archerOnBoard_player1;
-                    temp2 = Game_Manager.archerConstructors_player1;
+                    temp = player_data.archerOnBoard;
+                    temp2 = player_data.archerConstructors;
                 }
                 else
                 {
-                    temp = Game_Manager.archerOnBoard_player1;
-                    temp2 = Game_Manager.archerConstructors_player1;
+                    temp = player_data.archerOnBoard;
+                    temp2 = player_data.archerConstructors;
                 }
                 break;
             case "warrior":
                 if (behaviour == "move")
                 {
-                    temp = Game_Manager.warriorOnBoard_player1;
-                    temp2 = Game_Manager.warriorConstructors_player1;
+                    temp = player_data.warriorOnBoard;
+                    temp2 = player_data.warriorConstructors;
                 }
                 else
                 {
-                    temp = Game_Manager.warriorOnBoard_player1;
-                    temp2 = Game_Manager.warriorConstructors_player1;
+                    temp = player_data.warriorOnBoard;
+                    temp2 = player_data.warriorConstructors;
                 }
                 break;
             case "mage":
                 if (behaviour == "move")
                 {
-                    temp = Game_Manager.mageOnBoard_player1;
-                    temp2 = Game_Manager.mageConstructors_player1;
+                    temp = player_data.mageOnBoard;
+                    temp2 = player_data.mageConstructors;
                 }
                 else
                 {
-                    temp = Game_Manager.mageOnBoard_player1;
-                    temp2 = Game_Manager.mageConstructors_player1;
+                    temp = player_data.mageOnBoard;
+                    temp2 = player_data.mageConstructors;
                 }
                 break;
             case "king":
                 if (behaviour == "move")
                 {
                     Debug.Log("King(move) card is selected");
-                    temp = Game_Manager.kingOnBoard_player1;
-                    temp2 = Game_Manager.kingConstructors_player1;
+                    temp = player_data.kingOnBoard;
+                    temp2 = player_data.kingConstructors;
                 }
                 break;
             default: return;
@@ -86,7 +98,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         le.preferredHeight = this.GetComponent<LayoutElement>().preferredHeight;
         placeHolder.transform.SetSiblingIndex(this.transform.GetSiblingIndex());
 
-        Game_Manager.selected_card = null; 
+        player_data.selected_card = null; 
         // for (int i = 0; i < temp.Count; i++)
         // {
         //     temp[i].GetComponent<PieceController>().selected = false; 
@@ -96,31 +108,31 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             selectedPiece.GetComponent<PieceController>().selected = false;
         }
 
-        foreach (GameObject obj in Game_Manager.cards_in_hand)
+        foreach (GameObject obj in player_data.cards_in_hand)
         {
             Color color = obj.GetComponent<Image>().color;
             color.a = 1;
             obj.GetComponent<Image>().color = color;
         }
 
-        foreach (GameObject obj in Game_Manager.dots)
+        foreach (GameObject obj in player_data.dots)
         {
             Destroy(obj); 
         }
 
-        foreach(GameObject obj in Game_Manager.warriorOnBoard_player1) {
+        foreach(GameObject obj in player_data.warriorOnBoard) {
             Debug.Log(obj.GetComponent<PieceController>().selected);
         }
-        //Debug.Log("count before: " + Game_Manager.indicator.Count);
+        //Debug.Log("count before: " + player_data.indicator.Count);
 
-        foreach (GameObject obj in Game_Manager.indicator)
+        foreach (GameObject obj in player_data.indicator)
         {
-            //Debug.Log("obj is: " + Game_Manager.indicator.Count);
+            //Debug.Log("obj is: " + player_data.indicator.Count);
             //Debug.Log("id is: " + obj.GetInstanceID()); 
             Destroy(obj); 
         }
-        Game_Manager.indicator = new List<GameObject>();
-        //Debug.Log("count after: " + Game_Manager.indicator.Count);
+        player_data.indicator = new List<GameObject>();
+        //Debug.Log("count after: " + player_data.indicator.Count);
 
         //Debug.Log("OnBeginDrag");
         transform.SetParent(this.transform.root);
@@ -137,7 +149,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         indexSelected = -1;
 
-        //Debug.Log(Game_Manager.indicator.Count);
+        //Debug.Log(player_data.indicator.Count);
         this.transform.position = eventData.position;
         int newSiblingIndex = hand.transform.childCount;
         for(int i=0; i<hand.transform.childCount; i++) {
@@ -163,12 +175,12 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
         }
 
-        foreach(GameObject indicator in Game_Manager.indicator) {
+        foreach(GameObject indicator in player_data.indicator) {
             indicator.GetComponent<Image>().color = Color.red;
         }
 
         if(indexSelected >= 0) {
-            Game_Manager.indicator[indexSelected].GetComponent<Image>().color = Color.blue;
+            player_data.indicator[indexSelected].GetComponent<Image>().color = Color.blue;
         }
     }
     public static bool selected = false;
@@ -186,16 +198,16 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Color color = gameObject.GetComponent<Image>().color;
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;
-            Game_Manager.selected_card = gameObject; 
+            player_data.selected_card = gameObject; 
 
-            GameObject selectedIndicator = Game_Manager.indicator[indexSelected];
+            GameObject selectedIndicator = player_data.indicator[indexSelected];
             // Clear all indicators
-            Game_Manager.indicator = new List<GameObject>();
-            Game_Manager.indicator.Add(selectedIndicator);
+            player_data.indicator = new List<GameObject>();
+            player_data.indicator.Add(selectedIndicator);
             selectedPiece = temp[indexSelected];
             Debug.Log(selectedPiece);
         }else {
-            Game_Manager.indicator = new List<GameObject>();
+            player_data.indicator = new List<GameObject>();
         }
 
         // Destroy Indicator
