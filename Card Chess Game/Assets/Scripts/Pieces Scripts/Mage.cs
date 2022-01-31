@@ -14,9 +14,7 @@ public class Mage : ChessPiece {
         Debug.Log("createDotMove from Mage");
         // 마법사-이동: 나이트
         for (int i = 4; i < 8; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-            Debug.Log("Original Index is: " + indexX + indexY);
+            //Debug.Log("Original Index is: " + indexX + indexY);
             int newIndexX = indexX + (cardSave.position[i,0]);
             int newIndexY = indexY + (cardSave.position[i,1]*2);
             if(newIndexX > 4 || newIndexX < 0) {
@@ -33,12 +31,16 @@ public class Mage : ChessPiece {
                 Debug.Log( (i-3) + " th: " + newIndexX + " " + newIndexY + " has children");
                 continue;
             }
+
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            Debug.Log( (i-3) + "th dot: " + newIndexX + " " + newIndexY);
+            //Debug.Log( (i-3) + "th dot: " + newIndexX + " " + newIndexY);
             player_data.dots.Add(dot);
-            Debug.Log( (i-3) + "th dot is added!");
+            //Debug.Log( (i-3) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;
         }
@@ -48,8 +50,6 @@ public class Mage : ChessPiece {
         Debug.Log("createDotStrike from Mage");
         // 검사-공격: 상하좌우대각선 1칸
         for (int i = 0; i < 8; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             int newIndexX = indexX + (cardSave.position[i,0]);
             int newIndexY = indexY + (cardSave.position[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
@@ -64,8 +64,17 @@ public class Mage : ChessPiece {
             
             if(newCell.gameObject.transform.childCount > 0) {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
-                continue;
+                if(newCell.transform.GetChild(0).GetComponent<PieceController>().player == player) {
+                    continue;                
+                }else {
+                    createStrike(newCell, newIndexX, newIndexY);
+                    continue;
+                }
             }
+
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;

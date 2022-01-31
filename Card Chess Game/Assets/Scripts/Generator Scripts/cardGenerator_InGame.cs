@@ -35,7 +35,13 @@ public class cardGenerator_InGame : MonoBehaviour
             endButtonController.drawCard(handsPlayer2);
         }
 
-        Game_Manager.turn = 1;
+        //Game_Manager.turn = 1;
+    
+        if(cardGenerator.result == 0) {
+            Game_Manager.turn = 1;
+        }else {
+            Game_Manager.turn = 2;
+        }
     }
 
 }

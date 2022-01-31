@@ -14,8 +14,6 @@ public class Warrior : ChessPiece {
         //Debug.Log("createDotMove from Warrior");
         // 검사-이동: 상하좌우 1칸
         for (int i = 0; i < 4; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             int newIndexX = indexX + (cardSave.position[i,0]);
             int newIndexY = indexY + (cardSave.position[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
@@ -32,6 +30,10 @@ public class Warrior : ChessPiece {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
                 continue;
             }
+
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
@@ -47,8 +49,6 @@ public class Warrior : ChessPiece {
         //Debug.Log("createDotStrike from Warrior");
         // 검사-공격: 상하좌우 1칸
         for (int i = 0; i < 4; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             int newIndexX = indexX + (cardSave.position[i,0]);
             int newIndexY = indexY + (cardSave.position[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
@@ -63,8 +63,18 @@ public class Warrior : ChessPiece {
             
             if(newCell.gameObject.transform.childCount > 0) {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
-                continue;
+                if(newCell.transform.GetChild(0).GetComponent<PieceController>().player == player) {
+                    continue;                
+                }else {
+                    createStrike(newCell, newIndexX, newIndexY);
+                    continue;
+                }
             }
+            
+            Debug.Log("Create a dot!!");
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;

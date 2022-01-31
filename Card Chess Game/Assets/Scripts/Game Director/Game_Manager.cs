@@ -30,7 +30,7 @@ public class Game_Manager
     public  List<int> card_ingame = new List<int>();
 
     public  List<GameObject> cards_in_hand = new List<GameObject>();
-
+    public  List<GameObject> strike = new List<GameObject>();
     public  GameObject selected_card;
 
     public  int myDeckCount = 39;
@@ -41,6 +41,5 @@ public class Game_Manager
 
     public static GameObject handsPlayer1 = GameObject.Find("Hands");
     public static GameObject handsPlayer2 = GameObject.Find("Hands_Opponent");
- 
 
 }

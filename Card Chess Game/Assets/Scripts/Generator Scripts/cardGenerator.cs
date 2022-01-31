@@ -69,8 +69,8 @@ public class cardGenerator : MonoBehaviour
         // result가 1일때 후공
         if (result == 1 && numCard >= 3) return;
 
-        Debug.Log(Game_Manager.player1.myDeckCount);
-        Debug.Log(Game_Manager.player1.deck.Count);
+        //Debug.Log(Game_Manager.player1.myDeckCount);
+        //Debug.Log(Game_Manager.player1.deck.Count);
 
         int randomIndex = Random.Range(0, Game_Manager.player1.myDeckCount);
         int randomCard = Game_Manager.player1.deck[randomIndex];

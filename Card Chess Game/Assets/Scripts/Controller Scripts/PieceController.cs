@@ -46,19 +46,20 @@ public class PieceController : MonoBehaviour
             foreach (RaycastResult result in results)
             {
                 //Debug.Log(result.gameObject.name);
+                //If the player clicked the dot_move to move a selected piece
                 if (result.gameObject.name == "dot_move(Clone)")
                 {
                     //Debug.Log(this.name);
-                    if (this.transform.childCount > 0)
+                    if (this.transform.childCount > 0) // if a piece has selected indicator as a child gameobject
                     {
                         Destroy(this.transform.GetChild(0).gameObject); // Destory the selected indicator
 
                         this.transform.SetParent(result.gameObject.transform.parent); // Set parent to destination cell
                         //result.gameObject.transform.parent.GetComponent<Image>().color = Color.white;
                         this.transform.position = result.gameObject.transform.position; // Set position to destination cell
-                        piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX; // Set index X to cell X
+                        piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX; // Set indexX as cell X
                         piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY; // Set indexY as CellY
-                                                                                                                 //Debug.Log("Dot list has " + Game_Manager.dots.Count);
+                        //Debug.Log("Dot list has " + Game_Manager.dots.Count);
 
                         foreach (GameObject obj in player_data.dots)
                         {
@@ -77,6 +78,44 @@ public class PieceController : MonoBehaviour
                             }
                         }
                         Debug.Log("DragDrop selectedPiece is " + dragDrop.selectedPiece);
+                    }
+                }else if(result.gameObject.name == "Attacking(Clone)") {
+                    if (this.transform.childCount > 0) {
+                        Destroy(this.transform.GetChild(0).gameObject); // Destory the selected indicator
+                        
+                        Debug.Log("Attacked a piece");
+                        int x = result.gameObject.GetComponent<strikeController>().indexX;
+                        int y = result.gameObject.GetComponent<strikeController>().indexY;
+                        Destroy(cardSave.cells[x, y].transform.GetChild(0).gameObject);
+                        
+                        Debug.Log("An attacked piece is now destoryed");
+
+                        foreach(GameObject obj in player_data.strike) {
+                            Destroy(obj);
+                        }
+
+                        foreach (GameObject obj in player_data.dots)
+                        {
+                            Destroy(obj);  // Destory all dots
+                        }
+
+                        //this.transform.SetParent(result.gameObject.transform.parent); // Set parent to destination cell
+                        //result.gameObject.transform.parent.GetComponent<Image>().color = Color.white;
+                        //this.transform.position = result.gameObject.transform.position; // Set position to destination cell
+                        //piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX; // Set indexX as cell X
+                        //piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY; // Set indexY as CellY
+
+                        // Destroy Selected Card
+                        foreach (GameObject obj in player_data.cards_in_hand)
+                        {
+                            if (obj.GetInstanceID() == player_data.selected_card.GetInstanceID())
+                            {
+                                player_data.cards_in_hand.Remove(obj);
+                                Destroy(obj);
+                                player_data.selected_card = null;
+                                break;
+                            }
+                        }
                     }
                 }
             }

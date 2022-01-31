@@ -20,7 +20,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private GameObject placeHolder = null;
 
     public static GameObject selectedPiece = null;
-
     public int player = 1;
     Game_Manager player_data;
     void Start()
@@ -79,13 +78,17 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             case "king":
                 if (behaviour == "move")
                 {
-                    Debug.Log("King(move) card is selected");
+                    //Debug.Log("King(move) card is selected");
                     temp = player_data.kingOnBoard;
                     temp2 = player_data.kingConstructors;
                 }
                 break;
             default: return;
         }
+    }
+
+    void update() {
+        
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -99,11 +102,8 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         placeHolder.transform.SetSiblingIndex(this.transform.GetSiblingIndex());
 
         player_data.selected_card = null; 
-        // for (int i = 0; i < temp.Count; i++)
-        // {
-        //     temp[i].GetComponent<PieceController>().selected = false; 
-        // }
-        Debug.Log("Debugging" + selectedPiece);
+
+        //Debug.Log("Debugging" + selectedPiece);
         if(selectedPiece) {
             selectedPiece.GetComponent<PieceController>().selected = false;
         }
@@ -120,9 +120,9 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Destroy(obj); 
         }
 
-        foreach(GameObject obj in player_data.warriorOnBoard) {
-            Debug.Log(obj.GetComponent<PieceController>().selected);
-        }
+        // foreach(GameObject obj in player_data.warriorOnBoard) {
+        //     Debug.Log(obj.GetComponent<PieceController>().selected);
+        // }
         //Debug.Log("count before: " + player_data.indicator.Count);
 
         foreach (GameObject obj in player_data.indicator)
@@ -131,6 +131,11 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             //Debug.Log("id is: " + obj.GetInstanceID()); 
             Destroy(obj); 
         }
+
+        foreach (GameObject obj in player_data.strike) {
+            Destroy(obj);
+        }
+
         player_data.indicator = new List<GameObject>();
         //Debug.Log("count after: " + player_data.indicator.Count);
 
@@ -139,8 +144,12 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         beingHeld = true;
 
         // Create indicators
-        foreach (GameObject obj in temp) {
-            obj.GetComponent<PieceController>().createIndicator();
+        // If the player's turn create indicator
+        
+        if(player == Game_Manager.turn) {
+            foreach (GameObject obj in temp) {
+                obj.GetComponent<PieceController>().createIndicator();
+            }
         }
     }
     int indexSelected = -1;
@@ -189,6 +198,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         Destroy(placeHolder);
 
         Debug.Log("OnEndDrag");
+        Debug.Log("Player " + player + " dropped the card");
         //int index = -1;
 
         // Create a dot
@@ -201,25 +211,15 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             player_data.selected_card = gameObject; 
 
             GameObject selectedIndicator = player_data.indicator[indexSelected];
-            // Clear all indicators
             player_data.indicator = new List<GameObject>();
             player_data.indicator.Add(selectedIndicator);
             selectedPiece = temp[indexSelected];
-            Debug.Log(selectedPiece);
+            Debug.Log(selectedPiece + " will move or attack!");
         }else {
             player_data.indicator = new List<GameObject>();
         }
 
-        // Destroy Indicator
-        // for (int i = 0; i < temp.Count; i++)
-        // {
-        //     if (temp[i].GetComponent<PieceController>().selected == true)
-        //     {
-        //         continue;
-        //     }
-        //     temp[i].GetComponent<PieceController>().destroyIndicator();
-        // }
-
+        // Clear all indicators
         foreach ( GameObject obj in temp ) {
             if(obj.GetComponent<PieceController>().selected == true) {
                 continue;
@@ -230,17 +230,5 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         transform.SetParent(hand);
         beingHeld = false;
         this.transform.SetSiblingIndex( placeHolder.transform.GetSiblingIndex() );
-        
-
-
-        /*foreach(Transform child in pieces.transform) {
-        if(child.GetComponent<CircleCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
-                Debug.Log(child.gameObject.name + " will move or attack");
-                pieceName = child.gameObject.name;
-                selected = true;
-                obj_id = child.GetInstanceID();
-                Destroy(gameObject);
-            }
-        }*/
     }
 }

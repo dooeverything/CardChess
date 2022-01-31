@@ -22,7 +22,7 @@ public class endButtonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-                GameObject hands; 
+        GameObject hands; 
         if(Game_Manager.turn == 1) {
             hands = hands1;
         }else {
@@ -45,9 +45,13 @@ public class endButtonController : MonoBehaviour
                 //Debug.Log(result.gameObject.name);
                 if (result.gameObject.name == "End") { // result --> timer
                     result.gameObject.transform.GetChild(0).GetComponent<timerController>().timer = 30;
+                    
+                    // Draw a card before switch turn
+                    drawCard(hands);
+                    
+                    // After a player draw one's card, switch turn
                     switchTurn();
                     Debug.Log("It is now player" + Game_Manager.turn + "'s !!");
-                    drawCard(hands);
                 }
                 
             }
@@ -62,14 +66,15 @@ public class endButtonController : MonoBehaviour
         }else {
             player_data = Game_Manager.player2;
         }
-        Debug.Log("player " + Game_Manager.turn + " has " + player_data.myDeckCount);
         int randomIndex = Random.Range(0, player_data.myDeckCount);
         int randomCard = player_data.deck[randomIndex];
         player_data.deck.RemoveAt(randomIndex);
         player_data.myDeckCount--;
+        Debug.Log("player " + Game_Manager.turn + " has " + player_data.myDeckCount);
         Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
-        card.transform.SetParent(hands.transform, true); 
+        card.transform.SetParent(hands.transform, true);
+        card.GetComponent<dragDrop>().player = Game_Manager.turn;
         card.GetComponent<dragDrop>().pieceType = cardSave.test2[randomCard, 0];
         card.GetComponent<dragDrop>().behaviour = cardSave.test2[randomCard, 1];
         player_data.cards_in_hand.Add(card);

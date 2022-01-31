@@ -152,15 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1e035aadfad5942962e57ea91dd687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardPrefab:
-  - {fileID: 7350730214218476041, guid: 241210546b9829c49ad91fe0ba4d2890, type: 3}
-  - {fileID: 6555005448025821425, guid: 1afef5999b196864682a5ef8170ddc6a, type: 3}
-  - {fileID: 7278883509555268414, guid: 25d3711b06da5634396b5b5514129adc, type: 3}
-  - {fileID: 7458681064376910204, guid: a951fa289e1f05d438e0cd962ec7c8d0, type: 3}
-  - {fileID: 9114242865442028440, guid: 783042256abc9344cbeed923eeeec5e9, type: 3}
-  - {fileID: 5062242219555010733, guid: 4f080e7efa6b9a844ac7690b4a72b552, type: 3}
-  - {fileID: 811600135833980017, guid: 2c1e26467fcc0d847be06e6b4c88a077, type: 3}
-  cardList: 
 --- !u!4 &108130804
 Transform:
   m_ObjectHideFlags: 0

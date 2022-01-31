@@ -77,6 +77,15 @@ public class ChessPiece
         return;
     }
 
+    public void createStrike(GameObject cell, int indexX, int indexY) {
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject));
+        GameObject striking = GameObject.Instantiate(prefab) as GameObject;
+        striking.transform.SetParent(cell.transform, false);
+        striking.transform.position = cell.transform.position;
+        striking.GetComponent<strikeController>().indexX = indexX;
+        striking.GetComponent<strikeController>().indexY = indexY;
+        player_data.strike.Add(striking);
+    }
     void Start()
     {
     }

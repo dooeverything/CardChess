@@ -15,8 +15,6 @@ public class Archer : ChessPiece {
         //Debug.Log("createDotMove from archer");
         // 궁수-이동: 상하좌우 2칸
         for (int i = 0; i < 4; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             int newIndexX = indexX + (cardSave.position[i,0]*2);
             int newIndexY = indexY + (cardSave.position[i,1]*2);
             if(newIndexX > 4 || newIndexX < 0) {
@@ -33,6 +31,9 @@ public class Archer : ChessPiece {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
                 continue;
             }
+
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
@@ -48,8 +49,6 @@ public class Archer : ChessPiece {
         //Debug.Log("createDotMove from archer");
         // 궁수-이동: 상하좌우 2칸
         for (int i = 0; i < 4; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             int newIndexX = indexX + (cardSave.position[i,0]*4);
             int newIndexY = indexY + (cardSave.position[i,1]*4);
             if(newIndexX > 4 || newIndexX < 0) {
@@ -64,8 +63,16 @@ public class Archer : ChessPiece {
             
             if(newCell.gameObject.transform.childCount > 0) {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
-                continue;
+                if(newCell.transform.GetChild(0).GetComponent<PieceController>().player == player) {
+                    continue;                
+                }else {
+                    createStrike(newCell, newIndexX, newIndexY);
+                    continue;
+                }
             }
+            
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
@@ -76,65 +83,4 @@ public class Archer : ChessPiece {
             //this.indexY = newIndexY;
         }
     }
-
-    // void Update() {
-    //     // if the piece has a child (if a piece has selected indicators), it is ready to move to different location
-    //     if(transform.childCount > 0) {
-    //         clickToMove(gameObject);
-    //     }
-
-    //     // if the card is Strike_Archer
-    //     if(dragDrop.cardName == "cardTest(Clone)") {
-    //         if (dragDrop.beingHeld) {
-    //             gameObject.GetComponent<Image>().color = Color.red; // indicator of strike is red
-    //         }else {
-    //             gameObject.GetComponent<Image>().color = Color.white;
-
-    //             if (dragDrop.selected) {
-    //                 if (dragDrop.obj_id == transform.GetInstanceID()) {
-    //                     // Create a selected indicator prefab
-    //                     Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
-    //                     indicator = Instantiate(selected) as GameObject;
-    //                     indicator.transform.SetParent(this.gameObject.transform);
-    //                     indicator.transform.position = transform.position;
-
-    //                     // Create a dot-strike_indicator prefab 
-    //                     prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
-
-    //                     // If the selected object is Archer
-    //                     // use of inheritance and overriding
-    //                     createDotStrike(prefab);
-
-    //                     dragDrop.selected = false;
-    //                 }
-    //             }
-    //         }
-    //     // if the card is Move_Archer
-    //     } else if (dragDrop.cardName == "cardTest4(Clone)") { 
-    //         if (dragDrop.beingHeld) {
-    //             gameObject.GetComponent<Image>().color = Color.green; // indicator of move is green
-    //         }else {
-    //             gameObject.GetComponent<Image>().color = Color.white;
-
-    //             if (dragDrop.selected) {
-    //                 if (dragDrop.obj_id == transform.GetInstanceID()) {
-    //                     // Create a selected indicator prefab
-    //                     Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
-    //                     indicator = Instantiate(selected) as GameObject;
-    //                     indicator.transform.SetParent(this.gameObject.transform);
-    //                     indicator.transform.position = transform.position;
-
-    //                     // Create a dot-move_indicator prefab 
-    //                     prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-
-    //                     // If the selected object is Archer
-    //                     // use of inheritance and overriding
-    //                     createDotMove(prefab);
-
-    //                     dragDrop.selected = false;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 }
