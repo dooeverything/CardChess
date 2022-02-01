@@ -6,16 +6,15 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 
 
-public class Warrior : ChessPiece {
-    
-    public Warrior(int player, cardSave.Piece type, GameObject obj, int indexX, int indexY) : base(player, type, obj, indexX, indexY) {}
+public class Warrior : MonoBehaviour {
 
-    public override void createDotMove() {
-        //Debug.Log("createDotMove from Warrior");
+    public List<GameObject> createIndicator() {
+        Debug.Log("createDotMove from Warrior");
         // 검사-이동: 상하좌우 1칸
+        List<GameObject> indicators = new List<GameObject>();
         for (int i = 0; i < 4; i++) {
-            int newIndexX = indexX + (cardSave.position[i,0]);
-            int newIndexY = indexY + (cardSave.position[i,1]);
+            int newIndexX = GetComponent<ChessPiece>().indexX + (cardSave.position[i,0]);
+            int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]*2);
             if(newIndexX > 4 || newIndexX < 0) {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
@@ -27,7 +26,10 @@ public class Warrior : ChessPiece {
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
+                if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
+                    // 말이 적일 경우
+                    indicators.Add(createStrike(newCell, newIndexX, newIndexY));
+                }
                 continue;
             }
 
@@ -38,86 +40,21 @@ public class Warrior : ChessPiece {
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
             //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
-            player_data.dots.Add(dot);
+            indicators.Add(dot);
             //Debug.Log( (i+1) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;
         }
+        return indicators;
     }
 
-    public override void createDotStrike() {
-        //Debug.Log("createDotStrike from Warrior");
-        // 검사-공격: 상하좌우 1칸
-        for (int i = 0; i < 4; i++) {
-            int newIndexX = indexX + (cardSave.position[i,0]);
-            int newIndexY = indexY + (cardSave.position[i,1]);
-            if(newIndexX > 4 || newIndexX < 0) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
-                continue;
-            }
-            if(newIndexY > 7 || newIndexY < 0 ) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
-                continue;
-            }
-            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
-            
-            if(newCell.gameObject.transform.childCount > 0) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " has children");
-                if(newCell.transform.GetChild(0).GetComponent<PieceController>().player == player) {
-                    continue;                
-                }else {
-                    createStrike(newCell, newIndexX, newIndexY);
-                    continue;
-                }
-            }
-            
-            Debug.Log("Create a dot!!");
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_strike.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-
-            //newCell.GetComponent<Image>().color = Color.black;
-            dot.transform.SetParent(newCell.transform, false);
-            dot.transform.position = newCell.transform.position;
-            //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
-            player_data.dots.Add(dot);
-            //Debug.Log( (i+1) + "th dot is added!");
-            //this.indexX = newIndexX;
-            //this.indexY = newIndexY;
-        }
+    public GameObject createStrike(GameObject cell, int indexX, int indexY) {
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
+        GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
+        striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
+        striking.transform.position = cell.transform.position;
+        striking.GetComponent<strikeController>().indexX = indexX;
+        striking.GetComponent<strikeController>().indexY = indexY;
+        return striking;
     }
-
-
-    // void Update() {
-    //     // if the piece has a child (selected indicator)
-    //     if(gameObject.transform.childCount > 0) {
-    //         clickToMove(gameObject);
-    //     }
-
-    //     if(dragDrop.cardName == "cardTest3(Clone)" || dragDrop.cardName == "cardTest6(Clone)") {
-    //         if (dragDrop.beingHeld) {
-    //             gameObject.GetComponent<Image>().color = Color.blue;
-    //         }else {
-    //             gameObject.GetComponent<Image>().color = Color.white;
-
-    //             if (dragDrop.selected) {
-    //                 if (dragDrop.obj_id == transform.GetInstanceID()) {
-    //                     // Create a selected indicator prefab
-    //                     Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
-    //                     indicator = Instantiate(selected) as GameObject;
-    //                     indicator.transform.SetParent(this.transform);
-    //                     indicator.transform.position = transform.position;
-
-    //                     // Create a dot move indicator prefab 
-    //                     prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot.prefab", typeof(GameObject));
-
-    //                     // If the selected object is Archer
-    //                     // use of inheritance and overriding
-    //                     createDotMove(prefab);
-
-    //                     dragDrop.selected = false;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 }

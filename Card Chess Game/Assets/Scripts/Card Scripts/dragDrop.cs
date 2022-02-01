@@ -204,7 +204,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         // Create a dot
         if(indexSelected >= 0) {
             temp[indexSelected].GetComponent<PieceController>().selected = true;
-            temp[indexSelected].GetComponent<PieceController>().createDot(temp2[indexSelected], behaviour);
+            //temp[indexSelected].GetComponent<PieceController>().createDot(temp2[indexSelected], behaviour);
             Color color = gameObject.GetComponent<Image>().color;
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;

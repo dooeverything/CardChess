@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 
 
-public class PieceController : MonoBehaviour
+public class PieceController : MonoBehaviour, IPointerDownHandler 
 {
     public bool selected = false;
     public ChessPiece piece = null;
@@ -142,17 +142,15 @@ public class PieceController : MonoBehaviour
         }
     }
 
-    public void createDot(ChessPiece piece, string behaviour)
+    public void createDot(ChessPiece piece)
     {
         //GameObject dot = Instantiate(prefab) as GameObject;
         this.piece = piece;
-        if (behaviour == "move")
-        {
-            piece.createDotMove();
-        }
-        else
-        {
-            piece.createDotStrike();
-        }
+        //piece.createDot();
+    }
+
+
+    public void OnPointerDown(PointerEventData eventData) {
+        Debug.Log(this.transform.position.x + " " + this.transform.position.y);
     }
 }

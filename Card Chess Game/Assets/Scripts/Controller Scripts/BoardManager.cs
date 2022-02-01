@@ -9,6 +9,7 @@ using UnityEditor;
 public class BoardManager : MonoBehaviour
 {
     GameObject cellPrefab;
+    GameObject piecePrefab;
     Color cell_Brown;
     Color cell_Dark_Brown;
     // Start is called before the first frame update
@@ -47,36 +48,14 @@ public class BoardManager : MonoBehaviour
         // Create a ChessPiece for player1, player2
         for(int i=0; i<2; i++) {
             for(int j = 0; j < 5; j++) {
-                ChessPiece newPiece1 = ChessPiece.createDerivedChessPiece(1, cardSave.pieces[i,j], cardSave.cells[j, i], j, i);
-                ChessPiece newPiece2 = ChessPiece.createDerivedChessPiece(2, cardSave.pieces[i,j], cardSave.cells[j, 7-i], j, 7-i);
-                cardSave.Piece type  = newPiece1.chessPieceType;
-                switch(type) {
-                    case cardSave.Piece.Archer:
-                        Game_Manager.player1.archerConstructors.Add(newPiece1);
-                        Game_Manager.player1.archerOnBoard.Add(newPiece1.createPiece(1));
-                        Game_Manager.player2.archerConstructors.Add(newPiece2);
-                        Game_Manager.player2.archerOnBoard.Add(newPiece2.createPiece(2));  
-                        break;
-                    case cardSave.Piece.Mage:
-                        Game_Manager.player1.mageConstructors.Add(newPiece1);
-                        Game_Manager.player1.mageOnBoard.Add(newPiece1.createPiece(1));
-                        Game_Manager.player2.mageConstructors.Add(newPiece2);
-                        Game_Manager.player2.mageOnBoard.Add(newPiece2.createPiece(2));
-                        break;
-                    case cardSave.Piece.Warrior:
-                        Game_Manager.player1.warriorConstructors.Add(newPiece1);
-                        Game_Manager.player1.warriorOnBoard.Add(newPiece1.createPiece(1));
-                        Game_Manager.player2.warriorConstructors.Add(newPiece2);
-                        Game_Manager.player2.warriorOnBoard.Add(newPiece2.createPiece(2));
-                        break;
-                    case cardSave.Piece.King:
-                        Game_Manager.player1.kingConstructors.Add(newPiece1);
-                        Game_Manager.player1.kingOnBoard.Add(newPiece1.createPiece(1));
-                        Game_Manager.player2.kingConstructors.Add(newPiece2);
-                        Game_Manager.player2.kingOnBoard.Add(newPiece2.createPiece(2));
-                        break;
-                }
-
+                Object prefabPiece = AssetDatabase.LoadAssetAtPath(cardSave.piece[(int) cardSave.pieces[i,j]], typeof(GameObject));
+                GameObject piece = GameObject.Instantiate(prefabPiece) as GameObject;;
+                piece.transform.SetParent(cardSave.cells[j, i].transform);
+                piece.transform.position = cardSave.cells[j, i].transform.position;
+                piece.GetComponent<ChessPiece>().player = 1;
+                piece.GetComponent<ChessPiece>().chessPieceType = cardSave.pieces[i,j];
+                piece.GetComponent<ChessPiece>().indexX = j;
+                piece.GetComponent<ChessPiece>().indexY = i;
             }
         }
     }

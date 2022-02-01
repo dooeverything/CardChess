@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 4586389548899038665}
   - component: {fileID: 1045409462881315973}
   - component: {fileID: 9004985405100847919}
-  - component: {fileID: 2637942175630362839}
+  - component: {fileID: 7008567338273897876}
+  - component: {fileID: 2860407681856289797}
   m_Layer: 5
   m_Name: archerTest
   m_TagString: Untagged
@@ -115,7 +116,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &2637942175630362839
+--- !u!114 &7008567338273897876
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,6 +125,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6246205576233322715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 566aaec97e36d23418af9b5b9bac0fee, type: 3}
+  m_Script: {fileID: 11500000, guid: 60c8e8003c9e12f48a7bd8774c269595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indexX: 0
+  indexY: 0
+  chessPieceType: 0
+  player: 0
+  indicators: []
+--- !u!114 &2860407681856289797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6246205576233322715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9336859131e16444d8ac333b3efcc29a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
