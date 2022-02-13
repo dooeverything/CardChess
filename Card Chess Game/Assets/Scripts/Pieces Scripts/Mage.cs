@@ -29,11 +29,17 @@ public class Mage : MonoBehaviour {
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
-                    // 말이 적일 경우
-                    indicators.Add(createStrike(newCell, newIndexX, newIndexY));
+                Debug.Log("**The name of the child at " + newIndexX + ", " + newIndexY +": " + newCell.transform.GetChild(0).name + "**");
+                if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {
+                    Debug.Log("DOT");
+                    //break;
+                } else {
+                    if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
+                        // 말이 적일 경우
+                        indicators.Add(createStrike(newCell, newIndexX, newIndexY));
+                    }
+                    continue;
                 }
-                continue;
             }
 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));

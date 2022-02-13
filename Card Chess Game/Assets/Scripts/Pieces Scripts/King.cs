@@ -16,7 +16,7 @@ public class King : MonoBehaviour {
             //int newIndexX = indexX + (cardSave.position[i,0]);
             //int newIndexY = indexY + (cardSave.position[i,1]);
             int newIndexX = GetComponent<ChessPiece>().indexX + (cardSave.position[i,0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]*2);
+            int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]);
 
             if(newIndexX > 4 || newIndexX < 0) {
                 //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
@@ -29,12 +29,20 @@ public class King : MonoBehaviour {
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
-                    // 말이 적일 경우
-                    indicators.Add(createStrike(newCell, newIndexX, newIndexY));
+                Debug.Log("**The name of the child at " + newIndexX + ", " + newIndexY +": " + newCell.transform.GetChild(0).name + "**");
+                if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {
+                    Debug.Log("DOT");
+                    //break;
+                } else {
+                    if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
+                        // 말이 적일 경우
+                        indicators.Add(createStrike(newCell, newIndexX, newIndexY));
+                    }
+                    continue;
                 }
-                continue;
             }
+
+            Debug.Log("Make a dot");
 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
             GameObject dot = GameObject.Instantiate(prefab) as GameObject;

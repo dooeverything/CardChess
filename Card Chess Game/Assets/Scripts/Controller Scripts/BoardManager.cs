@@ -48,14 +48,26 @@ public class BoardManager : MonoBehaviour
         // Create a ChessPiece for player1, player2
         for(int i=0; i<2; i++) {
             for(int j = 0; j < 5; j++) {
-                Object prefabPiece = AssetDatabase.LoadAssetAtPath(cardSave.piece[(int) cardSave.pieces[i,j]], typeof(GameObject));
-                GameObject piece = GameObject.Instantiate(prefabPiece) as GameObject;;
+
+                //Chesspiece for player1
+                Object prefabPiece = AssetDatabase.LoadAssetAtPath(cardSave.piece[(int) cardSave.pieces[i,j]], typeof(GameObject)); // Get Location of the prefab to create a prefab
+                GameObject piece = GameObject.Instantiate(prefabPiece) as GameObject;; // Instantiate prefab
                 piece.transform.SetParent(cardSave.cells[j, i].transform);
                 piece.transform.position = cardSave.cells[j, i].transform.position;
                 piece.GetComponent<ChessPiece>().player = 1;
                 piece.GetComponent<ChessPiece>().chessPieceType = cardSave.pieces[i,j];
                 piece.GetComponent<ChessPiece>().indexX = j;
                 piece.GetComponent<ChessPiece>().indexY = i;
+            
+                //Chesspiece for player2
+                GameObject piece2 = GameObject.Instantiate(prefabPiece) as GameObject;; // Instantiate prefab
+                piece2.transform.SetParent(cardSave.cells[j, 7-i].transform);
+                piece2.transform.position = cardSave.cells[j, 7-i].transform.position;
+                piece2.GetComponent<ChessPiece>().player = 2;
+                piece2.GetComponent<ChessPiece>().chessPieceType = cardSave.pieces[i,j];
+                piece2.GetComponent<ChessPiece>().indexX = j;
+                piece2.GetComponent<ChessPiece>().indexY = 7-i;
+
             }
         }
     }

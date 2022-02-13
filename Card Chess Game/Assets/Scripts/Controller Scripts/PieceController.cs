@@ -91,7 +91,7 @@ public class PieceController : MonoBehaviour, IPointerDownHandler
                         Debug.Log("An attacked piece is now destoryed");
 
                         foreach(GameObject obj in player_data.strike) {
-                            Destroy(obj);
+                            Destroy(obj); 
                         }
 
                         foreach (GameObject obj in player_data.dots)
@@ -126,7 +126,7 @@ public class PieceController : MonoBehaviour, IPointerDownHandler
     {
         Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
         GameObject indicator = Instantiate(selected) as GameObject;
-        player_data.indicator.Add(indicator);
+        //player_data.indicators.Add(indicator);
         //Debug.Log("indicator is: " + indicator.transform.position.x); 
         indicator.transform.SetParent(this.gameObject.transform);
         indicator.transform.position = transform.position;

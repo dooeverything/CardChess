@@ -27,13 +27,16 @@ public class Game_Manager
 
     public  List<GameObject> indicator = new List<GameObject>();
 
+    public static List<GameObject> indicators = new List<GameObject>(); 
     public  List<int> card_ingame = new List<int>();
 
     public  List<GameObject> cards_in_hand = new List<GameObject>();
     public  List<GameObject> strike = new List<GameObject>();
     public  GameObject selected_card;
 
-    public  int myDeckCount = 39;
+    public  static GameObject selected_piece;
+
+    public  int myDeckCount = 20;
 
     public  List<int> deck = new List<int>();
 

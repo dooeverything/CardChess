@@ -25,9 +25,36 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         }
     }
 
-
+    public bool clicked = false;
     public void OnPointerDown(PointerEventData eventData) {
-        Debug.Log("HIHI");
+        
+        if(gameObject == eventData.lastPress ) {
+            if(clicked) {
+                Debug.Log("You clicked twice!");
+                if(Game_Manager.indicators != null) {
+                    foreach(GameObject obj in Game_Manager.indicators) {
+                        Destroy(obj);
+                    }
+                    Debug.Log("All indicators/dots is now removed!" + Game_Manager.indicators.Count);
+                }
+                clicked = false;
+                return;
+            }
+        }else {
+            Debug.Log("Another Piece is now clicked!");
+            clicked = false;
+            if(Game_Manager.indicators != null) {
+                foreach(GameObject obj in Game_Manager.indicators) {
+                    Destroy(obj);
+                }
+                Debug.Log("All indicators/dots is now removed!" + Game_Manager.indicators.Count);
+            }
+        }
+
+        clicked = true;
+
+        Debug.Log( this.gameObject.name + " is now selected and ready to move or attack");
+
         switch (chessPieceType)
         {
             case cardSave.Piece.Archer:
@@ -49,5 +76,20 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             default:
                 break;
         }
+
+        indicators.Add(selected()); // Create a selected indicator and add it to the list//
+
+        Game_Manager.selected_piece = gameObject;
+        Game_Manager.indicators = indicators;
+    }
+
+    public GameObject selected() {
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
+        GameObject selected_indicator = Instantiate(prefab) as GameObject;
+        //player_data.indicators.Add(indicator);
+        //Debug.Log("indicator is: " + indicator.transform.position.x); 
+        selected_indicator.transform.SetParent(this.gameObject.transform);
+        selected_indicator.transform.position = transform.position;
+        return selected_indicator;
     } 
 }
