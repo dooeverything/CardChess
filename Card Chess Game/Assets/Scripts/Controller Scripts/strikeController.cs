@@ -25,6 +25,7 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
 
         Transform cell = cardSave.cells[indexX, indexY].transform;
         
+        // Get Opponent's piece gameobject and destory it (kill)
         GameObject attacked_piece = cell.GetChild(0).gameObject;
         Destroy(attacked_piece);
 
@@ -39,6 +40,8 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
             Destroy(obj);
         }
 
+        // Switch turn after strike
+        endButtonController.switchTurn();
     }
 
 }

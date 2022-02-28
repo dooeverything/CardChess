@@ -58,7 +58,8 @@ public class BoardManager : MonoBehaviour
                 piece.GetComponent<ChessPiece>().chessPieceType = cardSave.pieces[i,j];
                 piece.GetComponent<ChessPiece>().indexX = j;
                 piece.GetComponent<ChessPiece>().indexY = i;
-            
+                addPiece(piece, cardSave.pieces[i,j], 1);
+
                 //Chesspiece for player2
                 GameObject piece2 = GameObject.Instantiate(prefabPiece) as GameObject;; // Instantiate prefab
                 piece2.transform.SetParent(cardSave.cells[j, 7-i].transform);
@@ -67,8 +68,44 @@ public class BoardManager : MonoBehaviour
                 piece2.GetComponent<ChessPiece>().chessPieceType = cardSave.pieces[i,j];
                 piece2.GetComponent<ChessPiece>().indexX = j;
                 piece2.GetComponent<ChessPiece>().indexY = 7-i;
-
+                addPiece(piece2, cardSave.pieces[i,j], 2);
             }
+        }
+    }
+
+    void addPiece(GameObject piece, cardSave.Piece pieceType, int player){
+
+        Game_Manager player_data;
+
+        if (player == 1)
+        {
+            player_data = Game_Manager.player1;
+        }
+        else
+        {
+            player_data = Game_Manager.player2;
+        }
+
+        switch(pieceType)
+        {
+            case cardSave.Piece.Archer:
+                player_data.archerOnBoard.Add(piece);
+                break;
+            
+            case cardSave.Piece.Mage:
+                player_data.mageOnBoard.Add(piece);
+                break;
+
+            case cardSave.Piece.Warrior:
+                player_data.warriorOnBoard.Add(piece);
+                break;
+
+            case cardSave.Piece.King:
+                player_data.kingOnBoard.Add(piece);
+                break;
+
+            default:
+                return;
         }
     }
 

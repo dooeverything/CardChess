@@ -105,7 +105,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         //Debug.Log("Debugging" + selectedPiece);
         if(selectedPiece) {
-            selectedPiece.GetComponent<PieceController>().selected = false;
+            selectedPiece.GetComponent<ChessPiece>().select = false;
         }
 
         foreach (GameObject obj in player_data.cards_in_hand)
@@ -148,9 +148,11 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         
         if(player == Game_Manager.turn) {
             foreach (GameObject obj in temp) {
-                obj.GetComponent<PieceController>().createIndicator();
+                obj.GetComponent<ChessPiece>().createIndicatorForCard();
             }
         }
+
+        
     }
     int indexSelected = -1;
 
@@ -187,10 +189,10 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         foreach(GameObject indicator in player_data.indicator) {
             indicator.GetComponent<Image>().color = Color.red;
         }
-
         if(indexSelected >= 0) {
             player_data.indicator[indexSelected].GetComponent<Image>().color = Color.blue;
         }
+        Debug.Log(" GOOD !");
     }
     public static bool selected = false;
     public void OnEndDrag(PointerEventData eventData)
@@ -203,32 +205,36 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         // Create a dot
         if(indexSelected >= 0) {
-            temp[indexSelected].GetComponent<PieceController>().selected = true;
+            temp[indexSelected].GetComponent<ChessPiece>().select = true;
             //temp[indexSelected].GetComponent<PieceController>().createDot(temp2[indexSelected], behaviour);
+            
+            // Change an alpha value of a card  --------------------------//
             Color color = gameObject.GetComponent<Image>().color;
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;
-            player_data.selected_card = gameObject; 
+            //------------------------------------------------------------//
+            
+            player_data.selected_card = gameObject; // Save this selected card to player_data
 
             GameObject selectedIndicator = player_data.indicator[indexSelected];
             player_data.indicator = new List<GameObject>();
             player_data.indicator.Add(selectedIndicator);
             selectedPiece = temp[indexSelected];
-            Debug.Log(selectedPiece + " will move or attack!");
+            Debug.Log("The player will use the card on " + selectedPiece);
         }else {
             player_data.indicator = new List<GameObject>();
         }
 
         // Clear all indicators
         foreach ( GameObject obj in temp ) {
-            if(obj.GetComponent<PieceController>().selected == true) {
+            if(obj.GetComponent<ChessPiece>().select == true) {
                 continue;
             }
-            obj.GetComponent<PieceController>().destroyIndicator();
+            obj.GetComponent<ChessPiece>().destroyIndicator();
         }
         
         transform.SetParent(hand);
-        beingHeld = false;
+        beingHeld = false; // It indicates the player has dropped the card
         this.transform.SetSiblingIndex( placeHolder.transform.GetSiblingIndex() );
     }
 }

@@ -22,7 +22,7 @@ public class dotController : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData) {
 
-        Transform parent = gameObject.transform.parent;
+        Transform parent = gameObject.transform.parent; // parent is a Cell gameobject
 
         Game_Manager.selected_piece.transform.SetParent(parent); // selected piece의 부모는 selected piece가 이동할 cell
         Game_Manager.selected_piece.transform.position = parent.position; // 위치 조정
@@ -31,8 +31,12 @@ public class dotController : MonoBehaviour, IPointerDownHandler
 
         Game_Manager.selected_piece = null;
         
+
         foreach(GameObject obj in Game_Manager.indicators) {
             Destroy(obj);
         }
+
+        // Switch turn after the piece move
+        endButtonController.switchTurn();
     }
 }
