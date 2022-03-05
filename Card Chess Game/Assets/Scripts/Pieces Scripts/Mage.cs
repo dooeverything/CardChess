@@ -7,23 +7,20 @@ using UnityEditor;
 
 
 public class Mage : MonoBehaviour {
-
-    
     public List<GameObject> createIndicator() {
-        Debug.Log("createDotMove from Mage");
-
         List<GameObject> indicators = new List<GameObject>();
-        // 마법사-이동: 나이트
-        for (int i = 4; i < 8; i++) {
-            //Debug.Log("Original Index is: " + indexX + indexY);
-            int newIndexX = GetComponent<ChessPiece>().indexX + (cardSave.position[i,0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]*2);
+
+        int[,] basic_moves = GetComponent<ChessPiece>().basic_moves; 
+
+        for (int i = 0; i < basic_moves.Length; i++) {
+            int newIndexX = GetComponent<ChessPiece>().indexX + (basic_moves[i,0]);
+            int newIndexY = GetComponent<ChessPiece>().indexY + (basic_moves[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
-                Debug.Log( (i-3) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                Debug.Log( (i) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             if(newIndexY > 7 || newIndexY < 0 ) {
-                Debug.Log( (i-3) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
+                Debug.Log( (i) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
@@ -44,15 +41,9 @@ public class Mage : MonoBehaviour {
 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
             GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-
-            //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            //Debug.Log( (i-3) + "th dot: " + newIndexX + " " + newIndexY);
             indicators.Add(dot);
-            //Debug.Log( (i-3) + "th dot is added!");
-            //this.indexX = newIndexX;
-            //this.indexY = newIndexY;
         }
         return indicators;
     }

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class dotController : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
+    public GameObject parent; 
     void Start()
     {
 
@@ -16,27 +17,19 @@ public class dotController : MonoBehaviour, IPointerDownHandler
     {
     }
 
-    public void destoryDot() {
-        Destroy(this.gameObject);
-    }
-
     public void OnPointerDown(PointerEventData eventData) {
+        Transform cellTransform = gameObject.transform.parent; // parent is a Cell gameobject
 
-        Transform parent = gameObject.transform.parent; // parent is a Cell gameobject
-
-        Game_Manager.selected_piece.transform.SetParent(parent); // selected piece의 부모는 selected piece가 이동할 cell
-        Game_Manager.selected_piece.transform.position = parent.position; // 위치 조정
-        Game_Manager.selected_piece.GetComponent<ChessPiece>().indexX = parent.GetComponent<cellController>().indexX;
-        Game_Manager.selected_piece.GetComponent<ChessPiece>().indexY = parent.GetComponent<cellController>().indexY;
-
-        Game_Manager.selected_piece = null;
-        
-
-        foreach(GameObject obj in Game_Manager.indicators) {
-            Destroy(obj);
-        }
+        parent.transform.SetParent(cellTransform); // selected piece의 부모는 selected piece가 이동할 cell
+        parent.transform.position = cellTransform.position; // 위치 조정
+        parent.GetComponent<ChessPiece>().indexX = cellTransform.gameObject.GetComponent<cellController>().indexX;
+        parent.GetComponent<ChessPiece>().indexY = cellTransform.gameObject.GetComponent<cellController>().indexY;        
 
         // Switch turn after the piece move
         endButtonController.switchTurn();
+
+        Game_Manager.destroyAlldots(); 
+        Game_Manager.destroyAllIndicators(); 
+
     }
 }

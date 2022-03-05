@@ -43,44 +43,36 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 if (behaviour == "move")
                 {
                     temp = player_data.archerOnBoard;
-                    temp2 = player_data.archerConstructors;
                 }
                 else
                 {
                     temp = player_data.archerOnBoard;
-                    temp2 = player_data.archerConstructors;
                 }
                 break;
             case "warrior":
                 if (behaviour == "move")
                 {
                     temp = player_data.warriorOnBoard;
-                    temp2 = player_data.warriorConstructors;
                 }
                 else
                 {
                     temp = player_data.warriorOnBoard;
-                    temp2 = player_data.warriorConstructors;
                 }
                 break;
             case "mage":
                 if (behaviour == "move")
                 {
                     temp = player_data.mageOnBoard;
-                    temp2 = player_data.mageConstructors;
                 }
                 else
                 {
                     temp = player_data.mageOnBoard;
-                    temp2 = player_data.mageConstructors;
                 }
                 break;
             case "king":
                 if (behaviour == "move")
                 {
-                    //Debug.Log("King(move) card is selected");
                     temp = player_data.kingOnBoard;
-                    temp2 = player_data.kingConstructors;
                 }
                 break;
             default: return;
@@ -105,7 +97,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         //Debug.Log("Debugging" + selectedPiece);
         if(selectedPiece) {
-            selectedPiece.GetComponent<ChessPiece>().select = false;
+            selectedPiece.GetComponent<ChessPiece>().activated = false;
         }
 
         foreach (GameObject obj in player_data.cards_in_hand)
@@ -115,20 +107,13 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             obj.GetComponent<Image>().color = color;
         }
 
-        foreach (GameObject obj in player_data.dots)
+        foreach (GameObject obj in Game_Manager.dots)
         {
             Destroy(obj); 
         }
 
-        // foreach(GameObject obj in player_data.warriorOnBoard) {
-        //     Debug.Log(obj.GetComponent<PieceController>().selected);
-        // }
-        //Debug.Log("count before: " + player_data.indicator.Count);
-
         foreach (GameObject obj in player_data.indicator)
         {
-            //Debug.Log("obj is: " + player_data.indicator.Count);
-            //Debug.Log("id is: " + obj.GetInstanceID()); 
             Destroy(obj); 
         }
 
@@ -137,14 +122,8 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
 
         player_data.indicator = new List<GameObject>();
-        //Debug.Log("count after: " + player_data.indicator.Count);
-
-        //Debug.Log("OnBeginDrag");
         transform.SetParent(this.transform.root);
         beingHeld = true;
-
-        // Create indicators
-        // If the player's turn create indicator
         
         if(player == Game_Manager.turn) {
             foreach (GameObject obj in temp) {
@@ -205,7 +184,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         // Create a dot
         if(indexSelected >= 0) {
-            temp[indexSelected].GetComponent<ChessPiece>().select = true;
+            temp[indexSelected].GetComponent<ChessPiece>().activated = true;
             //temp[indexSelected].GetComponent<PieceController>().createDot(temp2[indexSelected], behaviour);
             
             // Change an alpha value of a card  --------------------------//
@@ -227,7 +206,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         // Clear all indicators
         foreach ( GameObject obj in temp ) {
-            if(obj.GetComponent<ChessPiece>().select == true) {
+            if(obj.GetComponent<ChessPiece>().activated == true) {
                 continue;
             }
             obj.GetComponent<ChessPiece>().destroyIndicator();

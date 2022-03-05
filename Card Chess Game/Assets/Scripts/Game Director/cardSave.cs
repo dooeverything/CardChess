@@ -71,8 +71,7 @@ public class cardSave : MonoBehaviour
     public static int[,] position = {
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
     };
-
-
+    
     public static int[] cardList = new int[3];
     public static bool playFirst = true;
 }

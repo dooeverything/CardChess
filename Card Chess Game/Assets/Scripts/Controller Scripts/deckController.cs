@@ -20,6 +20,6 @@ public class deckController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<Text>().text = player_data.myDeckCount.ToString();
+        // gameObject.GetComponent<Text>().text = player_data.myDeckCount.ToString();
     }
 }

@@ -61,7 +61,7 @@ public class PieceController : MonoBehaviour, IPointerDownHandler
                         piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY; // Set indexY as CellY
                         //Debug.Log("Dot list has " + Game_Manager.dots.Count);
 
-                        foreach (GameObject obj in player_data.dots)
+                        foreach (GameObject obj in Game_Manager.dots)
                         {
                             Destroy(obj);  // Destory all dots
                         }
@@ -94,16 +94,10 @@ public class PieceController : MonoBehaviour, IPointerDownHandler
                             Destroy(obj); 
                         }
 
-                        foreach (GameObject obj in player_data.dots)
+                        foreach (GameObject obj in Game_Manager.dots)
                         {
                             Destroy(obj);  // Destory all dots
                         }
-
-                        //this.transform.SetParent(result.gameObject.transform.parent); // Set parent to destination cell
-                        //result.gameObject.transform.parent.GetComponent<Image>().color = Color.white;
-                        //this.transform.position = result.gameObject.transform.position; // Set position to destination cell
-                        //piece.indexX = result.gameObject.transform.parent.GetComponent<cellController>().indexX; // Set indexX as cell X
-                        //piece.indexY = result.gameObject.transform.parent.GetComponent<cellController>().indexY; // Set indexY as CellY
 
                         // Destroy Selected Card
                         foreach (GameObject obj in player_data.cards_in_hand)
