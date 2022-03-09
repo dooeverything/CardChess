@@ -28,8 +28,6 @@ public class BoardManager : MonoBehaviour
             for(int y = -3; y <= 4; y++) {
                 cellPrefab = Instantiate(prefab_board_cell) as GameObject;
                 cellPrefab.name = ("Cell(x, y): "+ xpos + " " + ypos);
-                //RectTransform rectTransform = cellPrefab.GetComponent<RectTransform>();
-                //rectTransform.anchoredPosition = new Vector2( 150*x, (150*y) - 75 );
                 cellPrefab.transform.position = new Vector2( 150*x, (150*y) - 75 );
                 cellPrefab.transform.SetParent(gameObject.transform, false);
                 cellPrefab.GetComponent<cellController>().indexX = xpos;
@@ -85,28 +83,7 @@ public class BoardManager : MonoBehaviour
         {
             player_data = Game_Manager.player2;
         }
-
-        switch(pieceType)
-        {
-            case cardSave.Piece.Archer:
-                player_data.archerOnBoard.Add(piece);
-                break;
-            
-            case cardSave.Piece.Mage:
-                player_data.mageOnBoard.Add(piece);
-                break;
-
-            case cardSave.Piece.Warrior:
-                player_data.warriorOnBoard.Add(piece);
-                break;
-
-            case cardSave.Piece.King:
-                player_data.kingOnBoard.Add(piece);
-                break;
-
-            default:
-                return;
-        }
+        player_data.piecesOnBoard[(int)cardSave.Piece.Archer].Add(piece); 
     }
 
     // Update is called once per frame

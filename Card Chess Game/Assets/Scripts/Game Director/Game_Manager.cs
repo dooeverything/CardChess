@@ -6,36 +6,6 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 public class Game_Manager
 {
-    // public  int a = 1; 
-
-    public static Game_Manager player1 = new Game_Manager();
-    public static Game_Manager player2 = new Game_Manager();
-
-    public List<GameObject> archerOnBoard = new List<GameObject>();
-    public List<GameObject> mageOnBoard = new List<GameObject>();
-    public List<GameObject> warriorOnBoard = new List<GameObject>();
-
-    public List<GameObject> kingOnBoard = new List<GameObject>();
-
-    public List<GameObject> piecesOnBoard = new List<GameObject>();
-
-    public static List<GameObject> dots = new List<GameObject>();
-
-    public List<GameObject> indicator = new List<GameObject>();
-
-    public static List<GameObject> indicators = new List<GameObject>();
-    public List<int> card_ingame = new List<int>();
-
-    public List<GameObject> cards_in_hand = new List<GameObject>();
-    public List<GameObject> strike = new List<GameObject>();
-    public GameObject selected_card;
-
-    public static GameObject selected_piece;
-
-    public int myDeckCount = 20;
-
-    public List<int> deck = new List<int>();
-
     public static int turn = 1;
 
     public static GameObject handsPlayer1 = GameObject.Find("Hands");
@@ -56,4 +26,22 @@ public class Game_Manager
             UnityEngine.Object.Destroy(dot);
         }
     }
+    public static Game_Manager player1 = new Game_Manager();
+    public static Game_Manager player2 = new Game_Manager();
+
+    public List<GameObject>[] piecesOnBoard = new List<GameObject>[4]; 
+
+    public static List<GameObject> dots = new List<GameObject>();
+
+    public List<GameObject> indicator = new List<GameObject>();
+
+    public static List<GameObject> indicators = new List<GameObject>();
+    public List<int> card_ingame = new List<int>();
+
+    public List<GameObject> cards_in_hand = new List<GameObject>();
+    public List<GameObject> strike = new List<GameObject>();
+    public GameObject selected_card;
+    public int myDeckCount = 20;
+
+    public List<int> deck = new List<int>();
 }

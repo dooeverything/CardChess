@@ -7,21 +7,18 @@ using UnityEditor;
 
 public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public static bool selected = false;
     public static bool beingHeld;
-    private GameObject pieces;
-    public static string pieceName;
-    public static string cardName;
-
-    public string pieceType;
+    public static GameObject selectedPiece = null;
+    public cardSave.Piece pieceType;
     public string behaviour;
     Transform hand;
-    private List<GameObject> temp = null;
-    private List<ChessPiece> temp2 = null;
+    private List<GameObject> target_pieces = null;
     private GameObject placeHolder = null;
-
-    public static GameObject selectedPiece = null;
+    int indexSelected = -1;
     public int player = 1;
     Game_Manager player_data;
+
     void Start()
     {
         if (player == 1)
@@ -33,50 +30,10 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             player_data = Game_Manager.player2;
         }
 
-        cardName = this.gameObject.name;
         hand = this.transform.parent;
 
         // Get information about a card
-        switch (pieceType)
-        {
-            case "archer":
-                if (behaviour == "move")
-                {
-                    temp = player_data.archerOnBoard;
-                }
-                else
-                {
-                    temp = player_data.archerOnBoard;
-                }
-                break;
-            case "warrior":
-                if (behaviour == "move")
-                {
-                    temp = player_data.warriorOnBoard;
-                }
-                else
-                {
-                    temp = player_data.warriorOnBoard;
-                }
-                break;
-            case "mage":
-                if (behaviour == "move")
-                {
-                    temp = player_data.mageOnBoard;
-                }
-                else
-                {
-                    temp = player_data.mageOnBoard;
-                }
-                break;
-            case "king":
-                if (behaviour == "move")
-                {
-                    temp = player_data.kingOnBoard;
-                }
-                break;
-            default: return;
-        }
+        target_pieces = player_data.piecesOnBoard[(int)pieceType]; 
     }
 
     void update() {
@@ -84,8 +41,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-
-
         placeHolder = new GameObject();
         placeHolder.transform.SetParent(this.transform.parent);
         LayoutElement le = placeHolder.AddComponent<LayoutElement>();
@@ -95,7 +50,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         player_data.selected_card = null; 
 
-        //Debug.Log("Debugging" + selectedPiece);
         if(selectedPiece) {
             selectedPiece.GetComponent<ChessPiece>().activated = false;
         }
@@ -126,22 +80,20 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         beingHeld = true;
         
         if(player == Game_Manager.turn) {
-            foreach (GameObject obj in temp) {
-                obj.GetComponent<ChessPiece>().createIndicatorForCard();
+            foreach (GameObject obj in target_pieces) {
+                obj.GetComponent<ChessPiece>().addIndicator();
             }
         }
-
-        
     }
-    int indexSelected = -1;
 
     public void OnDrag(PointerEventData eventData)
     {
         indexSelected = -1;
-
-        //Debug.Log(player_data.indicator.Count);
-        this.transform.position = eventData.position;
+        transform.position = eventData.position;
         int newSiblingIndex = hand.transform.childCount;
+        float minDistance = float.MaxValue;
+
+        // Changing the card Index 
         for(int i=0; i<hand.transform.childCount; i++) {
             if(transform.position.x < hand.transform.GetChild(i).position.x) {
                 newSiblingIndex = i;
@@ -153,11 +105,9 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
         placeHolder.transform.SetSiblingIndex(newSiblingIndex);
 
-        float minDistance = 1000000000;
-
-        for(int i=0; i<temp.Count; i++) {
-            float dist = Vector2.Distance(temp[i].transform.position, gameObject.transform.position);
-            if( dist < 150) {
+        for(int i=0; i<target_pieces.Count; i++) {
+            if(GetComponent<Collider2D>().IsTouching(target_pieces[i].GetComponent<Collider2D>())) {
+            float dist = Vector2.Distance(target_pieces[i].transform.position, gameObject.transform.position);
                 if(minDistance > dist) {
                     minDistance = dist;
                     indexSelected = i;
@@ -171,41 +121,30 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         if(indexSelected >= 0) {
             player_data.indicator[indexSelected].GetComponent<Image>().color = Color.blue;
         }
-        Debug.Log(" GOOD !");
     }
-    public static bool selected = false;
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(placeHolder);
 
-        Debug.Log("OnEndDrag");
-        Debug.Log("Player " + player + " dropped the card");
-        //int index = -1;
-
         // Create a dot
         if(indexSelected >= 0) {
-            temp[indexSelected].GetComponent<ChessPiece>().activated = true;
-            //temp[indexSelected].GetComponent<PieceController>().createDot(temp2[indexSelected], behaviour);
-            
+            target_pieces[indexSelected].GetComponent<ChessPiece>().activated = true;            
             // Change an alpha value of a card  --------------------------//
             Color color = gameObject.GetComponent<Image>().color;
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;
             //------------------------------------------------------------//
             
-            player_data.selected_card = gameObject; // Save this selected card to player_data
-
             GameObject selectedIndicator = player_data.indicator[indexSelected];
             player_data.indicator = new List<GameObject>();
             player_data.indicator.Add(selectedIndicator);
-            selectedPiece = temp[indexSelected];
-            Debug.Log("The player will use the card on " + selectedPiece);
-        }else {
+            selectedPiece = target_pieces[indexSelected];
+        } else {
             player_data.indicator = new List<GameObject>();
         }
 
         // Clear all indicators
-        foreach ( GameObject obj in temp ) {
+        foreach ( GameObject obj in target_pieces ) {
             if(obj.GetComponent<ChessPiece>().activated == true) {
                 continue;
             }

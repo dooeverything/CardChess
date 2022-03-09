@@ -24,9 +24,10 @@ public class cardGenerator_InGame : MonoBehaviour
             GameObject card = Instantiate(prefab) as GameObject;
             card.transform.SetParent(handsPlayer1.transform, true);
             card.GetComponent<dragDrop>().player = 1;
-            card.GetComponent<dragDrop>().pieceType = cardSave.test2[Game_Manager.player1.card_ingame[i], 0];
-            card.GetComponent<dragDrop>().behaviour = cardSave.test2[Game_Manager.player1.card_ingame[i], 1];
-            Game_Manager.player1.cards_in_hand.Add(card);
+            // card.GetComponent<dragDrop>().pieceType = cardSave.test2[Game_Manager.player1.card_ingame[i], 0];
+            // card.GetComponent<dragDrop>().behaviour = cardSave.test2[Game_Manager.player1.card_ingame[i], 1];
+            // card.GetComponent<dragAndDrop>().
+            // Game_Manager.player1.cards_in_hand.Add(card);
         }
 
         Game_Manager.turn = 2;

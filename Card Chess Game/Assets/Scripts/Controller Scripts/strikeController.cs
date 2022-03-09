@@ -20,21 +20,18 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-
-        Debug.Log("Strike!!");
-
         Transform cell = cardSave.cells[indexX, indexY].transform;
         
         // Get Opponent's piece gameobject and destory it (kill)
-        GameObject attacked_piece = cell.GetChild(0).gameObject;
-        Destroy(attacked_piece);
+        // GameObject attacked_piece = cell.GetChild(0).gameObject;
+        // Destroy(attacked_piece);
 
-        Game_Manager.selected_piece.transform.SetParent(cell.transform);
-        Game_Manager.selected_piece.transform.position = cell.position;
-        Game_Manager.selected_piece.GetComponent<ChessPiece>().indexX = indexX;
-        Game_Manager.selected_piece.GetComponent<ChessPiece>().indexY = indexY;
+        // Game_Manager.selected_piece.transform.SetParent(cell.transform);
+        // Game_Manager.selected_piece.transform.position = cell.position;
+        // Game_Manager.selected_piece.GetComponent<ChessPiece>().indexX = indexX;
+        // Game_Manager.selected_piece.GetComponent<ChessPiece>().indexY = indexY;
 
-        Game_Manager.selected_piece = null;
+        // Game_Manager.selected_piece = null;
         
         foreach(GameObject obj in Game_Manager.indicators) {
             Destroy(obj);
