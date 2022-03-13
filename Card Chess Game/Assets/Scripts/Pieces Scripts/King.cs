@@ -7,10 +7,8 @@ using UnityEditor;
 
 public class King : MonoBehaviour {
 
-    public List<GameObject> createIndicator() {
-        Debug.Log("createDotMove from King");
-
-        List<GameObject> indicators = new List<GameObject>();
+    public void createDots() {
+        List<GameObject> dots = new List<GameObject>();
         // 왕-이동: 상하좌우대각선 1칸
         for (int i = 0; i < 8; i++) {
             //int newIndexX = indexX + (cardSave.position[i,0]);
@@ -36,28 +34,20 @@ public class King : MonoBehaviour {
                 } else {
                     if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
                         // 말이 적일 경우
-                        indicators.Add(createStrike(newCell, newIndexX, newIndexY));
+                        dots.Add(createStrike(newCell, newIndexX, newIndexY));
                     }
                     continue;
                 }
             }
 
-            Debug.Log("Make a dot");
-
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
             GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-
-            //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            //Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
-            //player_data.dots.Add(dot);
-            //Debug.Log( (i+1) + "th dot is added!");
-            //this.indexX = newIndexX;
-            //this.indexY = newIndexY;
-            indicators.Add(dot);
+            dot.GetComponent<dotController>().parent = gameObject; 
+            dots.Add(dot);
         }
-        return indicators;
+        Game_Manager.dots = dots; 
     }
 
 

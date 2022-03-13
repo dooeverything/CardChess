@@ -70,13 +70,10 @@ public class endButtonController : MonoBehaviour
         int randomCard = player_data.deck[randomIndex];
         player_data.deck.RemoveAt(randomIndex);
         player_data.myDeckCount--;
-        Debug.Log("player " + Game_Manager.turn + " has " + player_data.myDeckCount);
         Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         card.transform.SetParent(hands.transform, true);
         card.GetComponent<dragDrop>().player = Game_Manager.turn;
-        card.GetComponent<dragDrop>().pieceType = cardSave.test2[randomCard, 0];
-        card.GetComponent<dragDrop>().behaviour = cardSave.test2[randomCard, 1];
         player_data.cards_in_hand.Add(card);
     }
 

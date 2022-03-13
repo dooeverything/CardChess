@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class cardSave : MonoBehaviour
 {
 
+    public static int numPieceTypes = 4; 
     public static GameObject[,] cells = new GameObject[5, 8];
 
     public static Piece[,] pieces = {
@@ -14,22 +15,18 @@ public class cardSave : MonoBehaviour
     };
     public enum Piece : ushort
     {
-        Archer = 0,
-        Mage = 1,
-        Warrior = 2,
-        King = 3
+        Archer,
+        Mage,
+        Warrior,
+        King
     };
 
-    public enum Card
-    {
-        AttackArcher,
-        AttackMage,
-        AttackWarrior,
-        MoveArcher,
-        MoveMage,
-        MoveWarrior,
-        MoveKing
-    }
+    // public enum Card
+    // {
+    //     Knights_Move
+    // }
+
+    public static string [] Card_List = {"Knights_Move"}; 
 
     // Path for Prefab cards for *Mulligan*
     public static string[] pathMulligan = { "Assets/Prefab/chess_card_mulligan/attack/attack_archer.prefab",
@@ -71,8 +68,9 @@ public class cardSave : MonoBehaviour
     public static int[,] position = {
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}
     };
-
-
+    
     public static int[] cardList = new int[3];
     public static bool playFirst = true;
+
+    
 }

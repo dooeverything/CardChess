@@ -20,12 +20,17 @@ public class cardGenerator_InGame : MonoBehaviour
 
         // Player1
         for(int i=0; i<cardGenerator.result+2; i++) {
-            Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[Game_Manager.player1.card_ingame[i]], typeof(GameObject));
+            string card_name = cardSave.Card_List[0]; 
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/cardTest.prefab", typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
             card.transform.SetParent(handsPlayer1.transform, true);
             card.GetComponent<dragDrop>().player = 1;
-            card.GetComponent<dragDrop>().pieceType = cardSave.test2[Game_Manager.player1.card_ingame[i], 0];
-            card.GetComponent<dragDrop>().behaviour = cardSave.test2[Game_Manager.player1.card_ingame[i], 1];
+            Sprite card_sprite =  Resources.Load("Image/" + "attack_mage" + ".png") as Sprite;  
+            Image image = card.GetComponent<Image>(); //= card_sprite; 
+            image.sprite = card_sprite;
+            card.GetComponent<dragDrop>().pieceType = cardSave.Piece.Mage; 
+            card.GetComponent<dragDrop>().card_name = card_name; 
+            card.GetComponent<dragDrop>().handIndex = i; 
             Game_Manager.player1.cards_in_hand.Add(card);
         }
 
@@ -42,6 +47,7 @@ public class cardGenerator_InGame : MonoBehaviour
         }else {
             Game_Manager.turn = 2;
         }
+
     }
 
 }

@@ -7,104 +7,111 @@ using UnityEditor;
 
 public class ChessPiece : MonoBehaviour, IPointerDownHandler
 {
-    //GameObject parent; // Cell GameObject
     public int indexX;
     public int indexY;
     public cardSave.Piece chessPieceType;
     protected GameObject indicator;
     protected GameObject moveIndicator;
     public int player;
-    protected Game_Manager player_data;
+    public Game_Manager player_data;
     public List<GameObject> indicators = null;
-    public bool select = false; // if the card selects the piece, it gives true, otherwise false.
+    public bool activated = false; // either selected by card or clicking the piece itself
+    public List<int[]> basic_moves = new List<int[]>(); 
     void Start()
     {
-        if(player == 1) {
+        basic_moves.Add(new int[]{-1, 0}); 
+        basic_moves.Add(new int[]{1, 0}); 
+        if (player == 1)
+        {
             player_data = Game_Manager.player1;
-        }else {
+            basic_moves.Add(new int[]{0, 1}); 
+        }
+        else
+        {
             player_data = Game_Manager.player2;
+            basic_moves.Add(new int[]{0, -1}); 
+        }
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        // exits if not piece owner's turn 
+        if (player != Game_Manager.turn) return;
+        // remove all indicators and dots
+        Game_Manager.destroyAllIndicators(); 
+        Game_Manager.destroyAlldots(); 
+        Debug.Log(Game_Manager.dots.Count);
+        bool activated = this.activated; 
+
+        // If the piece is active //
+        if (activated)
+        {
+            activated = false; 
+            return;
+        }
+        activated = true; 
+        // create indicator around the piece itself
+        addIndicator(); 
+        if(chessPieceType == cardSave.Piece.King) {
+            GetComponent<King>().createDots();
+        } else {
+            createDots(basic_moves); 
         }
     }
 
-    public bool clicked = false;
-    public void OnPointerDown(PointerEventData eventData) {
-        
-        // First need to check player's turn
-        if(player == Game_Manager.turn && select == false){
-            // If the piece is clicked again //
-            if(gameObject == eventData.lastPress ) {
-                if(clicked) {
-                    Debug.Log("You clicked twice!");
-                    if(Game_Manager.indicators != null) {
-                        foreach(GameObject obj in Game_Manager.indicators) {
-                            Destroy(obj);
-                        }
-                        Debug.Log("All indicators/dots is now removed!" + Game_Manager.indicators.Count);
-                    }
-                    clicked = false;
-                    return;
+    public void createDots(List<int[]> move_list, GameObject card = null) {
+        List<GameObject> dots = new List<GameObject>();
+        for (int i = 0; i < move_list.Count; i++) {
+            int[] coordinates = move_list[i]; 
+            int newIndexX = GetComponent<ChessPiece>().indexX + (move_list[i][0]);
+            int newIndexY = GetComponent<ChessPiece>().indexY + (move_list[i][1]);
+            if(newIndexX > 4 || newIndexX < 0) {
+                continue;
+            }
+            if(newIndexY > 7 || newIndexY < 0 ) {
+                continue;
+            }
+            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            
+            if(newCell.gameObject.transform.childCount > 0) {
+                // 말이 적일 경우
+                if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
+                    dots.Add(createStrike(newCell, newCell.transform.GetChild(0).gameObject, card));
                 }
-            }else {
-                // If the another piece is click??
-                Debug.Log("Another Piece is now clicked!");
-                clicked = false;
-                if(Game_Manager.indicators != null) {
-                    foreach(GameObject obj in Game_Manager.indicators) {
-                        Destroy(obj);
-                    }
-                    Debug.Log("All indicators/dots is now removed!" + Game_Manager.indicators.Count);
-                }
+                continue;
             }
 
-            clicked = true;
-
-            Debug.Log( this.gameObject.name + " is now selected and ready to move or attack");
-
-            switch (chessPieceType)
-            {
-                case cardSave.Piece.Archer:
-                    indicators = GetComponent<Archer>().createIndicator();
-                    break;
-
-                case cardSave.Piece.Warrior:
-                    indicators = GetComponent<Warrior>().createIndicator();
-                    break;
-
-                case cardSave.Piece.Mage:
-                    indicators = GetComponent<Mage>().createIndicator();
-                    break;
-
-                case cardSave.Piece.King:
-                    indicators = GetComponent<King>().createIndicator();
-                    break;
-
-                default:
-                    break;
-            }
-
-            indicators.Add(selected()); // Create a selected indicator on piece and add it to the list of all indicators//
-
-            Game_Manager.selected_piece = gameObject;
-            Game_Manager.indicators = indicators;
-        }else if(select == true) {
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+            dot.transform.SetParent(newCell.transform, false);
+            dot.transform.position = newCell.transform.position;
+            dot.GetComponent<dotController>().parent = gameObject; 
+            dot.GetComponent<dotController>().card = card;
             
-            
-            Destroy(player_data.selected_card);
-            
-            endButtonController.switchTurn();
-
+            dots.Add(dot);
         }
+        Game_Manager.dots = dots; 
     }
 
-    public GameObject selected() {
+    public void addIndicator()
+    {
         Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
         GameObject selected_indicator = Instantiate(prefab) as GameObject;
-        //player_data.indicators.Add(indicator);
-        //Debug.Log("indicator is: " + indicator.transform.position.x); 
-        selected_indicator.transform.SetParent(this.gameObject.transform);
+        selected_indicator.transform.SetParent(gameObject.transform);
         selected_indicator.transform.position = transform.position;
-        return selected_indicator;
-    } 
+        Game_Manager.indicators.Add(selected_indicator); 
+    }
+
+    public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
+        GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
+        striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
+        striking.transform.position = cell.transform.position;
+        striking.GetComponent<strikeController>().enemy = enemy;
+        striking.GetComponent<strikeController>().card = card;
+        striking.GetComponent<strikeController>().parent = gameObject;
+
+        return striking;
+    }
 
     public void destroyIndicator()
     {
@@ -112,17 +119,5 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         {
             Destroy(this.transform.GetChild(0).gameObject);
         }
-    }
-
-    public void createIndicatorForCard()
-    {
-        Object selected = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
-        GameObject indicator = Instantiate(selected) as GameObject;
-        player_data.indicator.Add(indicator);
-        //Debug.Log("indicator is: " + indicator.transform.position.x); 
-        indicator.transform.SetParent(this.gameObject.transform);
-        indicator.transform.position = transform.position;
-        // Destroy(indicator); 
-        //Debug.Log("id is: " + indicator.GetInstanceID()); 
     }
 }
