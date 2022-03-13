@@ -7,6 +7,7 @@ public class dotController : MonoBehaviour, IPointerDownHandler
 {
     // Start is called before the first frame update
     public GameObject parent; 
+    public GameObject card;
     void Start()
     {
 
@@ -30,6 +31,21 @@ public class dotController : MonoBehaviour, IPointerDownHandler
 
         Game_Manager.destroyAlldots(); 
         Game_Manager.destroyAllIndicators(); 
+
+        if(card) {
+            dragDrop temp = card.GetComponent<dragDrop>(); 
+            List<GameObject> list = temp.player_data.cards_in_hand;
+            int index = -1;
+            for (int i=0; i<list.Count; i++) {
+                if(card == list[i]){
+                    index = i;
+                    break;
+                }
+
+            }
+            temp.player_data.cards_in_hand.RemoveAt(index);
+            Destroy(card); 
+        }
 
     }
 }

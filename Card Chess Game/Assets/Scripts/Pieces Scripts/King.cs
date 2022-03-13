@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class King : MonoBehaviour {
 
-    public List<GameObject> createDots() {
+    public void createDots() {
         List<GameObject> dots = new List<GameObject>();
         // 왕-이동: 상하좌우대각선 1칸
         for (int i = 0; i < 8; i++) {
@@ -47,7 +47,7 @@ public class King : MonoBehaviour {
             dot.GetComponent<dotController>().parent = gameObject; 
             dots.Add(dot);
         }
-        return dots;
+        Game_Manager.dots = dots; 
     }
 
 

@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 86928ced4bceac8469546f5afbbb0e01, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -93,6 +93,7 @@ MonoBehaviour:
   pieceType: 0
   behaviour: 
   player: 1
+  card_name: 
 --- !u!61 &2249597859752049850
 BoxCollider2D:
   m_ObjectHideFlags: 0

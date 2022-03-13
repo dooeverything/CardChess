@@ -17,9 +17,9 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private GameObject placeHolder = null;
     int indexSelected = -1;
     public int player = 1;
-    Game_Manager player_data;
+    public Game_Manager player_data;
     public string card_name; 
-
+    public int handIndex = -1;
     void Start()
     {
         if (player == 1)
@@ -34,7 +34,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         hand = this.transform.parent;
 
         // Get information about a card
-        target_pieces = player_data.piecesOnBoard[(int)pieceType]; 
+        target_pieces = player_data.filterList(pieceType); 
     }
 
     void update() {
@@ -42,6 +42,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // 
         placeHolder = new GameObject();
         placeHolder.transform.SetParent(this.transform.parent);
         LayoutElement le = placeHolder.AddComponent<LayoutElement>();
@@ -67,7 +68,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Destroy(obj); 
         }
 
-        foreach (GameObject obj in player_data.indicator)
+        foreach (GameObject obj in Game_Manager.indicators)
         {
             Destroy(obj); 
         }
@@ -76,7 +77,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Destroy(obj);
         }
 
-        player_data.indicator = new List<GameObject>();
+        //player_data.indicator = new List<GameObject>();
         transform.SetParent(this.transform.root);
         beingHeld = true;
         
@@ -116,11 +117,12 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
         }
 
-        foreach(GameObject indicator in player_data.indicator) {
+        foreach(GameObject indicator in Game_Manager.indicators) {
             indicator.GetComponent<Image>().color = Color.red;
         }
+        Debug.Log("index is: " + indexSelected); 
         if(indexSelected >= 0) {
-            player_data.indicator[indexSelected].GetComponent<Image>().color = Color.blue;
+            Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
         }
     }
     public void OnEndDrag(PointerEventData eventData)
@@ -146,8 +148,8 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Color color = gameObject.GetComponent<Image>().color;
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;            
-
-            typeof(CardEffect).GetMethod(card_name).Invoke(null, new GameObject[]{target_piece}); 
+            Debug.Log(card_name);
+            typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
         }
 
         

@@ -17,6 +17,8 @@ public class Game_Manager
         {
             UnityEngine.Object.Destroy(indicator);
         }
+
+        indicators = new List<GameObject>();
     }
 
     public static void destroyAlldots()
@@ -25,12 +27,22 @@ public class Game_Manager
         {
             UnityEngine.Object.Destroy(dot);
         }
+        dots = new List<GameObject>(); 
     }
     public static Game_Manager player1 = new Game_Manager();
     public static Game_Manager player2 = new Game_Manager();
 
-    public List<GameObject>[] piecesOnBoard = new List<GameObject>[4]; 
+    public List<GameObject> piecesOnBoard = new List<GameObject>(); 
 
+    public List<GameObject> filterList(cardSave.Piece type) {
+        List<GameObject> temp = new List<GameObject>();
+        foreach(GameObject piece in piecesOnBoard) {
+            if(piece.GetComponent<ChessPiece>().chessPieceType == type) {
+                temp.Add(piece);
+            }
+        }
+        return temp;
+    }
     public static List<GameObject> dots = new List<GameObject>();
 
     public List<GameObject> indicator = new List<GameObject>();

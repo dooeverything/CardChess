@@ -13,10 +13,10 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     protected GameObject indicator;
     protected GameObject moveIndicator;
     public int player;
-    protected Game_Manager player_data;
+    public Game_Manager player_data;
     public List<GameObject> indicators = null;
     public bool activated = false; // either selected by card or clicking the piece itself
-    public List<int[]> basic_moves; 
+    public List<int[]> basic_moves = new List<int[]>(); 
     void Start()
     {
         basic_moves.Add(new int[]{-1, 0}); 
@@ -39,6 +39,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         // remove all indicators and dots
         Game_Manager.destroyAllIndicators(); 
         Game_Manager.destroyAlldots(); 
+        Debug.Log(Game_Manager.dots.Count);
         bool activated = this.activated; 
 
         // If the piece is active //
@@ -57,7 +58,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         }
     }
 
-    public void createDots(List<int[]> move_list) {
+    public void createDots(List<int[]> move_list, GameObject card = null) {
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < move_list.Count; i++) {
             int[] coordinates = move_list[i]; 
@@ -74,7 +75,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             if(newCell.gameObject.transform.childCount > 0) {
                 // 말이 적일 경우
                 if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
-                    dots.Add(createStrike(newCell, newIndexX, newIndexY));
+                    dots.Add(createStrike(newCell, newCell.transform.GetChild(0).gameObject, card));
                 }
                 continue;
             }
@@ -84,6 +85,8 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
             dot.GetComponent<dotController>().parent = gameObject; 
+            dot.GetComponent<dotController>().card = card;
+            
             dots.Add(dot);
         }
         Game_Manager.dots = dots; 
@@ -98,13 +101,15 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         Game_Manager.indicators.Add(selected_indicator); 
     }
 
-    public GameObject createStrike(GameObject cell, int indexX, int indexY) {
+    public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {
         Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
         GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
         striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         striking.transform.position = cell.transform.position;
-        striking.GetComponent<strikeController>().indexX = indexX;
-        striking.GetComponent<strikeController>().indexY = indexY;
+        striking.GetComponent<strikeController>().enemy = enemy;
+        striking.GetComponent<strikeController>().card = card;
+        striking.GetComponent<strikeController>().parent = gameObject;
+
         return striking;
     }
 

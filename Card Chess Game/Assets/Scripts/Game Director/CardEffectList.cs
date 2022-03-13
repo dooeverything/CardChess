@@ -4,7 +4,7 @@ using UnityEditor;
 
 public class CardEffect
 {
-    public static void Knights_Move(GameObject gameObject) {
+    public static void Knights_Move(GameObject piece, GameObject card) {
         
         int [,] move_list_core = {{1, 2}, {2, 1}}; 
         List<int[]> move_list = new List<int[]>();
@@ -25,6 +25,6 @@ public class CardEffect
                 }
             }
         }
-        gameObject.GetComponent<ChessPiece>().createDots(move_list); 
+        piece.GetComponent<ChessPiece>().createDots(move_list, card); 
     }
 }
