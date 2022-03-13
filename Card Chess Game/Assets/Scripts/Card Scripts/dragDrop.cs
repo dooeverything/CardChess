@@ -18,6 +18,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     int indexSelected = -1;
     public int player = 1;
     Game_Manager player_data;
+    public string card_name; 
 
     void Start()
     {
@@ -126,23 +127,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         Destroy(placeHolder);
 
-        // Create a dot
-        if(indexSelected >= 0) {
-            target_pieces[indexSelected].GetComponent<ChessPiece>().activated = true;            
-            // Change an alpha value of a card  --------------------------//
-            Color color = gameObject.GetComponent<Image>().color;
-            color.a = 0.5f;
-            gameObject.GetComponent<Image>().color = color;
-            //------------------------------------------------------------//
-            
-            GameObject selectedIndicator = player_data.indicator[indexSelected];
-            player_data.indicator = new List<GameObject>();
-            player_data.indicator.Add(selectedIndicator);
-            selectedPiece = target_pieces[indexSelected];
-        } else {
-            player_data.indicator = new List<GameObject>();
-        }
-
         // Clear all indicators
         foreach ( GameObject obj in target_pieces ) {
             if(obj.GetComponent<ChessPiece>().activated == true) {
@@ -150,6 +134,22 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
             obj.GetComponent<ChessPiece>().destroyIndicator();
         }
+
+        // Create a dot
+        if(indexSelected >= 0) {
+            Game_Manager.destroyAllIndicators(); 
+            Game_Manager.destroyAlldots(); 
+            
+            GameObject target_piece = target_pieces[indexSelected]; 
+            target_piece.GetComponent<ChessPiece>().activated = true; 
+
+            Color color = gameObject.GetComponent<Image>().color;
+            color.a = 0.5f;
+            gameObject.GetComponent<Image>().color = color;            
+
+            typeof(CardEffect).GetMethod(card_name).Invoke(null, new GameObject[]{target_piece}); 
+        }
+
         
         transform.SetParent(hand);
         beingHeld = false; // It indicates the player has dropped the card

@@ -21,12 +21,12 @@ public class cardSave : MonoBehaviour
         King
     };
 
-    public enum Card
-    {
-        Knights_Move
-    }
+    // public enum Card
+    // {
+    //     Knights_Move
+    // }
 
-
+    public string [] Card_List = {"Knights_Move"}; 
 
     // Path for Prefab cards for *Mulligan*
     public static string[] pathMulligan = { "Assets/Prefab/chess_card_mulligan/attack/attack_archer.prefab",
