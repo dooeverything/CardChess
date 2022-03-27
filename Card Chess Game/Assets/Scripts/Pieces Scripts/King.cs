@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 
 public class King : MonoBehaviour {
-
+    public int defensePower = 1;
     public void createDots() {
         List<GameObject> dots = new List<GameObject>();
         // 왕-이동: 상하좌우대각선 1칸
@@ -28,16 +28,17 @@ public class King : MonoBehaviour {
             
             if(newCell.gameObject.transform.childCount > 0) {
                 Debug.Log("**The name of the child at " + newIndexX + ", " + newIndexY +": " + newCell.transform.GetChild(0).name + "**");
-                if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {
-                    Debug.Log("DOT");
-                    //break;
-                } else {
-                    if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
-                        // 말이 적일 경우
-                        dots.Add(createStrike(newCell, newIndexX, newIndexY));
-                    }
-                    continue;
-                }
+                continue;
+                // if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {
+                //     Debug.Log("DOT");
+                //     //break;
+                // } else {
+                //     if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
+                //         // 말이 적일 경우
+                //         dots.Add(createStrike(newCell, newIndexX, newIndexY));
+                //     }
+                //     continue;
+                // }
             }
 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
@@ -48,17 +49,5 @@ public class King : MonoBehaviour {
             dots.Add(dot);
         }
         Game_Manager.dots = dots; 
-    }
-
-
-
-    public GameObject createStrike(GameObject cell, int indexX, int indexY) {
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
-        GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
-        striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
-        striking.transform.position = cell.transform.position;
-        striking.GetComponent<strikeController>().indexX = indexX;
-        striking.GetComponent<strikeController>().indexY = indexY;
-        return striking;
     }
 }

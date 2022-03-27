@@ -10,7 +10,10 @@ public class timerController : MonoBehaviour
     GameObject hands1;
     GameObject hands2;
     
+    void setTimer(int time){
 
+        timer = time;
+    }
     // Start is called before the first frame update
     void Start()
     {

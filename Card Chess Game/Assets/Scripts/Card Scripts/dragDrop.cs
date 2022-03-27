@@ -38,11 +38,12 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
     void update() {
+        //target_pieces = player_data.filterList(pieceType); 
         
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // 
+        target_pieces = player_data.filterList(pieceType); 
         placeHolder = new GameObject();
         placeHolder.transform.SetParent(this.transform.parent);
         LayoutElement le = placeHolder.AddComponent<LayoutElement>();
@@ -68,10 +69,12 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Destroy(obj); 
         }
 
-        foreach (GameObject obj in Game_Manager.indicators)
-        {
-            Destroy(obj); 
-        }
+        // foreach (GameObject obj in Game_Manager.indicators)
+        // {
+        //     Destroy(obj); 
+        // }
+
+        Game_Manager.destroyAllIndicators();
 
         foreach (GameObject obj in player_data.strike) {
             Destroy(obj);
@@ -90,6 +93,9 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        //target_pieces = player_data.filterList(pieceType); 
+        Game_Manager.destroyAlldots();
+        //Game_Manager.destroyAllIndicators();
         indexSelected = -1;
         transform.position = eventData.position;
         int newSiblingIndex = hand.transform.childCount;
@@ -116,45 +122,75 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 }
             }
         }
-
+        if(Game_Manager.indicators == null) {
+            Debug.Log("Indicator List is empty");
+        }
+        Debug.Log("List count is " + Game_Manager.indicators.Count);
         foreach(GameObject indicator in Game_Manager.indicators) {
             indicator.GetComponent<Image>().color = Color.red;
         }
         Debug.Log("index is: " + indexSelected); 
         if(indexSelected >= 0) {
             Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
+            GameObject target_piece = target_pieces[indexSelected]; 
+            typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
         }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(placeHolder);
 
-        // Clear all indicators
-        foreach ( GameObject obj in target_pieces ) {
-            if(obj.GetComponent<ChessPiece>().activated == true) {
-                continue;
-            }
-            obj.GetComponent<ChessPiece>().destroyIndicator();
-        }
 
         // Create a dot
         if(indexSelected >= 0) {
-            Game_Manager.destroyAllIndicators(); 
-            Game_Manager.destroyAlldots(); 
-            
             GameObject target_piece = target_pieces[indexSelected]; 
             target_piece.GetComponent<ChessPiece>().activated = true; 
+            GameObject temp = null;
+            // Clear all indicators(except the selected chesspiece) and dots
+            foreach ( GameObject obj in target_pieces ) {
+                if(obj.GetComponent<ChessPiece>().activated == true) {
+                    temp = obj.transform.GetChild(0).gameObject;
+                    int index=0;
+                    for(int i=0; i<Game_Manager.indicators.Count; i++){
+                        if(Game_Manager.indicators[i].GetInstanceID() == temp.GetInstanceID()) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    Game_Manager.indicators.RemoveAt(index);
+                    break;
+                }
+                //obj.GetComponent<ChessPiece>().destroyIndicator();
+            }
+            Game_Manager.destroyAllIndicators();
+            //Game_Manager.destroyAlldots(); 
 
-            Color color = gameObject.GetComponent<Image>().color;
+            Game_Manager.indicators.Add(temp);
+            
+            Color color = gameObject.GetComponent<Image>().color; // make a card transparency which means the card is dragged and applied to the piece
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;            
             Debug.Log(card_name);
+            CardEffect.execute = true; 
             typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
+            CardEffect.execute = false; 
+            target_piece.GetComponent<ChessPiece>().activated = false;
+        }else {
+            Game_Manager.destroyAllIndicators();
         }
-
         
+
         transform.SetParent(hand);
         beingHeld = false; // It indicates the player has dropped the card
         this.transform.SetSiblingIndex( placeHolder.transform.GetSiblingIndex() );
     }
+
+
+    public void destoryCard() {
+        dragDrop temp = GetComponent<dragDrop>(); 
+        List<GameObject> list = temp.player_data.cards_in_hand;
+        temp.player_data.cards_in_hand.RemoveAt(handIndex);
+        Destroy(this.gameObject); 
+    }
+
 }

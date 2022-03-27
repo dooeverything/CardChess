@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
 
-
 public class endButtonController : MonoBehaviour
 {
 
@@ -83,5 +82,6 @@ public class endButtonController : MonoBehaviour
         }else {
             Game_Manager.turn = 1;
         }
+        
     }
 }

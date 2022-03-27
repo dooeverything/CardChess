@@ -8,6 +8,9 @@ using UnityEditor;
 
 public class Warrior : MonoBehaviour {
 
+    public int offensePower = 1;
+    public int defensePower = 1;
+
     public List<GameObject> createIndicator() {
         Debug.Log("//createDotMove from Warrior//");
         // 검사-이동: 상하좌우 1칸
@@ -59,8 +62,6 @@ public class Warrior : MonoBehaviour {
         GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
         striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         striking.transform.position = cell.transform.position;
-        striking.GetComponent<strikeController>().indexX = indexX;
-        striking.GetComponent<strikeController>().indexY = indexY;
         return striking;
     }
 }

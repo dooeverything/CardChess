@@ -27,7 +27,7 @@ public class dotController : MonoBehaviour, IPointerDownHandler
         parent.GetComponent<ChessPiece>().indexY = cellTransform.gameObject.GetComponent<cellController>().indexY;        
 
         // Switch turn after the piece move
-        endButtonController.switchTurn();
+        //endButtonController.switchTurn();
 
         Game_Manager.destroyAlldots(); 
         Game_Manager.destroyAllIndicators(); 

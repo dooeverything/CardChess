@@ -26,7 +26,12 @@ public class cardSave : MonoBehaviour
     //     Knights_Move
     // }
 
-    public static string [] Card_List = {"Knights_Move"}; 
+    public static (string, cardSave.Piece) [] Card_List = { ("Knights_Move", Piece.Mage), 
+                                                            ("ArrowOfMadness", Piece.Archer),
+                                                            ("Rush", Piece.Warrior),
+                                                            ("Heavy_Armor", Piece.Warrior), 
+                                                            ("Teleport", Piece.Mage),
+                                                            ("Thunder_Bolt", Piece.Mage)}; 
 
     // Path for Prefab cards for *Mulligan*
     public static string[] pathMulligan = { "Assets/Prefab/chess_card_mulligan/attack/attack_archer.prefab",

@@ -11,20 +11,24 @@ public class Game_Manager
     public static GameObject handsPlayer1 = GameObject.Find("Hands");
     public static GameObject handsPlayer2 = GameObject.Find("Hands_Opponent");
 
-    public static void destroyAllIndicators()
+    async public static void destroyAllIndicators()
     {
+        Debug.Log("Destroy Indicators");
+        Debug.Log("Size of indicators is: " + Game_Manager.indicators.Count);
         foreach (GameObject indicator in Game_Manager.indicators)
         {
+            indicator.transform.SetParent(null); 
             UnityEngine.Object.Destroy(indicator);
         }
 
         indicators = new List<GameObject>();
-    }
+    } 
 
     public static void destroyAlldots()
     {
         foreach (GameObject dot in Game_Manager.dots)
         {
+            dot.transform.SetParent(null); 
             UnityEngine.Object.Destroy(dot);
         }
         dots = new List<GameObject>(); 
@@ -37,6 +41,9 @@ public class Game_Manager
     public List<GameObject> filterList(cardSave.Piece type) {
         List<GameObject> temp = new List<GameObject>();
         foreach(GameObject piece in piecesOnBoard) {
+            if(piece == null) {
+                continue;
+            }
             if(piece.GetComponent<ChessPiece>().chessPieceType == type) {
                 temp.Add(piece);
             }

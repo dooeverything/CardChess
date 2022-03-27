@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 
 public class Archer : MonoBehaviour {
-    
-    public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {
+    public int offensePower = 1;
+    public int defensePower = 1;
+    public GameObject create_strikeDot(GameObject cell, GameObject enemy, GameObject card) {
         Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
         GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
         striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
@@ -18,4 +19,59 @@ public class Archer : MonoBehaviour {
 
         return striking;
     }
+
+    public GameObject create_moveDot(GameObject newCell, GameObject card) {
+        Debug.Log("Create Move Dot");
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+        GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+        dot.transform.SetParent(newCell.transform, false);
+        dot.transform.position = newCell.transform.position;
+        dot.GetComponent<dotController>().parent = gameObject; 
+        dot.GetComponent<dotController>().card = card;
+        
+        return dot;
+    }
+
+    public void createDots_Archer(List<int[]> move_list, GameObject card = null)
+    {
+        List<GameObject> dots = new List<GameObject>();
+        for (int i = 0; i < 3; i++) {
+            for(int j = 1; j<4; j++) {
+                Debug.Log("The location added is " + move_list[i][0]+ " and " + move_list[i][1]);
+                int newX_strike = GetComponent<ChessPiece>().indexX + (move_list[i][0]*j);
+                int newY_strike = GetComponent<ChessPiece>().indexY + (move_list[i][1]*j);
+                Debug.Log(newX_strike + " and " + newY_strike);
+                
+                // Check the location is out of bound 
+                if(newX_strike > 4 || newX_strike < 0) {
+                    continue;
+                }
+                if(newY_strike > 7 || newY_strike < 0 ) {
+                    continue;
+                }
+
+                GameObject newCell_Stirke = cardSave.cells[newX_strike, newY_strike ];
+                if(newCell_Stirke.gameObject.transform.childCount > 0) {
+                    Debug.Log("Some piece is blocking!");
+                    //if(newCell_Stirke.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
+                    
+                    // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
+                    if(newCell_Stirke.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) { 
+                        dots.Add(create_strikeDot(newCell_Stirke, newCell_Stirke.transform.GetChild(0).gameObject, card));
+                    }
+
+                    // If there is any blocking piece, then further iteration is no needed 
+                    // (the piece further than blocking piece cannot be attacked)
+                    break; 
+                }else {
+                    // If there is no blocking piece on the location where archer can move to
+                    if(j==1){
+                        dots.Add(create_moveDot(newCell_Stirke, card));
+                    }
+                }
+            }
+        }
+        Game_Manager.dots = dots; 
+    }
+
 }

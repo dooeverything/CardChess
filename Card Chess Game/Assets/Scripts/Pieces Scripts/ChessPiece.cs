@@ -7,6 +7,8 @@ using UnityEditor;
 
 public class ChessPiece : MonoBehaviour, IPointerDownHandler
 {
+    public int offensePower;
+    public int defensePower;
     public int indexX;
     public int indexY;
     public cardSave.Piece chessPieceType;
@@ -19,6 +21,10 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     public List<int[]> basic_moves = new List<int[]>(); 
     void Start()
     {
+
+        offensePower = 1;
+        defensePower = 1;
+
         basic_moves.Add(new int[]{-1, 0}); 
         basic_moves.Add(new int[]{1, 0}); 
         if (player == 1)
@@ -32,7 +38,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             basic_moves.Add(new int[]{0, -1}); 
         }
     }
-    public void OnPointerDown(PointerEventData eventData)
+    async public void OnPointerDown(PointerEventData eventData)
     {
         // exits if not piece owner's turn 
         if (player != Game_Manager.turn) return;
@@ -49,11 +55,18 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             return;
         }
         activated = true; 
+
+        // If the piece is mage, then do nothing --> mage cannot both attack and move without a card!
+        // if(chessPieceType == cardSave.Piece.Mage)
+        //     return;
+
         // create indicator around the piece itself
         addIndicator(); 
         if(chessPieceType == cardSave.Piece.King) {
-            GetComponent<King>().createDots();
-        } else {
+            GetComponent<King>().createDots(); // Speical move for King
+        } else if(chessPieceType == cardSave.Piece.Archer){
+            GetComponent<Archer>().createDots_Archer(basic_moves);
+        }else {
             createDots(basic_moves); 
         }
     }
@@ -73,6 +86,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
+                //if(newCell.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
                 // 말이 적일 경우
                 if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
                     dots.Add(createStrike(newCell, newCell.transform.GetChild(0).gameObject, card));
