@@ -22,9 +22,7 @@ public class sceneLoader : MonoBehaviour
     }
 
     public void loadInGameScene() {
-        // for(int i=0; i<cardSave.cardList.Length; i++) {
-        //     Debug.Log(cardSave.cardList[i]);
-        // }
+
         SceneManager.LoadScene("InGame Scene"); 
     }
 

@@ -77,7 +77,6 @@ public class BoardManager : MonoBehaviour
 
         if (player == 1)
         {
-            Debug.Log("Player1");
             player_data = Game_Manager.player1;
         }
         else

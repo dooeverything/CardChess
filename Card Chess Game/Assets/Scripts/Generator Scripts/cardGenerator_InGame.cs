@@ -20,7 +20,9 @@ public class cardGenerator_InGame : MonoBehaviour
 
         // Player1
         for(int i=0; i<cardGenerator.result+2; i++) {
-            int random = Random.Range(10, 11);
+            var temp = 2; 
+            int random = Random.Range(temp, temp + 1);
+            //int random = Random.Range(cardSave.Card_List.Length - 1, cardSave.Card_List.Length);            
             string card_name = cardSave.Card_List[random].Item1; 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/cardTest.prefab", typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
@@ -29,9 +31,6 @@ public class cardGenerator_InGame : MonoBehaviour
             string fileLocation = "Sprites/" + card_name;
             Sprite card_sprite =  Resources.Load<Sprite>(fileLocation);
             
-            if(card_sprite == null) {
-                Debug.Log("Not working " + fileLocation);
-            }
 
             card.transform.GetChild(0).GetComponent<Image>().sprite = card_sprite;
             card.transform.GetChild(1).GetComponent<Text>().text = card_name;

@@ -30,12 +30,10 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
 
         {
             for(int i=0; i<3; i++) {
-                Debug.Log("currX, Y is: " + enemy.GetComponent<ChessPiece>().indexX + " and " + enemy.GetComponent<ChessPiece>().indexY);
                 List<GameObject> next_targets = new List<GameObject>(); 
                 for(int j=0; j<8; j++) {
                     int newX_strike = enemy.GetComponent<ChessPiece>().indexX + (CardEffect.move_list[j, 0]);
                     int newY_strike = enemy.GetComponent<ChessPiece>().indexY + (CardEffect.move_list[j, 1]);
-                    // Debug.Log(newX_strike + " and " + newY_strike);
 
                     // Check the location is out of bound 
                     if(newX_strike > 4 || newX_strike < 0) {
@@ -68,7 +66,6 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
                             break;
                         }
                     }
-                    Debug.Log(index);
                     list.RemoveAt(index);
                     DestroyImmediate(enemy); 
                 }

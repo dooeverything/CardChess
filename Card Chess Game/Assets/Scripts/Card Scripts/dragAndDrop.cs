@@ -32,7 +32,6 @@ public class dragAndDrop : MonoBehaviour
             gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
         }else {
             if(trashCan.GetComponent<BoxCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
-                Debug.Log("Change Card");
                 Destroy(gameObject);
                 createNewCard();
 
@@ -47,7 +46,6 @@ public class dragAndDrop : MonoBehaviour
         Game_Manager.player1.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
         Game_Manager.player1.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
         Game_Manager.player1.card_ingame[handPos] = randomCard;
-        Debug.Log("Create new Card " + randomCard);
         Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         dragAndDrop component = card.GetComponent<dragAndDrop>();

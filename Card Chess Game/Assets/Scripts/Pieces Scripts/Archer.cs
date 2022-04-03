@@ -24,7 +24,6 @@ public class Archer : MonoBehaviour {
     }
 
     public GameObject create_moveDot(GameObject newCell, GameObject card) {
-        Debug.Log("Create Move Dot");
         Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
         GameObject dot = GameObject.Instantiate(prefab) as GameObject;
         dot.transform.SetParent(newCell.transform, false);
@@ -39,10 +38,8 @@ public class Archer : MonoBehaviour {
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < 3; i++) {
             for(int j = 1; j<attackRange; j++) {
-                Debug.Log("The location added is " + move_list[i][0]+ " and " + move_list[i][1]);
                 int newX_strike = GetComponent<ChessPiece>().indexX + (move_list[i][0]*j);
                 int newY_strike = GetComponent<ChessPiece>().indexY + (move_list[i][1]*j);
-                Debug.Log(newX_strike + " and " + newY_strike);
                 
                 // Check the location is out of bound 
                 if(newX_strike > 4 || newX_strike < 0) {
@@ -54,14 +51,12 @@ public class Archer : MonoBehaviour {
 
                 GameObject newCell_Stirke = cardSave.cells[newX_strike, newY_strike ];
                 if(newCell_Stirke.gameObject.transform.childCount > 0) {
-                    Debug.Log("Some piece is blocking!");
                     //if(newCell_Stirke.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
                     
                     // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
                     if(newCell_Stirke.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) { 
                         dots.Add(create_strikeDot(newCell_Stirke, newCell_Stirke.transform.GetChild(0).gameObject, card, this.gameObject));
                         numEnemy++;
-                        Debug.Log("numEnemy is " + numEnemy);
                     }
 
                     // If there is any blocking piece, then further iteration is no needed 
@@ -75,6 +70,7 @@ public class Archer : MonoBehaviour {
                 }
             }
         }
+        strikeController.numAttack = System.Math.Min(2, numEnemy); 
         onlyAttack = false;
         Game_Manager.dots = dots; 
     }

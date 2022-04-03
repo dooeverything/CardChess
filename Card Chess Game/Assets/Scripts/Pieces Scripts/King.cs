@@ -17,28 +17,15 @@ public class King : MonoBehaviour {
             int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]);
 
             if(newIndexX > 4 || newIndexX < 0) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             if(newIndexY > 7 || newIndexY < 0 ) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                Debug.Log("**The name of the child at " + newIndexX + ", " + newIndexY +": " + newCell.transform.GetChild(0).name + "**");
                 continue;
-                // if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {
-                //     Debug.Log("DOT");
-                //     //break;
-                // } else {
-                //     if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
-                //         // 말이 적일 경우
-                //         dots.Add(createStrike(newCell, newIndexX, newIndexY));
-                //     }
-                //     continue;
-                // }
             }
 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));

@@ -12,14 +12,15 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public static GameObject selectedPiece = null;
     public cardSave.Piece pieceType;
     public string behaviour;
-    Transform hand;
-    private List<GameObject> target_pieces = null;
-    private GameObject placeHolder = null;
-    int indexSelected = -1;
     public int player = 1;
     public Game_Manager player_data;
     public string card_name; 
     public int handIndex = -1;
+    private bool move_available = false; 
+    private Transform hand;
+    private List<GameObject> target_pieces = null;
+    private GameObject placeHolder = null;
+    private int indexSelected = -1;
     void Start()
     {
         if (player == 1)
@@ -91,8 +92,9 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
-    public void OnDrag(PointerEventData eventData)
+        public void OnDrag(PointerEventData eventData)
     {
+        Debug.Log("Ondrag Called"); 
         //target_pieces = player_data.filterList(pieceType); 
         Game_Manager.destroyAlldots();
         //Game_Manager.destroyAllIndicators();
@@ -100,7 +102,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         transform.position = eventData.position;
         int newSiblingIndex = hand.transform.childCount;
         float minDistance = float.MaxValue;
-
         // Changing the card Index 
         for(int i=0; i<hand.transform.childCount; i++) {
             if(transform.position.x < hand.transform.GetChild(i).position.x) {
@@ -112,7 +113,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
         }
         placeHolder.transform.SetSiblingIndex(newSiblingIndex);
-
         for(int i=0; i<target_pieces.Count; i++) {
             if(GetComponent<Collider2D>().IsTouching(target_pieces[i].GetComponent<Collider2D>())) {
             float dist = Vector2.Distance(target_pieces[i].transform.position, gameObject.transform.position);
@@ -123,26 +123,29 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
         }
         if(Game_Manager.indicators == null) {
-            Debug.Log("Indicator List is empty");
         }
-        Debug.Log("List count is " + Game_Manager.indicators.Count);
         foreach(GameObject indicator in Game_Manager.indicators) {
             indicator.GetComponent<Image>().color = Color.red;
         }
-        Debug.Log("index is: " + indexSelected); 
         if(indexSelected >= 0) {
-            Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
+            //Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
             GameObject target_piece = target_pieces[indexSelected]; 
-            typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
+            move_available = (bool)typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
+            Debug.Log($"Move available is {move_available}");
+            if(move_available) {
+                Debug.Log("Color to blue");
+                Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
+            }
         }
-    }
+    }    
+    
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(placeHolder);
 
 
         // Create a dot
-        if(indexSelected >= 0) {
+        if(indexSelected >= 0  && move_available) {
             GameObject target_piece = target_pieces[indexSelected]; 
             target_piece.GetComponent<ChessPiece>().activated = true; 
             GameObject temp = null;
@@ -170,7 +173,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Color color = gameObject.GetComponent<Image>().color; // make a card transparency which means the card is dragged and applied to the piece
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;            
-            Debug.Log(card_name);
             CardEffect.execute = true; 
             typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
             CardEffect.execute = false; 

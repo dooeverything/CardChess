@@ -9,7 +9,7 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
     public GameObject card;
     public bool moveWhenAttack = true;
     public GameObject parent; 
-    public static int numAttack = 1;
+    public static int numAttack = default;
     // Start is called before the first frame update
     //public static int count = 0;
     void Start()
@@ -24,7 +24,6 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-        int numEnemy = 0;
         deleteCard();
 
         {
@@ -44,13 +43,10 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
                 }
                 list.RemoveAt(index);
                 numAttack--;
-                Debug.Log(numAttack);
+                Destroy(gameObject);
                 Destroy(enemy); 
                 if(parent.GetComponent<ChessPiece>().chessPieceType != cardSave.Piece.Archer) {
                     moveParent();
-                }else {
-                    parent.GetComponent<Archer>().attackRange = 4; // Set archer's attack range as 4 (basic attack range) 
-                    numEnemy = parent.GetComponent<Archer>().numEnemy;
                 }
             }
         }
@@ -59,18 +55,18 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
             parent.GetComponent<ChessPiece>().offensePower--;
         }
 
-        if(numAttack == 0 || numEnemy == 1) {
+        if(numAttack == 0) {
             Game_Manager.destroyAllIndicators();
             Game_Manager.destroyAlldots();
             // Switch turn after strike
             endButtonController.switchTurn();
             numAttack = 1;
         }
+        
     }
 
-    public void deleteCard()
+    public bool deleteCard()
     {
-        Debug.Log("Delete card!");
         if(card) {
             dragDrop temp = card.GetComponent<dragDrop>(); 
             List<GameObject> list = temp.player_data.cards_in_hand;
@@ -84,6 +80,7 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
             temp.player_data.cards_in_hand.RemoveAt(index);
             Destroy(card); 
         }
+        return true; 
     }
 
     public void moveParent(){

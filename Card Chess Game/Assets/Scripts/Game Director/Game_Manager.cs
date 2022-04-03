@@ -11,10 +11,9 @@ public class Game_Manager
     public static GameObject handsPlayer1 = GameObject.Find("Hands");
     public static GameObject handsPlayer2 = GameObject.Find("Hands_Opponent");
 
-    async public static void destroyAllIndicators()
+    public static void destroyAllIndicators()
     {
-        Debug.Log("Destroy Indicators");
-        Debug.Log("Size of indicators is: " + Game_Manager.indicators.Count);
+
         foreach (GameObject indicator in Game_Manager.indicators)
         {
             indicator.transform.SetParent(null); 
@@ -26,8 +25,10 @@ public class Game_Manager
 
     public static void destroyAlldots()
     {
+        Debug.Log("destroyDots Called"); 
         foreach (GameObject dot in Game_Manager.dots)
         {
+            if(dot == null) continue; 
             dot.transform.SetParent(null); 
             UnityEngine.Object.Destroy(dot);
         }

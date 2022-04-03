@@ -27,11 +27,9 @@ public class Result : MonoBehaviour
         wheelScript = FindObjectOfType<WheelController>();
         if(wheelScript.finish()) {
             resultImage.enabled = true;
-            //Debug.Log("Good!");
             if(wheelScript.result() == 1 ) {
                 result.text = "Tail";
             }else {
-                //Debug.Log("Head");
                 result.text = "Head";
             }
 
@@ -39,11 +37,9 @@ public class Result : MonoBehaviour
             if(timeElapsed > delay) {
                 int current = SceneManager.GetActiveScene().buildIndex;
                 if(player1.text == result.text) {
-                    Debug.Log("True");
                     playerResult = 1;
                     //SceneManager.LoadScene(current+1);
                 }else {
-                    Debug.Log("False");
                     playerResult = 0;
                     //SceneManager.LoadScene(current+2);
                 }

@@ -26,23 +26,23 @@ public class cardSave : MonoBehaviour
     //     Knights_Move
     // }
 
-    public static (string, cardSave.Piece) [] Card_List = { ("Knights_Move", Piece.Mage), 
-                                                            ("ArrowOfMadness", Piece.Archer),
-                                                            ("Rush", Piece.Warrior),
-                                                            ("Heavy_Armor", Piece.Warrior), 
-                                                            ("Teleport", Piece.Mage),
-                                                            ("Thunder_Bolt", Piece.Mage),
-                                                            ("Morale_Boost", Piece.King),
-                                                            ("Clairvoyant", Piece.Archer),
-                                                            ("King_Power", Piece.King),
-                                                            ("Double_Shot", Piece.Archer),
-                                                            ("Penetrating_Arrow", Piece.Archer),
-                                                            ("Switch_Teleport", Piece.Mage),
-                                                            ("Disguise", Piece.King),
-                                                            ("Testudo", Piece.Warrior),
+    public static (string, cardSave.Piece) [] Card_List = { ("Knights_Move", Piece.Mage), // 0
+                                                            ("ArrowOfMadness", Piece.Archer), // 1
+                                                            ("Rush", Piece.Warrior), // 2
+                                                            ("Heavy_Armor", Piece.Warrior), // 3
+                                                            ("Teleport", Piece.Mage), // 4
+                                                            ("Thunder_Bolt", Piece.Mage), // 5
+                                                            ("Morale_Boost", Piece.King), // 6
+                                                            ("Clairvoyant", Piece.Archer), // 7
+                                                            ("King_Power", Piece.King), // 8
+                                                            ("Double_Shot", Piece.Archer), // 9
+                                                            ("Penetrating_Arrow", Piece.Archer), // 10
+                                                            ("Rage_Attack", Piece.Warrior),
+                                                            ("Switch_Teleport", Piece.Mage), 
+                                                            ("Disguise", Piece.King), 
+                                                            ("Testudo", Piece.Warrior), 
                                                             ("Royal_Dagger", Piece.King),
                                                             ("Losing_Sacrifice", Piece.Mage),
-                                                            ("Rage_Attack", Piece.Warrior),
                                                             ("Last_Ditch_Effor", Piece.King),
                                                             ("Demotion_Punishment", Piece.King),
                                                             ("Diagonal_Shot", Piece.Archer),

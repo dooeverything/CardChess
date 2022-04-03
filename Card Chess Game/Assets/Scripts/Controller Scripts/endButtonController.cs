@@ -41,7 +41,6 @@ public class endButtonController : MonoBehaviour
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             // Result is a **End**
             foreach (RaycastResult result in results) {
-                //Debug.Log(result.gameObject.name);
                 if (result.gameObject.name == "End") { // result --> timer
                     result.gameObject.transform.GetChild(0).GetComponent<timerController>().timer = 30;
                     
@@ -50,7 +49,6 @@ public class endButtonController : MonoBehaviour
                     
                     // After a player draw one's card, switch turn
                     switchTurn();
-                    Debug.Log("It is now player" + Game_Manager.turn + "'s !!");
                 }
                 
             }
@@ -77,11 +75,6 @@ public class endButtonController : MonoBehaviour
     }
 
     public static void switchTurn() {
-        if(Game_Manager.turn == 1) {
-            Game_Manager.turn = 2;
-        }else {
-            Game_Manager.turn = 1;
-        }
-        
+        Game_Manager.turn = Game_Manager.turn == 1 ? 2 : 1; 
     }
 }

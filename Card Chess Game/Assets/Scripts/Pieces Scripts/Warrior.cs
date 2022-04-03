@@ -12,26 +12,21 @@ public class Warrior : MonoBehaviour {
     public int defensePower = 1;
 
     public List<GameObject> createIndicator() {
-        Debug.Log("//createDotMove from Warrior//");
         // 검사-이동: 상하좌우 1칸
         List<GameObject> indicators = new List<GameObject>();
         for (int i = 0; i < 4; i++) {
             int newIndexX = GetComponent<ChessPiece>().indexX + (cardSave.position[i,0]);
             int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             if(newIndexY > 7 || newIndexY < 0 ) {
-                //Debug.Log( (i+1) + " th: " + newIndexX + " " + newIndexY + " is out of bound");
                 continue;
             }
             GameObject newCell = cardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
-                Debug.Log("**The name of the child at " + newIndexX + ", " + newIndexY +": " + newCell.transform.GetChild(0).name + "**");
                 if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {
-                    Debug.Log("DOT");
                     //break;
                 } else {
                     if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
@@ -48,9 +43,7 @@ public class Warrior : MonoBehaviour {
             //newCell.GetComponent<Image>().color = Color.black;
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            Debug.Log( (i+1) + "th dot: " + newIndexX + " " + newIndexY);
             indicators.Add(dot);
-            //Debug.Log( (i+1) + "th dot is added!");
             //this.indexX = newIndexX;
             //this.indexY = newIndexY;
         }
