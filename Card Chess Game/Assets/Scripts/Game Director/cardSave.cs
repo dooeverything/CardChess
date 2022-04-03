@@ -31,7 +31,26 @@ public class cardSave : MonoBehaviour
                                                             ("Rush", Piece.Warrior),
                                                             ("Heavy_Armor", Piece.Warrior), 
                                                             ("Teleport", Piece.Mage),
-                                                            ("Thunder_Bolt", Piece.Mage)}; 
+                                                            ("Thunder_Bolt", Piece.Mage),
+                                                            ("Morale_Boost", Piece.King),
+                                                            ("Clairvoyant", Piece.Archer),
+                                                            ("King_Power", Piece.King),
+                                                            ("Double_Shot", Piece.Archer),
+                                                            ("Penetrating_Arrow", Piece.Archer),
+                                                            ("Switch_Teleport", Piece.Mage),
+                                                            ("Disguise", Piece.King),
+                                                            ("Testudo", Piece.Warrior),
+                                                            ("Royal_Dagger", Piece.King),
+                                                            ("Losing_Sacrifice", Piece.Mage),
+                                                            ("Rage_Attack", Piece.Warrior),
+                                                            ("Last_Ditch_Effor", Piece.King),
+                                                            ("Demotion_Punishment", Piece.King),
+                                                            ("Diagonal_Shot", Piece.Archer),
+                                                            ("Disarm", Piece.Mage),
+                                                            ("Longbow_Shot", Piece.Archer),
+                                                            ("Spear_Throw", Piece.Warrior),
+                                                            ("Shield", Piece.Warrior)
+                                                          }; 
 
     // Path for Prefab cards for *Mulligan*
     public static string[] pathMulligan = { "Assets/Prefab/chess_card_mulligan/attack/attack_archer.prefab",

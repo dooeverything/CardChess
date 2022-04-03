@@ -65,6 +65,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         if(chessPieceType == cardSave.Piece.King) {
             GetComponent<King>().createDots(); // Speical move for King
         } else if(chessPieceType == cardSave.Piece.Archer){
+            GetComponent<Archer>().numEnemy = 0;
             GetComponent<Archer>().createDots_Archer(basic_moves);
         }else {
             createDots(basic_moves); 
