@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\Controller Scripts\endButtonController.cs" />
      <Compile Include="Assets\Scripts\Pieces Scripts\Mage.cs" />
      <Compile Include="Assets\Scripts\Game Director\GameStart.cs" />
+     <Compile Include="Assets\Scripts\Controller Scripts\thunderBoltStrikeController.cs" />
      <Compile Include="Assets\Scripts\Card Scripts\dragAndDrop.cs" />
      <Compile Include="Assets\Scripts\Game Director\sceneLoader.cs" />
      <Compile Include="Assets\Scripts\Game Director\Game_Manager.cs" />
@@ -64,7 +65,6 @@
      <Compile Include="Assets\Scripts\Controller Scripts\dotController.cs" />
      <Compile Include="Assets\Scripts\Controller Scripts\boxController.cs" />
      <Compile Include="Assets\Scripts\Generator Scripts\cardGenerator.cs" />
-     <Compile Include="Assets\Scripts\Controller Scripts\thunderBoltStrikeController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Tiny Chess\Readme Eng.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
