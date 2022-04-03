@@ -20,7 +20,8 @@ public class cardGenerator_InGame : MonoBehaviour
 
         // Player1
         for(int i=0; i<cardGenerator.result+2; i++) {
-            int random = Random.Range(5, 6);
+            // int random = Random.Range(0, cardSave.Card_List.Length);
+            int random = Random.Range(cardSave.Card_List.Length - 1, cardSave.Card_List.Length);
             string card_name = cardSave.Card_List[random].Item1; 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/cardTest.prefab", typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;

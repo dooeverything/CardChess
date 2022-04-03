@@ -19,9 +19,9 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     public List<GameObject> indicators = null;
     public bool activated = false; // either selected by card or clicking the piece itself
     public List<int[]> basic_moves = new List<int[]>(); 
+    public int move_dir; 
     void Start()
     {
-
         offensePower = 1;
         defensePower = 1;
 
@@ -31,14 +31,16 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         {
             player_data = Game_Manager.player1;
             basic_moves.Add(new int[]{0, 1}); 
+            move_dir = 1; 
         }
         else
         {
             player_data = Game_Manager.player2;
             basic_moves.Add(new int[]{0, -1}); 
+            move_dir = -1; 
         }
     }
-    async public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         // exits if not piece owner's turn 
         if (player != Game_Manager.turn) return;
@@ -93,15 +95,8 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
                 }
                 continue;
             }
-
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-            GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-            dot.transform.SetParent(newCell.transform, false);
-            dot.transform.position = newCell.transform.position;
-            dot.GetComponent<dotController>().parent = gameObject; 
-            dot.GetComponent<dotController>().card = card;
             
-            dots.Add(dot);
+            dots.Add(createDot(newCell, card));
         }
         Game_Manager.dots = dots; 
     }
@@ -113,6 +108,16 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         selected_indicator.transform.SetParent(gameObject.transform);
         selected_indicator.transform.position = transform.position;
         Game_Manager.indicators.Add(selected_indicator); 
+    }
+
+    public GameObject createDot(GameObject cell, GameObject card) {
+        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
+        GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+        dot.transform.SetParent(cell.transform, false);
+        dot.transform.position = cell.transform.position;
+        dot.GetComponent<dotController>().parent = gameObject; 
+        dot.GetComponent<dotController>().card = card;
+        return dot; 
     }
 
     public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {

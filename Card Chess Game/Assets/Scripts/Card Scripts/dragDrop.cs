@@ -12,14 +12,15 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public static GameObject selectedPiece = null;
     public cardSave.Piece pieceType;
     public string behaviour;
-    Transform hand;
-    private List<GameObject> target_pieces = null;
-    private GameObject placeHolder = null;
-    int indexSelected = -1;
     public int player = 1;
     public Game_Manager player_data;
     public string card_name; 
     public int handIndex = -1;
+    private List<GameObject> target_pieces = null;
+    private bool move_available = false; 
+    private GameObject placeHolder = null;
+    private int indexSelected = -1;
+    private Transform hand;
     void Start()
     {
         if (player == 1)
@@ -131,18 +132,19 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
         Debug.Log("index is: " + indexSelected); 
         if(indexSelected >= 0) {
-            Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
             GameObject target_piece = target_pieces[indexSelected]; 
-            typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
+            move_available = (bool)typeof(CardEffect).GetMethod(card_name).Invoke(null, new Object[]{target_piece, gameObject}); 
+            Debug.Log($"return value is: {move_available}");
+            if(move_available) {
+                Game_Manager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
+            }
         }
     }
     public void OnEndDrag(PointerEventData eventData)
     {
         Destroy(placeHolder);
-
-
         // Create a dot
-        if(indexSelected >= 0) {
+        if(indexSelected >= 0 && move_available) {
             GameObject target_piece = target_pieces[indexSelected]; 
             target_piece.GetComponent<ChessPiece>().activated = true; 
             GameObject temp = null;
@@ -178,8 +180,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }else {
             Game_Manager.destroyAllIndicators();
         }
-        
-
         transform.SetParent(hand);
         beingHeld = false; // It indicates the player has dropped the card
         this.transform.SetSiblingIndex( placeHolder.transform.GetSiblingIndex() );

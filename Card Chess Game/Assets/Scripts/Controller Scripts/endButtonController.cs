@@ -77,11 +77,6 @@ public class endButtonController : MonoBehaviour
     }
 
     public static void switchTurn() {
-        if(Game_Manager.turn == 1) {
-            Game_Manager.turn = 2;
-        }else {
-            Game_Manager.turn = 1;
-        }
-        
+        Game_Manager.turn = Game_Manager.turn == 1 ? 2 : 1; 
     }
 }

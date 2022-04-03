@@ -31,7 +31,8 @@ public class cardSave : MonoBehaviour
                                                             ("Rush", Piece.Warrior),
                                                             ("Heavy_Armor", Piece.Warrior), 
                                                             ("Teleport", Piece.Mage),
-                                                            ("Thunder_Bolt", Piece.Mage)}; 
+                                                            ("Thunder_Bolt", Piece.Mage), 
+                                                            ("Rage_Attack", Piece.Warrior)}; 
 
     // Path for Prefab cards for *Mulligan*
     public static string[] pathMulligan = { "Assets/Prefab/chess_card_mulligan/attack/attack_archer.prefab",

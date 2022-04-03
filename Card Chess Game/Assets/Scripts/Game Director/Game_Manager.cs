@@ -11,7 +11,7 @@ public class Game_Manager
     public static GameObject handsPlayer1 = GameObject.Find("Hands");
     public static GameObject handsPlayer2 = GameObject.Find("Hands_Opponent");
 
-    async public static void destroyAllIndicators()
+    public static void destroyAllIndicators()
     {
         Debug.Log("Destroy Indicators");
         Debug.Log("Size of indicators is: " + Game_Manager.indicators.Count);
