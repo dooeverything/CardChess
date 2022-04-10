@@ -10,7 +10,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public static bool selected = false;
     public static bool beingHeld;
     public static GameObject selectedPiece = null;
-    public cardSave.Piece pieceType;
+    public CardSave.Piece pieceType;
     public string behaviour;
     public int player = 1;
     public Game_Manager player_data;

@@ -15,15 +15,15 @@ public class Warrior : MonoBehaviour {
         // 검사-이동: 상하좌우 1칸
         List<GameObject> indicators = new List<GameObject>();
         for (int i = 0; i < 4; i++) {
-            int newIndexX = GetComponent<ChessPiece>().indexX + (cardSave.position[i,0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]);
+            int newIndexX = GetComponent<ChessPiece>().indexX + (CardSave.position[i,0]);
+            int newIndexY = GetComponent<ChessPiece>().indexY + (CardSave.position[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
                 continue;
             }
             if(newIndexY > 7 || newIndexY < 0 ) {
                 continue;
             }
-            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            GameObject newCell = CardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
                 if(newCell.transform.GetChild(0).name == "dot_move(Clone)") {

@@ -7,8 +7,6 @@ public class GameStart : MonoBehaviour
     [SerializeField] public Text player1;
     [SerializeField] public Text player2;
 
-    //List<int> listNum = new List<int>();
-
     // Start is called before the first frame update
     void Start()
     {

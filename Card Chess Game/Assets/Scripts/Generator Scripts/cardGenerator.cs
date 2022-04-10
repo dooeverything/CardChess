@@ -73,7 +73,7 @@ public class cardGenerator : MonoBehaviour
         int randomCard = Game_Manager.player1.deck[randomIndex];
         Game_Manager.player1.deck.RemoveAt(randomIndex);
         Game_Manager.player1.myDeckCount--;
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
+        Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
 
         dragAndDrop component = card.GetComponent<dragAndDrop>();

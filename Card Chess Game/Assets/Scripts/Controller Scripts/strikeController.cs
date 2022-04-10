@@ -45,7 +45,7 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
                 numAttack--;
                 Destroy(gameObject);
                 Destroy(enemy); 
-                if(parent.GetComponent<ChessPiece>().chessPieceType != cardSave.Piece.Archer) {
+                if(parent.GetComponent<ChessPiece>().chessPieceType != CardSave.Piece.Archer) {
                     moveParent();
                 }
             }

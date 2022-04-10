@@ -11,9 +11,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     public int defensePower;
     public int indexX;
     public int indexY;
-    public cardSave.Piece chessPieceType;
-    protected GameObject indicator;
-    protected GameObject moveIndicator;
+    public CardSave.Piece chessPieceType;
     public int player;
     public Game_Manager player_data;
     public List<GameObject> indicators = null;
@@ -61,14 +59,14 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         activated = true; 
 
         // If the piece is mage, then do nothing --> mage cannot both attack and move without a card!
-        // if(chessPieceType == cardSave.Piece.Mage)
+        // if(chessPieceType == CardSave.Piece.Mage)
         //     return;
 
         // create indicator around the piece itself
         addIndicator(); 
-        if(chessPieceType == cardSave.Piece.King) {
+        if(chessPieceType == CardSave.Piece.King) {
             GetComponent<King>().createDots(); // Speical move for King
-        } else if(chessPieceType == cardSave.Piece.Archer){
+        } else if(chessPieceType == CardSave.Piece.Archer){
             GetComponent<Archer>().numEnemy = 0;
             GetComponent<Archer>().createDots_Archer(basic_moves);
         }else {
@@ -98,7 +96,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             if(newIndexY > 7 || newIndexY < 0 ) {
                 continue;
             }
-            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            GameObject newCell = CardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
                 //if(newCell.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;

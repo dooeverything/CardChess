@@ -1,0 +1,6 @@
+1. variables: snake_case
+2. functions: camelCase
+3. Unity editor gameobject name: PascalCase
+4. Card Name: Pascal_Snake_Case
+5. Class Name: PascalCase
+6. Prefab Name: Paskal_Snake_Case

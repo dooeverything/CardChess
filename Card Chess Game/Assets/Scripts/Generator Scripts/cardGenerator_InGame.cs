@@ -13,7 +13,7 @@ public class cardGenerator_InGame : MonoBehaviour
         GameObject handsPlayer1 = GameObject.Find("Hands");
         GameObject handsPlayer2 = GameObject.Find("Hands_Opponent");
         // for(int i=0; i<cardGenerator.result+1; i++) {
-        //     Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathInGame[cardSave.cardList[i]], typeof(GameObject));
+        //     Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathInGame[CardSave.cardList[i]], typeof(GameObject));
         //     GameObject card = Instantiate(prefab) as GameObject;
         //     card.transform.SetParent(handPlayer1.transform, true); 
         // }
@@ -22,8 +22,8 @@ public class cardGenerator_InGame : MonoBehaviour
         for(int i=0; i<cardGenerator.result+2; i++) {
             var temp = 2; 
             int random = Random.Range(temp, temp + 1);
-            //int random = Random.Range(cardSave.Card_List.Length - 1, cardSave.Card_List.Length);            
-            string card_name = cardSave.Card_List[random].Item1; 
+            //int random = Random.Range(CardSave.Card_List.Length - 1, CardSave.Card_List.Length);            
+            string card_name = CardSave.Card_List[random].Item1; 
             Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/cardTest.prefab", typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
             card.transform.SetParent(handsPlayer1.transform, true);
@@ -34,7 +34,7 @@ public class cardGenerator_InGame : MonoBehaviour
 
             card.transform.GetChild(0).GetComponent<Image>().sprite = card_sprite;
             card.transform.GetChild(1).GetComponent<Text>().text = card_name;
-            card.GetComponent<dragDrop>().pieceType = cardSave.Card_List[random].Item2; 
+            card.GetComponent<dragDrop>().pieceType = CardSave.Card_List[random].Item2; 
             card.GetComponent<dragDrop>().card_name = card_name; 
             card.GetComponent<dragDrop>().handIndex = i; 
             Game_Manager.player1.cards_in_hand.Add(card);

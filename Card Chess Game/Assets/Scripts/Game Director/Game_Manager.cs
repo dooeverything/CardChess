@@ -17,7 +17,7 @@ public class Game_Manager
         foreach (GameObject indicator in Game_Manager.indicators)
         {
             indicator.transform.SetParent(null); 
-            UnityEngine.Object.Destroy(indicator);
+            Object.Destroy(indicator);
         }
 
         indicators = new List<GameObject>();
@@ -30,7 +30,7 @@ public class Game_Manager
         {
             if(dot == null) continue; 
             dot.transform.SetParent(null); 
-            UnityEngine.Object.Destroy(dot);
+            Object.Destroy(dot);
         }
         dots = new List<GameObject>(); 
     }
@@ -39,7 +39,7 @@ public class Game_Manager
 
     public List<GameObject> piecesOnBoard = new List<GameObject>(); 
 
-    public List<GameObject> filterList(cardSave.Piece type) {
+    public List<GameObject> filterList(CardSave.Piece type) {
         List<GameObject> temp = new List<GameObject>();
         foreach(GameObject piece in piecesOnBoard) {
             if(piece == null) {

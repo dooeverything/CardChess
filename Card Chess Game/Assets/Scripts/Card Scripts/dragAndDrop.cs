@@ -16,7 +16,7 @@ public class dragAndDrop : MonoBehaviour
     private GameObject trashCan;
     void Start() {
 
-        cardSave.cardList[handPos] = cardType;
+        CardSave.cardList[handPos] = cardType;
         firstPosX = this.transform.localPosition.x;
         firstPosY = this.transform.localPosition.y;
         trashCan = GameObject.Find("trashcan_closed");
@@ -34,7 +34,6 @@ public class dragAndDrop : MonoBehaviour
             if(trashCan.GetComponent<BoxCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
                 Destroy(gameObject);
                 createNewCard();
-
             }
         }
         //onMouseUp();
@@ -46,7 +45,7 @@ public class dragAndDrop : MonoBehaviour
         Game_Manager.player1.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
         Game_Manager.player1.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
         Game_Manager.player1.card_ingame[handPos] = randomCard;
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
+        Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         dragAndDrop component = card.GetComponent<dragAndDrop>();
         card.transform.position = new Vector3( firstPosX, firstPosY, 0);
