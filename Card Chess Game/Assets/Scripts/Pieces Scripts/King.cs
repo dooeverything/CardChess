@@ -35,6 +35,6 @@ public class King : MonoBehaviour {
             dot.GetComponent<dotController>().parent = gameObject; 
             dots.Add(dot);
         }
-        Game_Manager.dots = dots; 
+        GameManager.dots = dots; 
     }
 }

@@ -13,7 +13,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     public int indexY;
     public CardSave.Piece chessPieceType;
     public int player;
-    public Game_Manager player_data;
+    public GameManager player_data;
     public List<GameObject> indicators = null;
     public bool activated = false; // either selected by card or clicking the piece itself
     public List<int[]> basic_moves = new List<int[]>(); 
@@ -29,14 +29,14 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         basic_moves.Add(new int[]{1, 0}); 
         if (player == 1)
         {
-            player_data = Game_Manager.player1;
+            player_data = GameManager.player1;
             basic_moves.Add(new int[]{0, 1}); 
             move_dir = 1; 
 
         }
         else
         {
-            player_data = Game_Manager.player2;
+            player_data = GameManager.player2;
             basic_moves.Add(new int[]{0, -1}); 
             move_dir = -1; 
         }
@@ -44,10 +44,10 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         // exits if not piece owner's turn 
-        if (player != Game_Manager.turn) return;
+        if (player != GameManager.turn) return;
         // remove all indicators and dots
-        Game_Manager.destroyAllIndicators(); 
-        Game_Manager.destroyAlldots(); 
+        GameManager.destroyAllIndicators(); 
+        GameManager.destroyAlldots(); 
         bool activated = this.activated; 
 
         // If the piece is active //
@@ -109,7 +109,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 
             dots.Add(createDot(newCell, card));
         }
-        Game_Manager.dots = dots; 
+        GameManager.dots = dots; 
     }
 
     public void addIndicator()
@@ -118,7 +118,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         GameObject selected_indicator = Instantiate(prefab) as GameObject;
         selected_indicator.transform.SetParent(gameObject.transform);
         selected_indicator.transform.position = transform.position;
-        Game_Manager.indicators.Add(selected_indicator); 
+        GameManager.indicators.Add(selected_indicator); 
     }
 
     public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {

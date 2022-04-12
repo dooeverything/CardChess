@@ -14,6 +14,6 @@ public class turnController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.GetComponent<Text>().text = Game_Manager.turn.ToString();
+        this.GetComponent<Text>().text = GameManager.turn.ToString();
     }
 }

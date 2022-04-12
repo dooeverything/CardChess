@@ -55,8 +55,8 @@ public class dotController : MonoBehaviour, IPointerDownHandler
         // Switch turn after the piece move
         //endButtonController.switchTurn();
 
-        Game_Manager.destroyAlldots();
-        Game_Manager.destroyAllIndicators();
+        GameManager.destroyAlldots();
+        GameManager.destroyAllIndicators();
 
         if (card)
         {

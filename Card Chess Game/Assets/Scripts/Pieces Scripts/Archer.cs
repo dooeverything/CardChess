@@ -72,7 +72,7 @@ public class Archer : MonoBehaviour {
         }
         strikeController.numAttack = System.Math.Min(2, numEnemy); 
         onlyAttack = false;
-        Game_Manager.dots = dots; 
+        GameManager.dots = dots; 
     }
 
 }

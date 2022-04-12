@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
+using Config; 
 
 // Create every pieces on the chess board
 public class BoardManager : MonoBehaviour
@@ -22,17 +23,16 @@ public class BoardManager : MonoBehaviour
         
         // Create a board with cell prefab
         int xpos = 0;
-        Object prefab_board_cell = AssetDatabase.LoadAssetAtPath(CardSave.board_cell_path, typeof(GameObject));
+        Object prefab_board_cell = AssetDatabase.LoadAssetAtPath(PieceConfig.board_cell_path, typeof(GameObject));
         for(int x = -2; x <= 2; x++){
             int ypos = 0;
             for(int y = -3; y <= 4; y++) {
-                cellPrefab = Instantiate(prefab_board_cell) as GameObject;
                 cellPrefab.name = ("Cell(x, y): "+ xpos + " " + ypos);
                 cellPrefab.transform.position = new Vector2( 150*x, (150*y) - 75 );
                 cellPrefab.transform.SetParent(gameObject.transform, false);
                 cellPrefab.GetComponent<cellController>().indexX = xpos;
                 cellPrefab.GetComponent<cellController>().indexY = ypos;
-                CardSave.cells[xpos, ypos] = cellPrefab;
+                PieceConfig.cells[xpos, ypos] = cellPrefab;
                 if((x + y + 5) % 2 == 0) {
                     cellPrefab.GetComponent<Image>().color =  cell_Brown; //Color.black;
                 } else {
@@ -73,15 +73,15 @@ public class BoardManager : MonoBehaviour
 
     void addPiece(GameObject piece, CardSave.Piece pieceType, int player){
 
-        Game_Manager player_data;
+        GameManager player_data;
 
         if (player == 1)
         {
-            player_data = Game_Manager.player1;
+            player_data = GameManager.player1;
         }
         else
         {
-            player_data = Game_Manager.player2;
+            player_data = GameManager.player2;
         }
         player_data.piecesOnBoard.Add(piece); 
     }

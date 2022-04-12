@@ -37,21 +37,21 @@ public class cardGenerator_InGame : MonoBehaviour
             card.GetComponent<dragDrop>().pieceType = CardSave.Card_List[random].Item2; 
             card.GetComponent<dragDrop>().card_name = card_name; 
             card.GetComponent<dragDrop>().handIndex = i; 
-            Game_Manager.player1.cards_in_hand.Add(card);
+            GameManager.player1.cards_in_hand.Add(card);
         }
 
-        Game_Manager.turn = 2;
+        GameManager.turn = 2;
         // Player2
         for(int i=0; i<3-cardGenerator.result; i++) {
             endButtonController.drawCard(handsPlayer2);
         }
 
-        //Game_Manager.turn = 1;
+        //GameManager.turn = 1;
     
         if(cardGenerator.result == 0) {
-            Game_Manager.turn = 1;
+            GameManager.turn = 1;
         }else {
-            Game_Manager.turn = 2;
+            GameManager.turn = 2;
         }
 
     }

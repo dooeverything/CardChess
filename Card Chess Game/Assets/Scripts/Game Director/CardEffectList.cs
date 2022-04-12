@@ -77,12 +77,12 @@
 //                     }
 //                 }
 //             }
-//             Game_Manager.dots = dots;
+//             GameManager.dots = dots;
 //         }
 //         else
 //         {
-//             Game_Manager.dots[0].GetComponent<strikeController>().deleteCard();
-//             foreach (GameObject strike_dot in Game_Manager.dots)
+//             GameManager.dots[0].GetComponent<strikeController>().deleteCard();
+//             foreach (GameObject strike_dot in GameManager.dots)
 //             {
 //                 GameObject destoryPiece = strike_dot.transform.parent.GetChild(0).gameObject;
 //                 int st_self = piece.GetComponent<ChessPiece>().offensePower;
@@ -94,8 +94,8 @@
 //                 }
 //                 UnityEngine.Object.Destroy(destoryPiece);
 //             }
-//             Game_Manager.destroyAlldots();
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAlldots();
+//             GameManager.destroyAllIndicators();
 //         }
 //         return true; 
 //     }
@@ -135,16 +135,16 @@
 //                     dots.Add(piece.GetComponent<ChessPiece>().createDot(newCell, card));
 //                 }
 //             }
-//             Game_Manager.dots = dots;
+//             GameManager.dots = dots;
 //             return move_available; 
 //         }
 //         else
 //         {
-//             if (Game_Manager.dots.Count > 0)
+//             if (GameManager.dots.Count > 0)
 //             {
-//                 Game_Manager.dots[0].GetComponent<strikeController>()?.deleteCard();
-//                 Game_Manager.dots[0].GetComponent<dotController>()?.deleteCard();
-//                 foreach (GameObject dot in Game_Manager.dots)
+//                 GameManager.dots[0].GetComponent<strikeController>()?.deleteCard();
+//                 GameManager.dots[0].GetComponent<dotController>()?.deleteCard();
+//                 foreach (GameObject dot in GameManager.dots)
 //                 {
 
 //                     dot.GetComponent<strikeController>()?.moveParent();
@@ -153,8 +153,8 @@
 //                 }
 //                 endButtonController.switchTurn(); 
 //             }
-//             Game_Manager.destroyAlldots();
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAlldots();
+//             GameManager.destroyAllIndicators();
 //             return true; 
 //         }
 //     }
@@ -165,7 +165,7 @@
 //         {
 //             piece.GetComponent<ChessPiece>().offensePower++;
 //             piece.GetComponent<ChessPiece>().defensePower++;
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAllIndicators();
 //             card.GetComponent<dragDrop>().destoryCard();
 //         }
 //         return true; 
@@ -196,7 +196,7 @@
 //                     dots.Add(dot);
 //                 }
 //             }
-//             Game_Manager.dots = dots;
+//             GameManager.dots = dots;
 //             return move_available; 
 //         }
 //         return true; 
@@ -242,7 +242,7 @@
 //                 }
 //             }
 
-//             Game_Manager.dots = dots;
+//             GameManager.dots = dots;
 //             return move_available;
 //         }
 //         return true; 
@@ -270,21 +270,21 @@
 //                     // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
 //                     dots.Add(piece.GetComponent<ChessPiece>().createStrike(newCell, newCell.transform.GetChild(0).gameObject, card));
 //                 }
-//             Game_Manager.dots = dots; 
+//             GameManager.dots = dots; 
 //             GOTO1: return move_available; 
 //         } else {
-//             if (Game_Manager.dots.Count > 0)
+//             if (GameManager.dots.Count > 0)
 //             {
-//                 Game_Manager.dots[0].GetComponent<strikeController>().deleteCard();
-//                 foreach (GameObject strike_dot in Game_Manager.dots)
+//                 GameManager.dots[0].GetComponent<strikeController>().deleteCard();
+//                 foreach (GameObject strike_dot in GameManager.dots)
 //                 {
 //                     strike_dot.GetComponent<strikeController>().moveParent();
 //                     UnityEngine.Object.Destroy(strike_dot.transform.parent.GetChild(0).gameObject);
 //                 }
 //                 endButtonController.switchTurn(); 
 //             }
-//             Game_Manager.destroyAlldots();
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAlldots();
+//             GameManager.destroyAllIndicators();
 //             return true; 
 //         }
 //     }
@@ -314,7 +314,7 @@
 //                     }
 //                 }
 //             }
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAllIndicators();
 //             card.GetComponent<dragDrop>().destoryCard();
 //         }
 //         return true; 
@@ -326,7 +326,7 @@
 //             // int currY = piece.GetComponent<ChessPiece>().indexY;
 //             // int newRange = 7 - currY;
 //             piece.GetComponent<Archer>().attackRange = 8;
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAllIndicators();
 //             card.GetComponent<dragDrop>().destoryCard();
 //         }
 //         return true; 
@@ -365,10 +365,10 @@
 //                     }
 //                 }
 //             }
-//             Game_Manager.dots = dots;
+//             GameManager.dots = dots;
 //         }else {
-//             Game_Manager.dots[0].GetComponent<strikeController>().deleteCard();
-//             foreach(GameObject strike_dot in Game_Manager.dots) {
+//             GameManager.dots[0].GetComponent<strikeController>().deleteCard();
+//             foreach(GameObject strike_dot in GameManager.dots) {
 //                 GameObject destoryPiece = strike_dot.transform.parent.GetChild(0).gameObject;
 //                 int st_self = piece.GetComponent<ChessPiece>().offensePower;
 //                 int hp_enemy = destoryPiece.GetComponent<ChessPiece>().defensePower;
@@ -378,8 +378,8 @@
 //                 }
 //                 UnityEngine.Object.Destroy(destoryPiece);
 //             }   
-//             Game_Manager.destroyAlldots();
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAlldots();
+//             GameManager.destroyAllIndicators();
 //         }
 //         return true;
 //     }
@@ -403,7 +403,7 @@
 //         //Penetrating Arrow(관통 화살): 공격력+1로 화살을 발사. 
 //         if(execute){
 //             piece.GetComponent<ChessPiece>().offensePower++;
-//             Game_Manager.destroyAllIndicators();
+//             GameManager.destroyAllIndicators();
 //             card.GetComponent<dragDrop>().destoryCard();
 //         }
 //                 return true;

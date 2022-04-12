@@ -16,11 +16,10 @@ public class dragAndDrop : MonoBehaviour
     private GameObject trashCan;
     void Start() {
 
-        CardSave.cardList[handPos] = cardType;
+        GameManager.cardList[handPos] = cardType;
         firstPosX = this.transform.localPosition.x;
         firstPosY = this.transform.localPosition.y;
         trashCan = GameObject.Find("trashcan_closed");
-
     }
     void Update()
     {
@@ -40,11 +39,11 @@ public class dragAndDrop : MonoBehaviour
     }
 
     private void createNewCard() {
-        int randomIndex = Random.Range(0, Game_Manager.player1.myDeckCount);
-        int randomCard = Game_Manager.player1.deck[randomIndex];
-        Game_Manager.player1.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
-        Game_Manager.player1.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
-        Game_Manager.player1.card_ingame[handPos] = randomCard;
+        int randomIndex = Random.Range(0, GameManager.player1.myDeckCount);
+        int randomCard = GameManager.player1.deck[randomIndex];
+        GameManager.player1.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
+        GameManager.player1.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
+        GameManager.player1.card_ingame[handPos] = randomCard;
         Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         dragAndDrop component = card.GetComponent<dragAndDrop>();

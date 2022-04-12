@@ -56,8 +56,8 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
         }
 
         if(numAttack == 0) {
-            Game_Manager.destroyAllIndicators();
-            Game_Manager.destroyAlldots();
+            GameManager.destroyAllIndicators();
+            GameManager.destroyAlldots();
             // Switch turn after strike
             endButtonController.switchTurn();
             numAttack = 1;
