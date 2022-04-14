@@ -250,7 +250,7 @@ namespace Config
                                         continue;
                                     }
                                     move_available = true; 
-                                    GameObject dot = Config.prefabToGameObject(Sprite.Dot_Move.ToString()); 
+                                    GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString()); 
                                     dot.transform.SetParent(cell.transform, false);
                                     dot.transform.position = cell.transform.position;
                                     dot.GetComponent<dotController>().parent = piece;
@@ -297,7 +297,7 @@ namespace Config
                                     GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;
                                     if (enemyPiece.GetComponent<ChessPiece>().player != piece.GetComponent<ChessPiece>().player)
                                     {
-                                        GameObject dot = Config.prefabToGameObject(Sprite.Thunder_Bolt.ToString()); 
+                                        GameObject dot = Helper.prefabNameToGameObject(Prefab.Thunder_Bolt.ToString()); 
                                         dot.transform.SetParent(newCell_Strike.transform, false);
                                         dot.transform.position = newCell_Strike.transform.position;
                                         dot.GetComponent<thunderBoltStrikeController>().parent = piece;

@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Config { 
-    enum Sprite {
+namespace Config {
+    enum Prefab {
         Dot_Move, 
         Thunder_Bolt, 
+        Cell, 
     }
+
 
     // Class For Path Strings
     public static class Path {
         public static string prefab_base_path = "Assets/Prefab"; 
-        
+        public static class Prefab {
+            public static string dot_move = "Dot_Move";
+            public static string thunder_bolt = "Thunder_Bolt"; 
+            public static string board = "Board/Cell"; 
+        }
     }
 
     // Class For Helper/Utility Functions
     public static class Helper {
-        public static GameObject prefabToGameObject(string prefab_name){
-            string path = typeof(Path).GetProperty(prefab_name).GetValue(null) as string;
+        // Creates And Returns GameObject Based On Prefab Name As String
+        public static GameObject prefabNameToGameObject(string prefab_name){
+            string path = typeof(Path.Prefab).GetProperty(prefab_name.ToUpper()).GetValue(null) as string;
             Object prefab = AssetDatabase.LoadAssetAtPath($"{Path.prefab_base_path}/{path}", typeof(GameObject));
             return GameObject.Instantiate(prefab) as GameObject;
         }
