@@ -15,10 +15,9 @@ public class dragAndDrop : MonoBehaviour
     private bool isBeingHeld = false;
     private GameObject trashCan;
     void Start() {
-
         GameManager.cardList[handPos] = cardType;
-        firstPosX = this.transform.localPosition.x;
-        firstPosY = this.transform.localPosition.y;
+        firstPosX = transform.localPosition.x;
+        firstPosY = transform.localPosition.y;
         trashCan = GameObject.Find("trashcan_closed");
     }
     void Update()

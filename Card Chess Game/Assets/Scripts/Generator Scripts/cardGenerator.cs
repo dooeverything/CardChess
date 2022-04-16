@@ -8,53 +8,18 @@ using UnityEditor;
 
 public class cardGenerator : MonoBehaviour
 {
-    // public List<int> cardList = new List<int>();
-    //public GameObject[] cards;
-    int numCard = 0;
+    public int player; 
     public static int result;
 
 
     void OnEnable()
     {
-        // result = PlayerPrefs.GetInt("result");
-        result = 1;
+        result = PlayerPrefs.GetInt("result");
     }
 
     void Start()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            int km = 6;
-            int aa = 0;
-            int ma = 1;
-            GameManager.player1.deck.Add(km);
-            GameManager.player2.deck.Add(km);
-            GameManager.player1.deck.Add(aa);
-            GameManager.player2.deck.Add(aa);
-            GameManager.player1.deck.Add(ma);
-            GameManager.player2.deck.Add(ma);
-        }
-
-        for (int i = 0; i < 6; i++)
-        {
-            int am = 3;
-            int mm = 4;
-            int wa = 2;
-            GameManager.player1.deck.Add(am);
-            GameManager.player1.deck.Add(mm);
-            GameManager.player1.deck.Add(wa);
-            GameManager.player2.deck.Add(am);
-            GameManager.player2.deck.Add(mm);
-            GameManager.player2.deck.Add(wa);
-        }
-
-        for (int i = 0; i < 12; i++)
-        {
-            int wm = 5;
-            GameManager.player1.deck.Add(wm);
-            GameManager.player2.deck.Add(wm);
-
-        }
+        
         for (int i = 0; i < 3; i++)
         {
             createCard();

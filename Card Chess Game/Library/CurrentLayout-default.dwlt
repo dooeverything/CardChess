@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_MinSize: {x: 881, y: 492}
   m_MaxSize: {x: 16006, y: 14042}
   vertical: 0
-  controlID: 132
+  controlID: 112
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 605, y: 492}
   m_MaxSize: {x: 12005, y: 14042}
   vertical: 1
-  controlID: 60
+  controlID: 40
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_MinSize: {x: 605, y: 221}
   m_MaxSize: {x: 12005, y: 4021}
   vertical: 0
-  controlID: 61
+  controlID: 41
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -422,9 +422,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: c6420000
-      m_LastClickedID: 0
-      m_ExpandedIDs: b2f9ffffbef9ffff
+      m_SelectedIDs: 74450000
+      m_LastClickedID: 17780
+      m_ExpandedIDs: 8af3ffff98f3ffff86f6ffff04faffff1afafffffcfaffff8043000088430000b443000028440000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -476,17 +476,17 @@ MonoBehaviour:
   m_ShowContextualTools: 0
   m_WindowGUID: cc27987af1a868c49b0894db9c0f5429
   m_Gizmos: 1
-  m_OverrideSceneCullingMask: 0
-  m_SceneIsLit: 0
+  m_OverrideSceneCullingMask: 6917529027641081856
+  m_SceneIsLit: 1
   m_SceneLighting: 1
   m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 548.4465, y: 1140.3917, z: 16622.373}
+    m_Target: {x: 436.3555, y: 1203.7184, z: -138.59222}
     speed: 2
-    m_Value: {x: 3.1643038, y: 4.584182, z: 0}
+    m_Value: {x: 436.3555, y: 1203.7184, z: -138.59222}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -498,7 +498,7 @@ MonoBehaviour:
   m_SceneViewState:
     m_AlwaysRefresh: 0
     showFog: 1
-    showSkybox: 0
+    showSkybox: 1
     showFlares: 1
     showImageEffects: 1
     showParticleSystems: 1
@@ -537,9 +537,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 114.75305
+    m_Target: 1241.4375
     speed: 2
-    m_Value: 10
+    m_Value: 1241.4375
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -602,22 +602,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefab/Board
+    - Assets/Scripts/Generator Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefab/Board
+  - Assets/Scripts/Generator Scripts
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\sejin\Desktop\Unity\anygames\Card Chess Game
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: be420000
-    m_LastClickedID: 17086
-    m_ExpandedIDs: 000000009c4200009e420000a8420000c042000000ca9a3b
+    m_SelectedIDs: ae420000
+    m_LastClickedID: 17070
+    m_ExpandedIDs: 000000009a4200009c420000a242000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -645,7 +645,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000009c4200009e420000
+    m_ExpandedIDs: 000000009a4200009c420000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -676,18 +676,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000466d00008857000080570000a0450000a845000072660000ae420000ce420000c0420000f6420000f4420000ea4100003e5600005e430000aa160000c2550000a81600009a6100006284000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Choose Card Scene
+      m_OriginalName: Choose Card Scene
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 17176
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
