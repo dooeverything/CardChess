@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
-
+using Config;
 public class endButtonController : MonoBehaviour
 {
 
@@ -63,15 +63,13 @@ public class endButtonController : MonoBehaviour
         }else {
             player_data = GameManager.player2;
         }
-        int randomIndex = Random.Range(0, player_data.myDeckCount);
-        int randomCard = player_data.deck[randomIndex];
-        player_data.deck.RemoveAt(randomIndex);
-        player_data.myDeckCount--;
-        Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.test[randomCard], typeof(GameObject));
-        GameObject card = Instantiate(prefab) as GameObject;
-        card.transform.SetParent(hands.transform, true);
-        card.GetComponent<dragDrop>().player = GameManager.turn;
-        player_data.cards_in_hand.Add(card);
+        Card card = player_data.drawCard();
+        
+        GameObject card_object = Config.Helper.cardToGameObject(card);
+
+        card_object.transform.SetParent(hands.transform, true);
+        card_object.GetComponent<dragDrop>().player = GameManager.turn;
+        player_data.cards_in_hand.Add(card_object);
     }
 
     public static void switchTurn() {

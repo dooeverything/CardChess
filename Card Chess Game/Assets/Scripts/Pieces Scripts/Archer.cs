@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
-
+using Config;
 public class Archer : MonoBehaviour {
     public int offensePower = 1;
     public int defensePower = 1;
@@ -12,8 +12,7 @@ public class Archer : MonoBehaviour {
     public int numEnemy = 0;
     public bool onlyAttack = false;
     public GameObject create_strikeDot(GameObject cell, GameObject enemy, GameObject card, GameObject parent) {
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
-        GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
+        GameObject striking = Helper.prefabNameToGameObject(Prefab.Attacking.ToString());
         striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         striking.transform.position = cell.transform.position;
         striking.GetComponent<strikeController>().enemy = enemy;
@@ -24,13 +23,12 @@ public class Archer : MonoBehaviour {
     }
 
     public GameObject create_moveDot(GameObject newCell, GameObject card) {
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-        GameObject dot = GameObject.Instantiate(prefab) as GameObject;
-        dot.transform.SetParent(newCell.transform, false);
-        dot.transform.position = newCell.transform.position;
-        dot.GetComponent<dotController>().parent = gameObject; 
-        dot.GetComponent<dotController>().card = card;
-        return dot;
+        GameObject move = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
+        move.transform.SetParent(newCell.transform, false);
+        move.transform.position = newCell.transform.position;
+        move.GetComponent<dotController>().parent = gameObject; 
+        move.GetComponent<dotController>().card = card;
+        return move;
     }
 
     public void createDots_Archer(List<int[]> move_list, GameObject card = null)
@@ -49,7 +47,7 @@ public class Archer : MonoBehaviour {
                     continue;
                 }
 
-                GameObject newCell_Stirke = CardSave.cells[newX_strike, newY_strike ];
+                GameObject newCell_Stirke = PieceConfig.cells[newY_strike, newX_strike ];
                 if(newCell_Stirke.gameObject.transform.childCount > 0) {
                     //if(newCell_Stirke.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
                     

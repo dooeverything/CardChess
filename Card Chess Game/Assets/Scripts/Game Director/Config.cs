@@ -2,29 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using UnityEngine.UI;
 namespace Config {
     enum Prefab {
         Dot_Move, 
         Thunder_Bolt, 
         Cell, 
+        Card, 
+        Attacking,
+        Selected_Indicator,
+        Mulligan
     }
 
     enum Names {
         P1_First = 1, 
         P2_First = 2,
-        Mulligan, 
     }
+
+
 
 
     // Class For Path Strings
     public static class Path {
-        public static string prefab_base_path = "Assets/Prefab"; 
-        public static string sprite_base_path = "Sprites"; 
+        public const string prefab_base_path = "Assets/Prefab"; 
+        public const string sprite_base_path = "Sprites"; 
         public static class Prefab {
-            public static string dot_move = "Dot_Move";
-            public static string thunder_bolt = "Thunder_Bolt"; 
-            public static string board = "Board/Cell"; 
+            public const string dot_move = "Dot_Move";
+            public const string thunder_bolt = "Thunder_Bolt"; 
+            public const string cell = "Board/Cell"; 
+            public const string card = "Card"; 
+            public const string king = "Chess_Piece/King";
+            public const string mage = "Chess_Piece/Mage"; 
+            public const string archer = "Chess_Piece/Archer"; 
+            public const string warrior = "Chess_Piece/Mage"; 
+            public const string mulligan = "MulliganTest";
+            public const string attacking = "Attacking";
+            public const string selected_indicator = "Selected_Indicator";
+
         }
     }
 
@@ -32,9 +46,23 @@ namespace Config {
     public static class Helper {
         // Creates And Returns GameObject Based On Prefab Name As String
         public static GameObject prefabNameToGameObject(string prefab_name){
-            string path = (typeof(Path.Prefab).GetProperty(prefab_name.ToLower()).GetValue(null) as string).ToUpper();
-            Object prefab = AssetDatabase.LoadAssetAtPath($"{Path.prefab_base_path}/{path}", typeof(GameObject));
+            Debug.Log(prefab_name.ToLower());
+            string path = typeof(Path.Prefab).GetField(prefab_name.ToLower()).GetValue(null) as string;
+            Debug.Log(path);
+            Debug.Log($"{Path.prefab_base_path}/{path}");
+            Object prefab = AssetDatabase.LoadAssetAtPath($"{Path.prefab_base_path}/{path}.prefab", typeof(GameObject));
             return GameObject.Instantiate(prefab) as GameObject;
+
+        }
+
+        public static GameObject cardToGameObject(Card card) {
+            GameObject card_object = prefabNameToGameObject(Prefab.Card.ToString()); 
+            Sprite sprite = generateSprite(card.ToString()); 
+            card_object.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
+            card_object.transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
+
+            card_object.GetComponent<dragDrop>().pieceType = CardConfig.card_dict[card].Item2;
+            return card_object; 
         }
 
         public static Sprite generateSprite(params string[] path_list) {

@@ -114,7 +114,7 @@ namespace Config
                                         continue;
                                     }
 
-                                    GameObject newCell_Stirke = PieceConfig.cells[newX_strike, newY_strike];
+                                    GameObject newCell_Stirke = PieceConfig.cells[newY_strike, newX_strike];
                                     if (newCell_Stirke.gameObject.transform.childCount > 0)
                                     {
                                         // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
@@ -175,7 +175,7 @@ namespace Config
                                     continue;
                                 }
                                 move_available = true; 
-                                GameObject newCell = PieceConfig.cells[newX_strike, newY_strike];
+                                GameObject newCell = PieceConfig.cells[newY_strike, newX_strike];
 
                                 if (newCell.gameObject.transform.childCount > 0)
                                 {
@@ -291,7 +291,7 @@ namespace Config
                                 }
                                 move_available = true; 
 
-                                GameObject newCell_Strike = PieceConfig.cells[newX_strike, newY_strike];
+                                GameObject newCell_Strike = PieceConfig.cells[newY_strike, newX_strike];
                                 if (newCell_Strike.transform.childCount > 0)
                                 {
                                     GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;
@@ -440,7 +440,7 @@ namespace Config
                                         continue;
                                     }
 
-                                    GameObject newCell_Strike = PieceConfig.cells[newX_strike, newY_strike ];
+                                    GameObject newCell_Strike = PieceConfig.cells[newY_strike, newX_strike];
                                     if(newCell_Strike.gameObject.transform.childCount > 0) {
                                         GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;
                                         if(enemyPiece.GetComponent<ChessPiece>().player != piece.GetComponent<ChessPiece>().player) { 
@@ -514,8 +514,8 @@ namespace Config
                         // 아군을 모두 찾고 -> 찾은 모든 아군에 생성한 인디케이터를 차일드로 set
                         // 
                         if(!GameManager.executing) {
-                            for(int i=0; i<5; i++) {
-                                for(int j=0; j<8; j++) {
+                            for(int i=0; i<8; i++) {
+                                for(int j=0; j<5; j++) {
                                     GameObject cell = PieceConfig.cells[i, j];
                                     if(cell.transform.childCount <= 0 ) {
                                         continue;

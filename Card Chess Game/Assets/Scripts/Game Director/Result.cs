@@ -30,6 +30,7 @@ public class Result : MonoBehaviour
             if(timeElapsed > delay) {
                 Names playerResult = (player1.text == result.text) ? Names.P1_First : Names.P2_First; 
                 PlayerPrefs.SetInt("result", (int) playerResult);
+                PlayerPrefs.SetInt("player", 1);
                 loadNextScene(); 
             }
         }

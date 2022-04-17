@@ -16,6 +16,7 @@ namespace Config {
 
     public static class PieceConfig
     {
+        public static int[,] move_list_basic = { {1, 0}, {-1,0}, {0,-1}, {0, 1}};
         public static int[,] move_list_surround = { { 1, 0 }, { 1, 1 }, { 0, 1 }, { -1, 1 }, { -1, 0 }, { -1, -1 }, { 0, -1 }, { 1, -1 } };
         public static int[,] move_list_knight = { { 2, 1 }, { 1, 2 }, { 2, -1 }, { 1, -2 }, { -2, 1 }, { -1, 2 }, { -2, -1 }, { -1, -2 } };
         public static GameObject[,] cells = new GameObject[8, 5];

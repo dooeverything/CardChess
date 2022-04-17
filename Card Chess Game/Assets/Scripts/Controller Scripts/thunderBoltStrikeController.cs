@@ -32,8 +32,8 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
             for(int i=0; i<3; i++) {
                 List<GameObject> next_targets = new List<GameObject>(); 
                 for(int j=0; j<8; j++) {
-                    int newX_strike = enemy.GetComponent<ChessPiece>().indexX + (CardEffect.move_list[j, 0]);
-                    int newY_strike = enemy.GetComponent<ChessPiece>().indexY + (CardEffect.move_list[j, 1]);
+                    int newX_strike = enemy.GetComponent<ChessPiece>().indexX + (Config.PieceConfig.move_list_surround[j, 0]);
+                    int newY_strike = enemy.GetComponent<ChessPiece>().indexY + (Config.PieceConfig.move_list_surround[j, 1]);
 
                     // Check the location is out of bound 
                     if(newX_strike > 4 || newX_strike < 0) {
@@ -43,7 +43,7 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
                         continue;
                     }
                     
-                    GameObject newCell_Strike = CardSave.cells[newX_strike, newY_strike ];
+                    GameObject newCell_Strike = Config.PieceConfig.cells[newY_strike, newX_strike];
                     if(newCell_Strike.transform.childCount > 0) {
                         if(newCell_Strike.transform.GetChild(0) == null) continue; 
                         GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;

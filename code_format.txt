@@ -5,6 +5,7 @@
 5. Class Name: PascalCase
 6. Prefab Name: Paskal_Snake_Case
 7. Enum: Pascal_Snake_Case
+8. Folder: Pascal_Snake_Case
 
 
 x, y or y, x

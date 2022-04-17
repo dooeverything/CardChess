@@ -16,7 +16,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public int player = 1;
     public GameManager player_data;
     public Card card; 
-    public int handIndex = -1;
+    public int hand_index = -1;
     private bool move_available = false; 
     private Transform hand;
     private List<GameObject> target_pieces = null;
@@ -43,6 +43,14 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         //target_pieces = player_data.filterList(pieceType); 
         
     }
+
+
+    public void init(int player, int hand_index){
+
+        this.player = player;
+        this.hand_index = hand_index;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         target_pieces = player_data.filterList(pieceType); 
@@ -180,7 +188,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void destoryCard() {
         dragDrop temp = GetComponent<dragDrop>(); 
         List<GameObject> list = temp.player_data.cards_in_hand;
-        temp.player_data.cards_in_hand.RemoveAt(handIndex);
+        temp.player_data.cards_in_hand.RemoveAt(hand_index);
         Destroy(this.gameObject); 
     }
 

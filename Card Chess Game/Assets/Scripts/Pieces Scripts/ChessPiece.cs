@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
-
+using Config;
 public class ChessPiece : MonoBehaviour, IPointerDownHandler
 {
     public int offensePower;
     public int defensePower;
     public int indexX;
     public int indexY;
-    public CardSave.Piece chessPieceType;
+    public Piece chessPieceType;
     public int player;
     public GameManager player_data;
     public List<GameObject> indicators = null;
@@ -58,15 +58,11 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         }
         activated = true; 
 
-        // If the piece is mage, then do nothing --> mage cannot both attack and move without a card!
-        // if(chessPieceType == CardSave.Piece.Mage)
-        //     return;
-
         // create indicator around the piece itself
         addIndicator(); 
-        if(chessPieceType == CardSave.Piece.King) {
+        if(chessPieceType == Piece.King) {
             GetComponent<King>().createDots(); // Speical move for King
-        } else if(chessPieceType == CardSave.Piece.Archer){
+        } else if(chessPieceType == Piece.Archer){
             GetComponent<Archer>().numEnemy = 0;
             GetComponent<Archer>().createDots_Archer(basic_moves);
         }else {
@@ -75,8 +71,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     }
 
     public GameObject createDot(GameObject cell, GameObject card) {
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/dot_move.prefab", typeof(GameObject));
-        GameObject dot = GameObject.Instantiate(prefab) as GameObject;
+        GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
         dot.transform.SetParent(cell.transform, false);
         dot.transform.position = cell.transform.position;
         dot.GetComponent<dotController>().parent = gameObject; 
@@ -96,7 +91,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             if(newIndexY > 7 || newIndexY < 0 ) {
                 continue;
             }
-            GameObject newCell = CardSave.cells[newIndexX, newIndexY];
+            GameObject newCell = PieceConfig.cells[newIndexY, newIndexX];
             
             if(newCell.gameObject.transform.childCount > 0) {
                 //if(newCell.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
@@ -114,8 +109,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 
     public void addIndicator()
     {
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/selectedIndicator.prefab", typeof(GameObject));
-        GameObject selected_indicator = Instantiate(prefab) as GameObject;
+        GameObject selected_indicator = Helper.prefabNameToGameObject(Prefab.Selected_Indicator.ToString());
         selected_indicator.transform.SetParent(gameObject.transform);
         selected_indicator.transform.position = transform.position;
         GameManager.indicators.Add(selected_indicator); 
@@ -123,15 +117,14 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 
     public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {
         Debug.Log("CreateStrike Called"); 
-        Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Attacking.prefab", typeof(GameObject)); // Create Prefab
-        GameObject striking = GameObject.Instantiate(prefab) as GameObject; // Instantiate on Canvas
-        striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
-        striking.transform.position = cell.transform.position;
-        striking.GetComponent<strikeController>().enemy = enemy;
-        striking.GetComponent<strikeController>().card = card;
-        striking.GetComponent<strikeController>().parent = gameObject;
+        GameObject attacking = Helper.prefabNameToGameObject(Prefab.Attacking.ToString());
+        attacking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
+        attacking.transform.position = cell.transform.position;
+        attacking.GetComponent<strikeController>().enemy = enemy;
+        attacking.GetComponent<strikeController>().card = card;
+        attacking.GetComponent<strikeController>().parent = gameObject;
 
-        return striking;
+        return attacking;
     }
 
     public void destroyIndicator()
