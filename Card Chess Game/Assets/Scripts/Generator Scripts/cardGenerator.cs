@@ -4,82 +4,42 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor;
-
+using Config;
 
 public class cardGenerator : MonoBehaviour
 {
-    // public List<int> cardList = new List<int>();
-    //public GameObject[] cards;
-    int numCard = 0;
+    public int player; 
     public static int result;
-
+    private int num_cards; 
 
     void OnEnable()
     {
-        // result = PlayerPrefs.GetInt("result");
-        result = 1;
+        result = PlayerPrefs.GetInt("result");
     }
 
     void Start()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            int km = 6;
-            int aa = 0;
-            int ma = 1;
-            Game_Manager.player1.deck.Add(km);
-            Game_Manager.player2.deck.Add(km);
-            Game_Manager.player1.deck.Add(aa);
-            Game_Manager.player2.deck.Add(aa);
-            Game_Manager.player1.deck.Add(ma);
-            Game_Manager.player2.deck.Add(ma);
-        }
+        Names result = (Names)PlayerPrefs.GetInt("result");
 
-        for (int i = 0; i < 6; i++)
-        {
-            int am = 3;
-            int mm = 4;
-            int wa = 2;
-            Game_Manager.player1.deck.Add(am);
-            Game_Manager.player1.deck.Add(mm);
-            Game_Manager.player1.deck.Add(wa);
-            Game_Manager.player2.deck.Add(am);
-            Game_Manager.player2.deck.Add(mm);
-            Game_Manager.player2.deck.Add(wa);
+        if(player == 1 && result == Names.P1_First || player == 2 && result == Names.P2_First) {
+            num_cards = 3; 
+        } else {
+            num_cards = 4; 
         }
-
-        for (int i = 0; i < 12; i++)
-        {
-            int wm = 5;
-            Game_Manager.player1.deck.Add(wm);
-            Game_Manager.player2.deck.Add(wm);
-
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            createCard();
-        }
-
+        createCards(); 
     }
 
-    public void createCard()
+    public void createCards()
     {
-        // result가 0일때 선공
-        if (result == 0 && numCard >= 2) return;
-        // result가 1일때 후공
-        if (result == 1 && numCard >= 3) return;
-
-        int randomIndex = Random.Range(0, Game_Manager.player1.myDeckCount);
-        int randomCard = Game_Manager.player1.deck[randomIndex];
-        Game_Manager.player1.deck.RemoveAt(randomIndex);
-        Game_Manager.player1.myDeckCount--;
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
-        GameObject card = Instantiate(prefab) as GameObject;
-
-        dragAndDrop component = card.GetComponent<dragAndDrop>();
-        Game_Manager.player1.card_ingame.Add(randomCard);
-        component.cardType = randomCard;
-        component.handPos = numCard;
+        GameManager player = (this.player == 1) ? GameManager.player1 : GameManager.player2; 
+        for(int i = 0; i < num_cards; i++) {
+            Card card_drawn = player.drawCard(); 
+            GameObject card = Helper.prefabNameToGameObject(Names.Mulligan.ToString()); 
+            dragAndDrop component = card.GetComponent<dragAndDrop>();
+            component.init(Card,)
+            Vector3 center_pos = new Vector3(4, 8.5f, 0); 
+            
+        }
 
         //if player1 is the second
         if (result == 1)

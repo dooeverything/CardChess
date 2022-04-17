@@ -22,7 +22,7 @@ public class endButtonController : MonoBehaviour
     void Update()
     {
         GameObject hands; 
-        if(Game_Manager.turn == 1) {
+        if(GameManager.turn == 1) {
             hands = hands1;
         }else {
             hands = hands2; 
@@ -56,25 +56,25 @@ public class endButtonController : MonoBehaviour
     }
 
     public static void drawCard(GameObject hands) {
-        Game_Manager player_data;
+        GameManager player_data;
 
-        if(Game_Manager.turn == 1) {
-            player_data = Game_Manager.player1;
+        if(GameManager.turn == 1) {
+            player_data = GameManager.player1;
         }else {
-            player_data = Game_Manager.player2;
+            player_data = GameManager.player2;
         }
         int randomIndex = Random.Range(0, player_data.myDeckCount);
         int randomCard = player_data.deck[randomIndex];
         player_data.deck.RemoveAt(randomIndex);
         player_data.myDeckCount--;
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.test[randomCard], typeof(GameObject));
+        Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.test[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         card.transform.SetParent(hands.transform, true);
-        card.GetComponent<dragDrop>().player = Game_Manager.turn;
+        card.GetComponent<dragDrop>().player = GameManager.turn;
         player_data.cards_in_hand.Add(card);
     }
 
     public static void switchTurn() {
-        Game_Manager.turn = Game_Manager.turn == 1 ? 2 : 1; 
+        GameManager.turn = GameManager.turn == 1 ? 2 : 1; 
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5021769905501708943}
   - component: {fileID: -4037359315955725865}
   m_Layer: 5
-  m_Name: dot_strike
+  m_Name: Dot_Strike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

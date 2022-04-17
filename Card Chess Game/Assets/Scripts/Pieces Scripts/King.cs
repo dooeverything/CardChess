@@ -11,10 +11,10 @@ public class King : MonoBehaviour {
         List<GameObject> dots = new List<GameObject>();
         // 왕-이동: 상하좌우대각선 1칸
         for (int i = 0; i < 8; i++) {
-            //int newIndexX = indexX + (cardSave.position[i,0]);
-            //int newIndexY = indexY + (cardSave.position[i,1]);
-            int newIndexX = GetComponent<ChessPiece>().indexX + (cardSave.position[i,0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (cardSave.position[i,1]);
+            //int newIndexX = indexX + (CardSave.position[i,0]);
+            //int newIndexY = indexY + (CardSave.position[i,1]);
+            int newIndexX = GetComponent<ChessPiece>().indexX + (CardSave.position[i,0]);
+            int newIndexY = GetComponent<ChessPiece>().indexY + (CardSave.position[i,1]);
 
             if(newIndexX > 4 || newIndexX < 0) {
                 continue;
@@ -22,7 +22,7 @@ public class King : MonoBehaviour {
             if(newIndexY > 7 || newIndexY < 0 ) {
                 continue;
             }
-            GameObject newCell = cardSave.cells[newIndexX, newIndexY];
+            GameObject newCell = CardSave.cells[newIndexX, newIndexY];
             
             if(newCell.gameObject.transform.childCount > 0) {
                 continue;
@@ -35,6 +35,6 @@ public class King : MonoBehaviour {
             dot.GetComponent<dotController>().parent = gameObject; 
             dots.Add(dot);
         }
-        Game_Manager.dots = dots; 
+        GameManager.dots = dots; 
     }
 }

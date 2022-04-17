@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using Config; 
 public class dragAndDrop : MonoBehaviour
 {
     public int handPos; // 손에서 몇번째에 있는지 
@@ -13,14 +14,13 @@ public class dragAndDrop : MonoBehaviour
     private float startPosX;
     private float startPosY;
     private bool isBeingHeld = false;
+    private Card card; 
     private GameObject trashCan;
+    private int player; 
     void Start() {
-
-        cardSave.cardList[handPos] = cardType;
-        firstPosX = this.transform.localPosition.x;
-        firstPosY = this.transform.localPosition.y;
+        firstPosX = transform.localPosition.x;
+        firstPosY = transform.localPosition.y;
         trashCan = GameObject.Find("trashcan_closed");
-
     }
     void Update()
     {
@@ -34,19 +34,26 @@ public class dragAndDrop : MonoBehaviour
             if(trashCan.GetComponent<BoxCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
                 Destroy(gameObject);
                 createNewCard();
-
             }
         }
         //onMouseUp();
     }
 
+    public void init(Card card, int player) {
+        this.card = card; 
+        this.player = player; 
+        Sprite card_sprite = Config.Helper.generateSprite(card.ToString()); 
+        transform.GetChild(0).GetComponent<Image>().sprite = card_sprite;
+        transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
+    }
+
     private void createNewCard() {
-        int randomIndex = Random.Range(0, Game_Manager.player1.myDeckCount);
-        int randomCard = Game_Manager.player1.deck[randomIndex];
-        Game_Manager.player1.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
-        Game_Manager.player1.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
-        Game_Manager.player1.card_ingame[handPos] = randomCard;
-        Object prefab = AssetDatabase.LoadAssetAtPath(cardSave.pathMulligan[randomCard], typeof(GameObject));
+        int randomIndex = Random.Range(0, GameManager.player1.myDeckCount);
+        int randomCard = GameManager.player1.deck[randomIndex];
+        GameManager.player1.deck.RemoveAt(randomIndex); // 다시 뽑은 카드 덱에서 뽑기
+        GameManager.player1.deck.Add(cardType); // 버린 카드 다시 덱으로 넣기
+        GameManager.player1.card_ingame[handPos] = randomCard;
+        Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathMulligan[randomCard], typeof(GameObject));
         GameObject card = Instantiate(prefab) as GameObject;
         dragAndDrop component = card.GetComponent<dragAndDrop>();
         card.transform.position = new Vector3( firstPosX, firstPosY, 0);

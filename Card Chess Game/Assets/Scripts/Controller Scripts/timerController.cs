@@ -28,7 +28,7 @@ public class timerController : MonoBehaviour
     {
         timer = timer - Time.deltaTime;
         GameObject hands; 
-        if(Game_Manager.turn == 1) {
+        if(GameManager.turn == 1) {
             hands = hands1; 
         } else {
             hands = hands2; 

@@ -49,7 +49,7 @@ public class Archer : MonoBehaviour {
                     continue;
                 }
 
-                GameObject newCell_Stirke = cardSave.cells[newX_strike, newY_strike ];
+                GameObject newCell_Stirke = CardSave.cells[newX_strike, newY_strike ];
                 if(newCell_Stirke.gameObject.transform.childCount > 0) {
                     //if(newCell_Stirke.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
                     
@@ -72,7 +72,7 @@ public class Archer : MonoBehaviour {
         }
         strikeController.numAttack = System.Math.Min(2, numEnemy); 
         onlyAttack = false;
-        Game_Manager.dots = dots; 
+        GameManager.dots = dots; 
     }
 
 }

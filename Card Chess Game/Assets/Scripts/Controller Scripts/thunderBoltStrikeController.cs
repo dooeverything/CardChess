@@ -43,7 +43,7 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
                         continue;
                     }
                     
-                    GameObject newCell_Strike = cardSave.cells[newX_strike, newY_strike ];
+                    GameObject newCell_Strike = CardSave.cells[newX_strike, newY_strike ];
                     if(newCell_Strike.transform.childCount > 0) {
                         if(newCell_Strike.transform.GetChild(0) == null) continue; 
                         GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;
@@ -81,8 +81,8 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
         }
 
 
-        Game_Manager.destroyAllIndicators(); 
-        Game_Manager.destroyAlldots(); 
+        GameManager.destroyAllIndicators(); 
+        GameManager.destroyAlldots(); 
         // Switch turn after strike
         endButtonController.switchTurn();
     }

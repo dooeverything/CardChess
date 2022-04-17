@@ -45,7 +45,7 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
                 numAttack--;
                 Destroy(gameObject);
                 Destroy(enemy); 
-                if(parent.GetComponent<ChessPiece>().chessPieceType != cardSave.Piece.Archer) {
+                if(parent.GetComponent<ChessPiece>().chessPieceType != CardSave.Piece.Archer) {
                     moveParent();
                 }
             }
@@ -56,8 +56,8 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
         }
 
         if(numAttack == 0) {
-            Game_Manager.destroyAllIndicators();
-            Game_Manager.destroyAlldots();
+            GameManager.destroyAllIndicators();
+            GameManager.destroyAlldots();
             // Switch turn after strike
             endButtonController.switchTurn();
             numAttack = 1;
