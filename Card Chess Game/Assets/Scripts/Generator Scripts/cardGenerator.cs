@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor;
-
+using Config;
 
 public class cardGenerator : MonoBehaviour
 {
     public int player; 
     public static int result;
-
+    private int num_cards; 
 
     void OnEnable()
     {
@@ -19,32 +19,27 @@ public class cardGenerator : MonoBehaviour
 
     void Start()
     {
-        
-        for (int i = 0; i < 3; i++)
-        {
-            createCard();
-        }
+        Names result = (Names)PlayerPrefs.GetInt("result");
 
+        if(player == 1 && result == Names.P1_First || player == 2 && result == Names.P2_First) {
+            num_cards = 3; 
+        } else {
+            num_cards = 4; 
+        }
+        createCards(); 
     }
 
-    public void createCard()
+    public void createCards()
     {
-        // result가 0일때 선공
-        if (result == 0 && numCard >= 2) return;
-        // result가 1일때 후공
-        if (result == 1 && numCard >= 3) return;
-
-        int randomIndex = Random.Range(0, GameManager.player1.myDeckCount);
-        int randomCard = GameManager.player1.deck[randomIndex];
-        GameManager.player1.deck.RemoveAt(randomIndex);
-        GameManager.player1.myDeckCount--;
-        Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathMulligan[randomCard], typeof(GameObject));
-        GameObject card = Instantiate(prefab) as GameObject;
-
-        dragAndDrop component = card.GetComponent<dragAndDrop>();
-        GameManager.player1.card_ingame.Add(randomCard);
-        component.cardType = randomCard;
-        component.handPos = numCard;
+        GameManager player = (this.player == 1) ? GameManager.player1 : GameManager.player2; 
+        for(int i = 0; i < num_cards; i++) {
+            Card card_drawn = player.drawCard(); 
+            GameObject card = Helper.prefabNameToGameObject(Names.Mulligan.ToString()); 
+            dragAndDrop component = card.GetComponent<dragAndDrop>();
+            component.init(Card,)
+            Vector3 center_pos = new Vector3(4, 8.5f, 0); 
+            
+        }
 
         //if player1 is the second
         if (result == 1)

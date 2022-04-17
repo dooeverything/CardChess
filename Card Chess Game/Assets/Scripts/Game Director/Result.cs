@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using Config; 
 public class Result : MonoBehaviour
 {
     [SerializeField] Text player1;
@@ -28,8 +28,8 @@ public class Result : MonoBehaviour
             result.text = (wheelScript.result() == 1) ? "Tail" : "Head"; 
             timeElapsed += Time.deltaTime;
             if(timeElapsed > delay) {
-                int playerResult = (player1.text == result.text) ? 1 : 0; 
-                PlayerPrefs.SetInt("result", playerResult);
+                Names playerResult = (player1.text == result.text) ? Names.P1_First : Names.P2_First; 
+                PlayerPrefs.SetInt("result", (int) playerResult);
                 loadNextScene(); 
             }
         }

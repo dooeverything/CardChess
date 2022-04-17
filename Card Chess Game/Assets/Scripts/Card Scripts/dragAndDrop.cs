@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using Config; 
 public class dragAndDrop : MonoBehaviour
 {
     public int handPos; // 손에서 몇번째에 있는지 
@@ -13,9 +14,10 @@ public class dragAndDrop : MonoBehaviour
     private float startPosX;
     private float startPosY;
     private bool isBeingHeld = false;
+    private Card card; 
     private GameObject trashCan;
+    private int player; 
     void Start() {
-        GameManager.cardList[handPos] = cardType;
         firstPosX = transform.localPosition.x;
         firstPosY = transform.localPosition.y;
         trashCan = GameObject.Find("trashcan_closed");
@@ -35,6 +37,14 @@ public class dragAndDrop : MonoBehaviour
             }
         }
         //onMouseUp();
+    }
+
+    public void init(Card card, int player) {
+        this.card = card; 
+        this.player = player; 
+        Sprite card_sprite = Config.Helper.generateSprite(card.ToString()); 
+        transform.GetChild(0).GetComponent<Image>().sprite = card_sprite;
+        transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
     }
 
     private void createNewCard() {

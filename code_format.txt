@@ -7,17 +7,21 @@
 7. Enum: Pascal_Snake_Case
 
 
-
-    public static class Config
-    {
-        public static string prefab_path = "Assets/Prefab"; 
-        // public static string prefabPathGenerator(string prefab_name) {
-        //     return $"{prefab_path}/{prefab_name}.prefab"; 
-        // }
-    }
-
-
 x, y or y, x
 need to make a decision 
 
 *go for y, x
+
+
+
+delete hand and create it over again design pattern
+
+error overchecking design paradigm 
+
+event driven gameobject creation pattern 
+
+
+1. event driven design pattern
+2. removeAll and GenerateAll design pattern
+
+add constructor-like initializer function 

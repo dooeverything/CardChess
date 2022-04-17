@@ -9,14 +9,8 @@ public class cardGenerator_InGame : MonoBehaviour
 
     void Start()
     {
-        //GameObject handPlayer1 = GameObject.Find("Hand_player1");
         GameObject handsPlayer1 = GameObject.Find("Hands");
         GameObject handsPlayer2 = GameObject.Find("Hands_Opponent");
-        // for(int i=0; i<cardGenerator.result+1; i++) {
-        //     Object prefab = AssetDatabase.LoadAssetAtPath(CardSave.pathInGame[CardSave.cardList[i]], typeof(GameObject));
-        //     GameObject card = Instantiate(prefab) as GameObject;
-        //     card.transform.SetParent(handPlayer1.transform, true); 
-        // }
 
         // Player1
         for(int i=0; i<cardGenerator.result+2; i++) {
@@ -24,8 +18,11 @@ public class cardGenerator_InGame : MonoBehaviour
             int random = Random.Range(temp, temp + 1);
             //int random = Random.Range(CardSave.Card_List.Length - 1, CardSave.Card_List.Length);            
             string card_name = CardSave.Card_List[random].Item1; 
-            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/cardTest.prefab", typeof(GameObject));
+            Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefab/Card.prefab", typeof(GameObject));
             GameObject card = Instantiate(prefab) as GameObject;
+
+            
+
             card.transform.SetParent(handsPlayer1.transform, true);
             card.GetComponent<dragDrop>().player = 1;
             string fileLocation = "Sprites/" + card_name;
