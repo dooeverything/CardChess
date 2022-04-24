@@ -4,40 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
+using UnityEngine.EventSystems;
 
 using Config; 
-public class dragAndDrop : MonoBehaviour
+public class dragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    Vector3 startPos;
     public int index;
     public int cardType; // 무슨 카드인지
     public bool canMove = true; // 드래그할수 있는지
-    private float firstPosX;
-    private float firstPosY;
-    private float startPosX;
-    private float startPosY;
-    private bool isBeingHeld = false;
     private Card card; 
     private GameObject trashCan;
     private int player; 
     public GameManager player_data;
     void Start() {
-        firstPosX = transform.localPosition.x;
-        firstPosY = transform.localPosition.y;
-        trashCan = GameObject.Find("trashcan_closed");
+        startPos = transform.position;
+        trashCan = GameObject.Find("TrashCan");
     }
     void Update()
     {
-        if(isBeingHeld == true) {
-            Vector3 mousePos;
-            mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            
-            gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
-        }else {
-            if(trashCan.GetComponent<BoxCollider2D>().IsTouching(gameObject.GetComponent<BoxCollider2D>())) {
-                createNewCard();
-            }
-        }
         //onMouseUp();
     }
 
@@ -67,26 +52,27 @@ public class dragAndDrop : MonoBehaviour
         transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
     }
 
-    private void OnMouseDown() {
-        if(!canMove) return; 
-        if(Input.GetMouseButtonDown(0)) {
-            Vector3 mousePos;
-            mousePos = Input.mousePosition;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos); // convert screen mouse to world(game)
+    public void OnBeginDrag(PointerEventData eventData) 
+    {
+        //Debug.Log("Begin");
 
-            startPosX = mousePos.x - this.transform.localPosition.x;
-            startPosY = mousePos.y - this.transform.localPosition.y;
-
-            isBeingHeld = true;
-            gameObject.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        }
     }
 
-    private void OnMouseUp() {
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.position = eventData.position;
+        //Debug.Log("On Dragging");
         
-        isBeingHeld = false;
-        gameObject.transform.localPosition = new Vector3(firstPosX, firstPosY, 0);
-        gameObject.GetComponent<SpriteRenderer>().sortingOrder = 1;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+
+        if(GetComponent<BoxCollider2D>().IsTouching(trashCan.GetComponent<BoxCollider2D>())) {
+            //Debug.Log("Touching Box");
+            changeCard();
+        }
         
+        transform.position = startPos;
     }
 }

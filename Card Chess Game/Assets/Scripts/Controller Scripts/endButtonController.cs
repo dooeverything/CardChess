@@ -14,8 +14,8 @@ public class endButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hands1 = GameObject.Find("Hands");
-        hands2 = GameObject.Find("Hands_Opponent");
+        hands1 = GameObject.Find("Hand_P1");
+        hands2 = GameObject.Find("Hand_P2");
     }
 
     // Update is called once per frame
@@ -69,7 +69,7 @@ public class endButtonController : MonoBehaviour
 
         card_object.transform.SetParent(hands.transform, true);
         card_object.GetComponent<dragDrop>().player = GameManager.turn;
-        player_data.cards_in_hand.Add(card_object);
+        card_object.GetComponent<dragDrop>().init(GameManager.turn, player_data.hand.Count-1, card);
     }
 
     public static void switchTurn() {

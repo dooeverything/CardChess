@@ -57,7 +57,7 @@ public class GameManager
     public static List<GameObject> indicators = new List<GameObject>();
     public List<int> card_ingame = new List<int>();
 
-    public List<GameObject> cards_in_hand = new List<GameObject>();
+    //public List<GameObject> cards_in_hand = new List<GameObject>();
     public List<GameObject> strike = new List<GameObject>();
     public GameObject selected_card;
     public List<Card> hand = new List<Card>(); 
@@ -84,11 +84,11 @@ public class GameManager
         deck.Insert(Random.Range(0, deck.Count + 1), hand[index]); 
         hand.RemoveAt(index);
         int index_deck = Random.Range(0, deck.Count); 
-        Card card = deck[Random.Range(0, deck.Count)]; 
+        Card card = deck[index_deck]; 
         deck.RemoveAt(index_deck); 
 
         hand.Insert(index, card);
-        
+        //Debug.Log(deck.Count);
         return card; 
     }
 

@@ -18,12 +18,12 @@ public class ClickController : MonoBehaviour
     }
 
 
-    void sceneOneButtonController(){
+    public void sceneOneButtonController(){
         int current = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(current+1);
     }
 
-    void sceneThreeButtonController(){
+    public void sceneThreeButtonController(){
 
         int player = PlayerPrefs.GetInt("player");
         int current = SceneManager.GetActiveScene().buildIndex;

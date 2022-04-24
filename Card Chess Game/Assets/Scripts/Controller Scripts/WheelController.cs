@@ -13,7 +13,7 @@ public class WheelController : MonoBehaviour, IPointerDownHandler
     void Update()
     {
         transform.Rotate(0, 0, this.rotSpeed);
-        this.rotSpeed *= Random.Range(0.9f, 0.97f);
+        this.rotSpeed *= Random.Range(0.97f, 0.98f);
     }
 
     public void OnPointerDown(PointerEventData eventData)

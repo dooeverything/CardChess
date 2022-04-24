@@ -116,7 +116,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     }
 
     public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {
-        Debug.Log("CreateStrike Called"); 
+        //Debug.Log("CreateStrike Called"); 
         GameObject attacking = Helper.prefabNameToGameObject(Prefab.Attacking.ToString());
         attacking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         attacking.transform.position = cell.transform.position;

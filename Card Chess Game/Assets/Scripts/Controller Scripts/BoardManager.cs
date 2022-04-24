@@ -9,7 +9,6 @@ using Config;
 // Create every pieces on the chess board
 public class BoardManager : MonoBehaviour
 {
-    GameObject cellPrefab;
     GameObject piecePrefab;
     Color cell_Brown;
     Color cell_Dark_Brown;
@@ -23,20 +22,20 @@ public class BoardManager : MonoBehaviour
         
         // Create a board with cell prefab
         int ypos = 0;
-        GameObject prefab_board_cell = Helper.prefabNameToGameObject(Prefab.Cell.ToString()); 
         for(int y = -3; y <= 4; y++){
             int xpos = 0;
             for(int x = -2; x <= 2; x++) {
-                cellPrefab.name = ("Cell(x, y): "+ xpos + " " + ypos);
-                cellPrefab.transform.position = new Vector2( 150 * x, 150 * y - 75 );
-                cellPrefab.transform.SetParent(gameObject.transform, false);
-                cellPrefab.GetComponent<cellController>().indexX = xpos;
-                cellPrefab.GetComponent<cellController>().indexY = ypos;
-                PieceConfig.cells[xpos, ypos] = cellPrefab;
+                GameObject prefab_board_cell = Helper.prefabNameToGameObject(Prefab.Cell.ToString()); 
+                prefab_board_cell.name = ("Cell(x, y): "+ xpos + " " + ypos);
+                prefab_board_cell.transform.position = new Vector2( 150 * x, 150 * y - 75 );
+                prefab_board_cell.transform.SetParent(gameObject.transform, false);
+                prefab_board_cell.GetComponent<cellController>().indexX = xpos;
+                prefab_board_cell.GetComponent<cellController>().indexY = ypos;
+                PieceConfig.cells[ypos, xpos] = prefab_board_cell;
                 if((x + y + 5) % 2 == 0) {
-                    cellPrefab.GetComponent<Image>().color =  cell_Brown; //Color.black;
+                    prefab_board_cell.GetComponent<Image>().color =  cell_Brown; //Color.black;
                 } else {
-                    cellPrefab.GetComponent<Image>().color =  cell_Dark_Brown; //Color.white;
+                    prefab_board_cell.GetComponent<Image>().color =  cell_Dark_Brown; //Color.white;
                 }
                 xpos++;
             }

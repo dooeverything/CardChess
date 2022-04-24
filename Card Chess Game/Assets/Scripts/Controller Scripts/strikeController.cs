@@ -64,23 +64,13 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
         }
         
     }
-
-    public bool deleteCard()
+    public void deleteCard()
     {
-        if(card) {
-            dragDrop temp = card.GetComponent<dragDrop>(); 
-            List<GameObject> list = temp.player_data.cards_in_hand;
-            int index = -1;
-            for (int i=0; i<list.Count; i++) {
-                if(card == list[i]){
-                    index = i;
-                    break;
-                }
-            }
-            temp.player_data.cards_in_hand.RemoveAt(index);
-            Destroy(card); 
+        if (card) {
+            int hand_index = card.GetComponent<dragDrop>().hand_index;
+            card.GetComponent<dragDrop>().player_data.hand.RemoveAt(hand_index);
+            Destroy(card);
         }
-        return true; 
     }
 
     public void moveParent(){

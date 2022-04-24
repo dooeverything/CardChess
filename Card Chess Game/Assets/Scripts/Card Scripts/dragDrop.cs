@@ -45,8 +45,9 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
 
-    public void init(int player, int hand_index){
-
+    public void init(int player, int hand_index, Card card)
+    {
+        this.card = card;
         this.player = player;
         this.hand_index = hand_index;
     }
@@ -67,11 +68,13 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             selectedPiece.GetComponent<ChessPiece>().activated = false;
         }
 
-        foreach (GameObject obj in player_data.cards_in_hand)
+        foreach (Image card in transform.parent.GetComponentsInChildren<Image>())
         {
-            Color color = obj.GetComponent<Image>().color;
+            //GameObject card_object = card.gameObject;
+            if(card == transform.parent.gameObject.GetComponent<Image>()) continue;
+            Color color = card.color;
             color.a = 1;
-            obj.GetComponent<Image>().color = color;
+            card.color = color;
         }
 
         foreach (GameObject obj in GameManager.dots)
@@ -101,7 +104,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
-        public void OnDrag(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
         //target_pieces = player_data.filterList(pieceType); 
         GameManager.destroyAlldots();
@@ -187,8 +190,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void destoryCard() {
         dragDrop temp = GetComponent<dragDrop>(); 
-        List<GameObject> list = temp.player_data.cards_in_hand;
-        temp.player_data.cards_in_hand.RemoveAt(hand_index);
+        temp.player_data.hand.RemoveAt(hand_index);
         Destroy(this.gameObject); 
     }
 

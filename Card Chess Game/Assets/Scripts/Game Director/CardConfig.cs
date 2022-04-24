@@ -244,7 +244,7 @@ namespace Config
                             {
                                 for (int j = 0; j < 8; j++)
                                 {
-                                    GameObject cell = PieceConfig.cells[i, j];
+                                    GameObject cell = PieceConfig.cells[j, i];
                                     if (cell.transform.childCount > 0)
                                     {
                                         continue;
@@ -268,7 +268,7 @@ namespace Config
                 )
             },  // Teleport End
             {   // Thunder_Bolt Start
-                Card.Teleport, // Key 
+                Card.Thunder_Bolt, // Key 
                 (
                     (GameObject piece, GameObject card) => { // Card Logic
                         // Thunder Bolt(썬더볼트): 인접 대상에 발동 가능, 피격 대상 공격 및 인접 대상을 2개까지 공격

@@ -34,8 +34,8 @@ namespace Config {
             public const string king = "Chess_Piece/King";
             public const string mage = "Chess_Piece/Mage"; 
             public const string archer = "Chess_Piece/Archer"; 
-            public const string warrior = "Chess_Piece/Mage"; 
-            public const string mulligan = "MulliganTest";
+            public const string warrior = "Chess_Piece/Warrior"; 
+            public const string mulligan = "Mulligan";
             public const string attacking = "Attacking";
             public const string selected_indicator = "Selected_Indicator";
 
@@ -46,10 +46,10 @@ namespace Config {
     public static class Helper {
         // Creates And Returns GameObject Based On Prefab Name As String
         public static GameObject prefabNameToGameObject(string prefab_name){
-            Debug.Log(prefab_name.ToLower());
+            //Debug.Log(prefab_name.ToLower());
             string path = typeof(Path.Prefab).GetField(prefab_name.ToLower()).GetValue(null) as string;
-            Debug.Log(path);
-            Debug.Log($"{Path.prefab_base_path}/{path}");
+            //Debug.Log(path);
+            //Debug.Log($"{Path.prefab_base_path}/{path}");
             Object prefab = AssetDatabase.LoadAssetAtPath($"{Path.prefab_base_path}/{path}.prefab", typeof(GameObject));
             return GameObject.Instantiate(prefab) as GameObject;
 
