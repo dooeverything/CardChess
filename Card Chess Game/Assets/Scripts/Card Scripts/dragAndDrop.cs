@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEditor;
 using UnityEngine.EventSystems;
 
@@ -17,13 +16,14 @@ public class dragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private GameObject trashCan;
     private int player; 
     public GameManager player_data;
+    private bool lock_dragging = false;
     void Start() {
         startPos = transform.position;
         trashCan = GameObject.Find("TrashCan");
     }
     void Update()
     {
-        //onMouseUp();
+
     }
 
     public void init(Card card, int player, int index) {
@@ -44,6 +44,8 @@ public class dragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     private void changeCard() {
         this.card = player_data.replaceCard(index);
         createNewCard();
+        lock_dragging = true;
+        GetComponent<Outline>().enabled = true;
     }
 
     private void createNewCard() {
@@ -54,22 +56,17 @@ public class dragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnBeginDrag(PointerEventData eventData) 
     {
-        //Debug.Log("Begin");
-
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(lock_dragging) return;
         transform.position = eventData.position;
-        //Debug.Log("On Dragging");
-        
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-
         if(GetComponent<BoxCollider2D>().IsTouching(trashCan.GetComponent<BoxCollider2D>())) {
-            //Debug.Log("Touching Box");
             changeCard();
         }
         

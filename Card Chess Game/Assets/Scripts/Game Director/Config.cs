@@ -14,7 +14,7 @@ namespace Config {
         Mulligan
     }
 
-    enum Names {
+    enum Constants {
         P1_First = 1, 
         P2_First = 2,
     }
@@ -55,6 +55,8 @@ namespace Config {
 
         }
 
+
+        // Generate Card GameObject From Card Enum
         public static GameObject cardToGameObject(Card card) {
             GameObject card_object = prefabNameToGameObject(Prefab.Card.ToString()); 
             Sprite sprite = generateSprite(card.ToString()); 

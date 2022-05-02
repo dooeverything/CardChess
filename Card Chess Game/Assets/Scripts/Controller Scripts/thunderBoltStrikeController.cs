@@ -84,7 +84,7 @@ public class thunderBoltStrikeController : MonoBehaviour, IPointerDownHandler
         GameManager.destroyAllIndicators(); 
         GameManager.destroyAlldots(); 
         // Switch turn after strike
-        endButtonController.switchTurn();
+        GameManager.endTurn();
     }
 
     public void deleteCard()

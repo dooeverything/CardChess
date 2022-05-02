@@ -24,12 +24,11 @@ public class Result : MonoBehaviour
     void Update()
     {
         if(wheelScript.finish()) {
-            resultImage.enabled = true;
-            result.text = (wheelScript.result() == 1) ? "Tail" : "Head"; 
+            resultImage.gameObject.SetActive(true);
+            result.text = (wheelScript.result() == (int) Constants.P1_First) ? "P1 First!" : "P2 First!"; 
             timeElapsed += Time.deltaTime;
             if(timeElapsed > delay) {
-                Names playerResult = (player1.text == result.text) ? Names.P1_First : Names.P2_First; 
-                PlayerPrefs.SetInt("result", (int) playerResult);
+                PlayerPrefs.SetInt("result", (int) wheelScript.result());
                 PlayerPrefs.SetInt("player", 1);
                 loadNextScene(); 
             }

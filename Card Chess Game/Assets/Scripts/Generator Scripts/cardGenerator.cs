@@ -22,7 +22,7 @@ public class cardGenerator : MonoBehaviour
     {
         card_base = GameObject.Find("Base");
         int result = PlayerPrefs.GetInt("result");
-        if(player == 1 && result == (int)Names.P1_First || player == 2 && result == (int)Names.P2_First) {
+        if(player == 1 && result == (int)Constants.P1_First || player == 2 && result == (int)Constants.P2_First) {
             num_cards = 3; 
         } else {
             num_cards = 4; 

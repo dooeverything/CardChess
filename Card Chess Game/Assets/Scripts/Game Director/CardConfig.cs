@@ -202,10 +202,10 @@ namespace Config
                                     dot.GetComponent<dotController>()?.moveParent();
                                     UnityEngine.Object.Destroy(dot.transform.parent.GetChild(0).gameObject);
                                 }
-                                endButtonController.switchTurn(); 
                             }
                             GameManager.destroyAlldots();
                             GameManager.destroyAllIndicators();
+                            GameManager.endTurn(); 
                             return true; 
                         }
                     }, 
@@ -350,10 +350,10 @@ namespace Config
                                     strike_dot.GetComponent<strikeController>().moveParent();
                                     UnityEngine.Object.Destroy(strike_dot.transform.parent.GetChild(0).gameObject);
                                 }
-                                endButtonController.switchTurn(); 
                             }
                             GameManager.destroyAlldots();
                             GameManager.destroyAllIndicators();
+                            GameManager.endTurn(); 
                             return true; 
                         }
                     }, 

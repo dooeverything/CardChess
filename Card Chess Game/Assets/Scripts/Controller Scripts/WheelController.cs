@@ -3,37 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using static UnityEngine.Debug;
+using Config;
 public class WheelController : MonoBehaviour, IPointerDownHandler
 {
-    float rotSpeed;
+    float rot_speed;
     bool clicked = false;
+    float decay_factor = 0;
     void Start() {
 
     }
     void Update()
     {
-        transform.Rotate(0, 0, this.rotSpeed);
-        this.rotSpeed *= Random.Range(0.97f, 0.98f);
+        transform.Rotate(0, 0, this.rot_speed);
+        this.rot_speed *= decay_factor;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(!clicked)
-            rotSpeed = Random.Range(30.0f, 50.0f);
+        Log("clicked!");
+        if(clicked) return; 
+        decay_factor = Random.Range(0.9972f, 0.9973f);
+        rot_speed = 3;
         clicked = true;
     }
 
     public int result() {
         if(transform.eulerAngles.z <= 180) {
-            return 0;
+            return (int) Constants.P1_First;
         }else {
-            return 1;
+            return (int) Constants.P2_First;
         }
     }
 
     public bool finish() {
-        if(rotSpeed <= 0.07f && clicked) {
-            rotSpeed = 0;
+        if(rot_speed <= 0.07f && clicked) {
+            rot_speed = 0;
             return true;
         }
         return false;

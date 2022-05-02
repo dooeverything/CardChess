@@ -24,6 +24,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private int indexSelected = -1;
     void Start()
     {
+        Debug.Log("start called!");
         if (player == 1)
         {
             player_data = GameManager.player1;
@@ -47,6 +48,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void init(int player, int hand_index, Card card)
     {
+        Debug.Log("init called!");
         this.card = card;
         this.player = player;
         this.hand_index = hand_index;
@@ -81,12 +83,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         {
             Destroy(obj); 
         }
-
-        // foreach (GameObject obj in GameManager.indicators)
-        // {
-        //     Destroy(obj); 
-        // }
-
+        
         GameManager.destroyAllIndicators();
 
         foreach (GameObject obj in player_data.strike) {

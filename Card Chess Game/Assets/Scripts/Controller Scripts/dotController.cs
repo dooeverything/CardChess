@@ -40,14 +40,9 @@ public class dotController : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         moveParent();
-
-        // Switch turn after the piece move
-        //endButtonController.switchTurn();
-
         GameManager.destroyAlldots();
         GameManager.destroyAllIndicators();
-
         deleteCard();
-
+        GameManager.endTurn();
     }
 }
