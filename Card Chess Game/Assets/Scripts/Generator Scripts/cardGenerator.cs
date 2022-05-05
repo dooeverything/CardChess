@@ -36,7 +36,7 @@ public class cardGenerator : MonoBehaviour
         for(int i = 0; i < num_cards; i++) {
             Card card_drawn = player.drawCard(); 
             GameObject card = Helper.prefabNameToGameObject(Prefab.Mulligan.ToString()); 
-            dragAndDrop component = card.GetComponent<dragAndDrop>();
+            DragAndDrop component = card.GetComponent<DragAndDrop>();
             card.transform.SetParent(card_base.transform, true);
             component.init(card_drawn, this.player, i);
             int center_x = 0; 

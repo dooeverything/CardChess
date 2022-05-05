@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class deckController : MonoBehaviour
+public class DeckController : MonoBehaviour
 {
     [SerializeField] public int player;
     GameManager player_data;

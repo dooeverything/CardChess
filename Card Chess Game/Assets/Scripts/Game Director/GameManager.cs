@@ -9,9 +9,10 @@ using Config;
 
 public class GameManager
 {
+    public static float timer = 30;
     public static int turn = 1;
     public static bool executing = false;
-    public static int init_deck_count = 11;
+    public static int init_deck_count = 13;
     public static void destroyAllIndicators()
     {
 
@@ -36,11 +37,26 @@ public class GameManager
     }
     public static void endTurn() {
         switchTurn(); 
-        addCardToHand();
+        GameManager player_data;
+        
+        if (GameManager.turn == 1)
+        {
+            player_data = GameManager.player1;
+        }
+        else
+        {
+            player_data = GameManager.player2;
+        }
+
+        if(player_data.hand.Count < 4 && player_data.deck.Count > 0 ) {
+            addCardToHand();
+        }
+        
     }
     public static void switchTurn()
     {
         turn = (turn == 1 ? 2 : 1);
+        timer = 30;
     }
     public static void addCardToHand()
     {
@@ -62,11 +78,14 @@ public class GameManager
         GameObject card_object = Config.Helper.cardToGameObject(card);
 
         card_object.transform.SetParent(hand.transform, true);
-        card_object.GetComponent<dragDrop>().player = GameManager.turn;
-        card_object.GetComponent<dragDrop>().init(GameManager.turn, player_data.hand.Count - 1, card);
+        card_object.GetComponent<DragDrop>().player = GameManager.turn;
+        card_object.GetComponent<DragDrop>().init(GameManager.turn, player_data.hand.Count - 1, card);
     }
     public static GameManager player1 = new GameManager();
     public static GameManager player2 = new GameManager();
+    
+    //public static GameManager[] players_data = {player1, player2};
+    
     public List<GameObject> piecesOnBoard = new List<GameObject>();
 
     public List<GameObject> filterList(Piece type)
@@ -86,9 +105,6 @@ public class GameManager
         return temp;
     }
     public static List<GameObject> dots = new List<GameObject>();
-
-    public List<GameObject> indicator = new List<GameObject>();
-
     public static List<GameObject> indicators = new List<GameObject>();
     public List<int> card_ingame = new List<int>();
 
@@ -129,5 +145,15 @@ public class GameManager
         hand.Insert(index, card);
         //Debug.Log(deck.Count);
         return card;
+    }
+
+    public static void lastDotClicked(bool has_card) {
+        if(has_card) {
+            GameManager.dots[0].GetComponent<SwapController>().deleteCard();
+        }
+
+        GameManager.destroyAlldots();
+        GameManager.destroyAllIndicators();
+        GameManager.endTurn();
     }
 }

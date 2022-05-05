@@ -11,16 +11,16 @@ namespace Config {
         Card, 
         Attacking,
         Selected_Indicator,
-        Mulligan
+        Mulligan,
+        Arrow,
+        Swap,
+        Disarm,
     }
 
     enum Constants {
         P1_First = 1, 
         P2_First = 2,
     }
-
-
-
 
     // Class For Path Strings
     public static class Path {
@@ -38,7 +38,10 @@ namespace Config {
             public const string mulligan = "Mulligan";
             public const string attacking = "Attacking";
             public const string selected_indicator = "Selected_Indicator";
-
+            public const string arrow = "Arrow";
+            public const string swap = "Swap";
+            public const string disarm = "Disarm";
+            
         }
     }
 
@@ -63,13 +66,18 @@ namespace Config {
             card_object.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
             card_object.transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
 
-            card_object.GetComponent<dragDrop>().pieceType = CardConfig.card_dict[card].Item2;
+            card_object.GetComponent<DragDrop>().pieceType = CardConfig.card_dict[card].Item2;
             return card_object; 
         }
 
         public static Sprite generateSprite(params string[] path_list) {
             string fileLocation = $"{Config.Path.sprite_base_path}/{string.Join("/", path_list)}";
             return Resources.Load<Sprite>(fileLocation);
+        }
+
+        public static bool isEnemy(GameObject me, GameObject other)
+        {
+            return me.GetComponent<ChessPiece>().player != other.GetComponent<ChessPiece>().player;
         }
     }
 }

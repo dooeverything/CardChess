@@ -29,8 +29,8 @@ public class BoardManager : MonoBehaviour
                 prefab_board_cell.name = ("Cell(x, y): "+ xpos + " " + ypos);
                 prefab_board_cell.transform.position = new Vector2( 150 * x, 150 * y - 75 );
                 prefab_board_cell.transform.SetParent(gameObject.transform, false);
-                prefab_board_cell.GetComponent<cellController>().indexX = xpos;
-                prefab_board_cell.GetComponent<cellController>().indexY = ypos;
+                prefab_board_cell.GetComponent<CellController>().indexX = xpos;
+                prefab_board_cell.GetComponent<CellController>().indexY = ypos;
                 PieceConfig.cells[ypos, xpos] = prefab_board_cell;
                 if((x + y + 5) % 2 == 0) {
                     prefab_board_cell.GetComponent<Image>().color =  cell_Brown; //Color.black;
@@ -54,6 +54,7 @@ public class BoardManager : MonoBehaviour
                 piece.GetComponent<ChessPiece>().chessPieceType = type; 
                 piece.GetComponent<ChessPiece>().indexX = j;
                 piece.GetComponent<ChessPiece>().indexY = i;
+                piece.GetComponent<Outline>().enabled = false;
                 addPiece(piece, 1);
 
                 //Chesspiece for player2

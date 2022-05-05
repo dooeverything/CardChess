@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 using Config; 
 
-public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public static bool selected = false;
     public static bool beingHeld;
@@ -24,7 +24,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private int indexSelected = -1;
     void Start()
     {
-        Debug.Log("start called!");
+        //Debug.Log("start called!");
         if (player == 1)
         {
             player_data = GameManager.player1;
@@ -48,7 +48,6 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void init(int player, int hand_index, Card card)
     {
-        Debug.Log("init called!");
         this.card = card;
         this.player = player;
         this.hand_index = hand_index;
@@ -56,6 +55,8 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if(GameManager.turn != player) return;
+
         target_pieces = player_data.filterList(pieceType); 
         placeHolder = new GameObject();
         placeHolder.transform.SetParent(this.transform.parent);
@@ -103,6 +104,8 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if(GameManager.turn != player) return;
+
         //target_pieces = player_data.filterList(pieceType); 
         GameManager.destroyAlldots();
         //GameManager.destroyAllIndicators();
@@ -146,6 +149,8 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     
     public void OnEndDrag(PointerEventData eventData)
     {
+        if(GameManager.turn != player) return;
+
         Destroy(placeHolder);
         // Create a dot
         if(indexSelected >= 0  && move_available) {
@@ -186,7 +191,7 @@ public class dragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     }
 
     public void destoryCard() {
-        dragDrop temp = GetComponent<dragDrop>(); 
+        DragDrop temp = GetComponent<DragDrop>(); 
         temp.player_data.hand.RemoveAt(hand_index);
         Destroy(this.gameObject); 
     }

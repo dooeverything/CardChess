@@ -5,11 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
 using Config;
+using static UnityEngine.Debug;
 
-public class endButtonController : MonoBehaviour
+public class EndButtonController : MonoBehaviour, IPointerDownHandler
 {
     public void OnPointerDown(PointerEventData eventData)
     {
+        Log("End button clicked");
         GameManager.endTurn();
     }
 }

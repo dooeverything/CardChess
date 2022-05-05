@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine.EventSystems;
 
 using Config; 
-public class dragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragAndDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     Vector3 startPos;
     public int index;

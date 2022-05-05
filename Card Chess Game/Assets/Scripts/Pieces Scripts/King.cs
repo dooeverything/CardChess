@@ -31,7 +31,7 @@ public class King : MonoBehaviour {
             GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            dot.GetComponent<dotController>().parent = gameObject; 
+            dot.GetComponent<DotController>().parent = gameObject; 
             dots.Add(dot);
         }
         GameManager.dots = dots; 

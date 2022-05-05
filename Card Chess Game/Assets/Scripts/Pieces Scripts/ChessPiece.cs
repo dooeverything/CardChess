@@ -64,7 +64,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
             GetComponent<King>().createDots(); // Speical move for King
         } else if(chessPieceType == Piece.Archer){
             GetComponent<Archer>().numEnemy = 0;
-            GetComponent<Archer>().createDots_Archer(basic_moves);
+            GetComponent<Archer>().createArrowArcher(basic_moves);
         }else {
             createDots(basic_moves); 
         }
@@ -74,8 +74,8 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
         dot.transform.SetParent(cell.transform, false);
         dot.transform.position = cell.transform.position;
-        dot.GetComponent<dotController>().parent = gameObject; 
-        dot.GetComponent<dotController>().card = card;
+        dot.GetComponent<DotController>().parent = gameObject; 
+        dot.GetComponent<DotController>().card = card;
         return dot; 
     }
 
@@ -120,9 +120,9 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         GameObject attacking = Helper.prefabNameToGameObject(Prefab.Attacking.ToString());
         attacking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         attacking.transform.position = cell.transform.position;
-        attacking.GetComponent<strikeController>().enemy = enemy;
-        attacking.GetComponent<strikeController>().card = card;
-        attacking.GetComponent<strikeController>().parent = gameObject;
+        attacking.GetComponent<StrikeController>().enemy = enemy;
+        attacking.GetComponent<StrikeController>().card = card;
+        attacking.GetComponent<StrikeController>().parent = gameObject;
 
         return attacking;
     }

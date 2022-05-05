@@ -11,27 +11,27 @@ public class Archer : MonoBehaviour {
     public int attackRange = 4;
     public int numEnemy = 0;
     public bool onlyAttack = false;
-    public GameObject create_strikeDot(GameObject cell, GameObject enemy, GameObject card, GameObject parent) {
-        GameObject striking = Helper.prefabNameToGameObject(Prefab.Attacking.ToString());
+    public GameObject createStrikeDot(GameObject cell, GameObject enemy, GameObject card, GameObject parent) {
+        GameObject striking = Helper.prefabNameToGameObject(Prefab.Arrow.ToString());
         striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         striking.transform.position = cell.transform.position;
-        striking.GetComponent<strikeController>().enemy = enemy;
-        striking.GetComponent<strikeController>().card = card;
-        striking.GetComponent<strikeController>().moveWhenAttack = false;
-        striking.GetComponent<strikeController>().parent = parent;
+        striking.GetComponent<ArrowController>().enemy = enemy;
+        striking.GetComponent<ArrowController>().card = card;
+        striking.GetComponent<ArrowController>().moveWhenAttack = false;
+        striking.GetComponent<ArrowController>().parent = parent;
         return striking;
     }
 
-    public GameObject create_moveDot(GameObject newCell, GameObject card) {
+    public GameObject createMoveDot(GameObject newCell, GameObject card) {
         GameObject move = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
         move.transform.SetParent(newCell.transform, false);
         move.transform.position = newCell.transform.position;
-        move.GetComponent<dotController>().parent = gameObject; 
-        move.GetComponent<dotController>().card = card;
+        move.GetComponent<DotController>().parent = gameObject; 
+        move.GetComponent<DotController>().card = card;
         return move;
     }
 
-    public void createDots_Archer(List<int[]> move_list, GameObject card = null)
+    public void createArrowArcher(List<int[]> move_list, GameObject card = null, int num_attack = 1)
     {
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < 3; i++) {
@@ -53,7 +53,7 @@ public class Archer : MonoBehaviour {
                     
                     // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
                     if(newCell_Stirke.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) { 
-                        dots.Add(create_strikeDot(newCell_Stirke, newCell_Stirke.transform.GetChild(0).gameObject, card, this.gameObject));
+                        dots.Add(createStrikeDot(newCell_Stirke, newCell_Stirke.transform.GetChild(0).gameObject, card, this.gameObject));
                         numEnemy++;
                     }
 
@@ -63,12 +63,13 @@ public class Archer : MonoBehaviour {
                 }else if(!onlyAttack){
                     // If there is no blocking piece on the location where archer can move to
                     if(j==1){
-                        dots.Add(create_moveDot(newCell_Stirke, card));
+                        dots.Add(createMoveDot(newCell_Stirke, card));
                     }
                 }
             }
         }
-        strikeController.numAttack = System.Math.Min(2, numEnemy); 
+        ArrowController.numAttack = System.Math.Min(num_attack, numEnemy); 
+        Debug.Log(ArrowController.numAttack);
         onlyAttack = false;
         GameManager.dots = dots; 
     }

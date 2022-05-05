@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class strikeController : MonoBehaviour, IPointerDownHandler
+public class StrikeController : MonoBehaviour, IPointerDownHandler
 {
     public GameObject enemy;
     public GameObject card;
     public bool moveWhenAttack = true;
     public GameObject parent; 
-    public static int numAttack = default;
     // Start is called before the first frame update
     //public static int count = 0;
     void Start()
@@ -42,12 +41,9 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
                     }
                 }
                 list.RemoveAt(index);
-                numAttack--;
                 Destroy(gameObject);
                 Destroy(enemy); 
-                if(parent.GetComponent<ChessPiece>().chessPieceType != Config.Piece.Archer) {
-                    moveParent();
-                }
+                moveParent();
             }
         }
 
@@ -55,19 +51,17 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
             parent.GetComponent<ChessPiece>().offensePower--;
         }
 
-        if(numAttack == 0) {
-            GameManager.destroyAllIndicators();
-            GameManager.destroyAlldots();
-            // Switch turn after strike
-            GameManager.endTurn();
-        }
+        GameManager.destroyAllIndicators();
+        GameManager.destroyAlldots();
+        // Switch turn after strike
+        GameManager.endTurn();
         
     }
     public void deleteCard()
     {
         if (card) {
-            int hand_index = card.GetComponent<dragDrop>().hand_index;
-            card.GetComponent<dragDrop>().player_data.hand.RemoveAt(hand_index);
+            int hand_index = card.GetComponent<DragDrop>().hand_index;
+            card.GetComponent<DragDrop>().player_data.hand.RemoveAt(hand_index);
             Destroy(card);
         }
     }
@@ -77,7 +71,7 @@ public class strikeController : MonoBehaviour, IPointerDownHandler
 
             parent.transform.SetParent(cellTransform); // selected piece의 부모는 selected piece가 이동할 cell
             parent.transform.position = cellTransform.position; // 위치 조정
-            parent.GetComponent<ChessPiece>().indexX = cellTransform.gameObject.GetComponent<cellController>().indexX;
-            parent.GetComponent<ChessPiece>().indexY = cellTransform.gameObject.GetComponent<cellController>().indexY;      
+            parent.GetComponent<ChessPiece>().indexX = cellTransform.gameObject.GetComponent<CellController>().indexX;
+            parent.GetComponent<ChessPiece>().indexY = cellTransform.gameObject.GetComponent<CellController>().indexY;      
     }
 }

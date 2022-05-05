@@ -4,17 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class timerController : MonoBehaviour
+public class TimerController : MonoBehaviour
 {
-    private float timer = 30;
     // Update is called once per frame
     void Update()
     {
-        timer = timer - Time.deltaTime;
-        if(timer <=0 ){
-            timer = 30;
+        GameManager.timer = GameManager.timer - Time.deltaTime;
+        if(GameManager.timer <=0 ){
+            GameManager.timer = 30;
             GameManager.endTurn();
         }
-        this.GetComponent<Text>().text = Mathf.Floor(timer).ToString();
+        this.GetComponent<Text>().text = Mathf.Floor(GameManager.timer).ToString();
     }
 }

@@ -23,8 +23,8 @@ public class WheelController : MonoBehaviour, IPointerDownHandler
     {
         Log("clicked!");
         if(clicked) return; 
-        decay_factor = Random.Range(0.9972f, 0.9973f);
-        rot_speed = 3;
+        decay_factor = Random.Range(0.9942f, 0.9943f);
+        rot_speed = Random.Range(3.0f, 3.15f);
         clicked = true;
     }
 
