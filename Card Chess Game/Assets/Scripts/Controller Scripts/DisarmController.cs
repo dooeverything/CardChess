@@ -7,29 +7,22 @@ public class DisarmController : MonoBehaviour, IPointerDownHandler
 {
     public GameObject target;
     public GameObject card;
-    // Start is called before the first frame update
-    void Start()
+    public void deleteCard()
     {
-        
+        if (card) {
+            int hand_index = card.GetComponent<DragDrop>().hand_index;
+            card.GetComponent<DragDrop>().player_data.hand.RemoveAt(hand_index);
+            Destroy(card);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         target.GetComponent<ChessPiece>().offensePower = 1;
         target.GetComponent<ChessPiece>().defensePower = 1;
 
         if(target.GetComponent<ChessPiece>().chessPieceType == Piece.Archer) {
-
             target.GetComponent<Archer>().attackRange = 4;
         }
-        
-
         GameManager.lastDotClicked(true);
     }
 }

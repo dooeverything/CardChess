@@ -11,7 +11,6 @@ public class ArrowController : MonoBehaviour, IPointerDownHandler
     public GameObject parent; 
     public static int numAttack = default;
     // Start is called before the first frame update
-    //public static int count = 0;
     void Start()
     {
         

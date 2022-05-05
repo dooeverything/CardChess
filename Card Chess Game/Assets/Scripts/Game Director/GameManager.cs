@@ -12,7 +12,7 @@ public class GameManager
     public static float timer = 30;
     public static int turn = 1;
     public static bool executing = false;
-    public static int init_deck_count = 13;
+    public static int init_deck_count = 14;
     public static void destroyAllIndicators()
     {
 
@@ -82,10 +82,7 @@ public class GameManager
         card_object.GetComponent<DragDrop>().init(GameManager.turn, player_data.hand.Count - 1, card);
     }
     public static GameManager player1 = new GameManager();
-    public static GameManager player2 = new GameManager();
-    
-    //public static GameManager[] players_data = {player1, player2};
-    
+    public static GameManager player2 = new GameManager();    
     public List<GameObject> piecesOnBoard = new List<GameObject>();
 
     public List<GameObject> filterList(Piece type)
@@ -107,8 +104,6 @@ public class GameManager
     public static List<GameObject> dots = new List<GameObject>();
     public static List<GameObject> indicators = new List<GameObject>();
     public List<int> card_ingame = new List<int>();
-
-    //public List<GameObject> cards_in_hand = new List<GameObject>();
     public List<GameObject> strike = new List<GameObject>();
     public GameObject selected_card;
     public List<Card> hand = new List<Card>();
@@ -143,15 +138,17 @@ public class GameManager
         deck.RemoveAt(index_deck);
 
         hand.Insert(index, card);
-        //Debug.Log(deck.Count);
         return card;
     }
 
     public static void lastDotClicked(bool has_card) {
         if(has_card) {
-            GameManager.dots[0].GetComponent<SwapController>().deleteCard();
+            GameManager.dots[0].GetComponent<SwapController>()?.deleteCard();
+            GameManager.dots[0].GetComponent<DotController>()?.deleteCard();
+            GameManager.dots[0].GetComponent<StrikeController>()?.deleteCard();
+            GameManager.dots[0].GetComponent<ThunderBoltController>()?.deleteCard();
+            GameManager.dots[0].GetComponent<DisarmController>()?.deleteCard();
         }
-
         GameManager.destroyAlldots();
         GameManager.destroyAllIndicators();
         GameManager.endTurn();

@@ -31,6 +31,7 @@ namespace Config
         Rage_Attack, // 10
         Swap, // 11
         Disarm, // 12
+        Thunder_Bolt, // 13
         Disguise, // 12
         Testudo, // 13
         Royal_Dagger, // 14
@@ -41,7 +42,6 @@ namespace Config
         Longbow_Shot, // 20
         Spear_Throw, // 21
         Shield, // 22
-        Thunder_Bolt, // 23
     };
 
     public delegate bool CardFunction(GameObject piece, GameObject card);
@@ -470,10 +470,6 @@ namespace Config
                             }   
                             
                             GameManager.lastDotClicked(true);
-                            // GameManager.dots[0].GetComponent<StrikeController>().deleteCard();
-                            // GameManager.destroyAlldots();
-                            // GameManager.destroyAllIndicators();
-                            // GameManager.endTurn();
                             return true;
                         }
                         return move_available;
@@ -521,10 +517,7 @@ namespace Config
                 Card.Swap, // Key 
                 (
                     (GameObject piece, GameObject card) => { // Card Logic
-                        // Switch Teleport(위치교환): 아군 말과 자신의 위치를 바꾼다. 
-                        // 아군을 모두 찾고 -> 찾은 모든 아군에 생성한 인디케이터를 차일드로 set
-                        // 
-                        
+                        // Switch Teleport(위치교환): 아군 말과 자신의 위치를 바꾼다.                         
                         if(!GameManager.executing) {
                             List<GameObject> dots = new List<GameObject>();
                             for(int i=0; i<8; i++) {
@@ -560,10 +553,7 @@ namespace Config
                 Card.Disarm,
                 (
                     (GameObject piece, GameObject card) => { // Card Logic
-                        // Switch Teleport(위치교환): 아군 말과 자신의 위치를 바꾼다. 
-                        // 아군을 모두 찾고 -> 찾은 모든 아군에 생성한 인디케이터를 차일드로 set
-                        // 
-                        
+                        // Disarm(무장해제): 상대방 말 한개의 모든 강화효과를 제거한다 (어느 위치에 있든).
                         if(!GameManager.executing) {
                             List<GameObject> dots = new List<GameObject>();
                             for(int i=0; i<8; i++) {

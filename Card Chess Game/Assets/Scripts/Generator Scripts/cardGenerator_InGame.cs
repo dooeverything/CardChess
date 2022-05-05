@@ -34,8 +34,6 @@ public class cardGenerator_InGame : MonoBehaviour
 
             card_object.GetComponent<DragDrop>().init(player: 2, hand_index: i, card: card); 
         }
-        //GameManager.turn = 1;
-
         GameManager.turn = PlayerPrefs.GetInt("result");
 
     }

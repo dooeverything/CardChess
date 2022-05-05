@@ -9,19 +9,6 @@ public class StrikeController : MonoBehaviour, IPointerDownHandler
     public GameObject card;
     public bool moveWhenAttack = true;
     public GameObject parent; 
-    // Start is called before the first frame update
-    //public static int count = 0;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnPointerDown(PointerEventData eventData) {
         deleteCard();
 

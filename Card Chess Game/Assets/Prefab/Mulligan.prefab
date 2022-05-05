@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 399237614902624955}
   - component: {fileID: 2249597859752049850}
   - component: {fileID: -4259625989549307529}
-  - component: {fileID: 1787086195312710697}
   - component: {fileID: 1510513746856846537}
+  - component: {fileID: 284518421040296098}
   m_Layer: 5
   m_Name: Mulligan
   m_TagString: Untagged
@@ -127,21 +127,6 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
---- !u!114 &1787086195312710697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399237614902624950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c70febddb3f81474686a981ba025ce3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  index: 0
-  cardType: 0
-  canMove: 1
 --- !u!114 &1510513746856846537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,6 +142,21 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
+--- !u!114 &284518421040296098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399237614902624950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70febddb3f81474686a981ba025ce3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
+  cardType: 0
+  canMove: 1
 --- !u!1 &4698809544454574944
 GameObject:
   m_ObjectHideFlags: 0

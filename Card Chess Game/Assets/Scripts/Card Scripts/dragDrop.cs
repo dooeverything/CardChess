@@ -24,7 +24,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private int indexSelected = -1;
     void Start()
     {
-        //Debug.Log("start called!");
         if (player == 1)
         {
             player_data = GameManager.player1;
@@ -39,12 +38,6 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         // Get information about a card
         target_pieces = player_data.filterList(pieceType); 
     }
-
-    void update() {
-        //target_pieces = player_data.filterList(pieceType); 
-        
-    }
-
 
     public void init(int player, int hand_index, Card card)
     {
@@ -106,9 +99,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         if(GameManager.turn != player) return;
 
-        //target_pieces = player_data.filterList(pieceType); 
         GameManager.destroyAlldots();
-        //GameManager.destroyAllIndicators();
         indexSelected = -1;
         transform.position = eventData.position;
         int newSiblingIndex = hand.transform.childCount;

@@ -43,7 +43,6 @@ public class cardGenerator : MonoBehaviour
             float displacement = 250f; 
             card.transform.position = card_base.transform.position + new Vector3(center_x - ((num_cards-0.75f) / 2) * displacement + (i * displacement), 0, 0);
         
-        
         }
     }
 }

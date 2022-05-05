@@ -49,10 +49,7 @@ namespace Config {
     public static class Helper {
         // Creates And Returns GameObject Based On Prefab Name As String
         public static GameObject prefabNameToGameObject(string prefab_name){
-            //Debug.Log(prefab_name.ToLower());
             string path = typeof(Path.Prefab).GetField(prefab_name.ToLower()).GetValue(null) as string;
-            //Debug.Log(path);
-            //Debug.Log($"{Path.prefab_base_path}/{path}");
             Object prefab = AssetDatabase.LoadAssetAtPath($"{Path.prefab_base_path}/{path}.prefab", typeof(GameObject));
             return GameObject.Instantiate(prefab) as GameObject;
 
