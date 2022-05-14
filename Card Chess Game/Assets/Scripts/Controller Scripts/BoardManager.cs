@@ -52,8 +52,6 @@ public class BoardManager : MonoBehaviour
                 piece.transform.position = PieceConfig.cells[i, j].transform.position;
                 piece.GetComponent<ChessPiece>().player = 1;
                 piece.GetComponent<ChessPiece>().chessPieceType = type; 
-                piece.GetComponent<ChessPiece>().indexX = j;
-                piece.GetComponent<ChessPiece>().indexY = i;
                 piece.GetComponent<Outline>().enabled = false;
                 addPiece(piece, 1);
 
@@ -63,8 +61,6 @@ public class BoardManager : MonoBehaviour
                 piece2.transform.position = PieceConfig.cells[7-i, j].transform.position;
                 piece2.GetComponent<ChessPiece>().player = 2;
                 piece2.GetComponent<ChessPiece>().chessPieceType = type; 
-                piece2.GetComponent<ChessPiece>().indexX = j;
-                piece2.GetComponent<ChessPiece>().indexY = 7-i;
                 addPiece(piece2, 2);
             }
         }
@@ -83,11 +79,5 @@ public class BoardManager : MonoBehaviour
             player_data = GameManager.player2;
         }
         player_data.piecesOnBoard.Add(piece); 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

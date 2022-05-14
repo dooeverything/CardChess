@@ -9,8 +9,6 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 {
     public int offensePower;
     public int defensePower;
-    public int indexX;
-    public int indexY;
     public Piece chessPieceType;
     public int player;
     public GameManager player_data;
@@ -74,8 +72,8 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
         dot.transform.SetParent(cell.transform, false);
         dot.transform.position = cell.transform.position;
-        dot.GetComponent<DotController>().parent = gameObject; 
-        dot.GetComponent<DotController>().card = card;
+        dot.GetComponent<MoveController>().parent = gameObject; 
+        dot.GetComponent<MoveController>().card = card;
         return dot; 
     }
 
@@ -83,8 +81,8 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < move_list.Count; i++) {
             int[] coordinates = move_list[i]; 
-            int newIndexX = GetComponent<ChessPiece>().indexX + (move_list[i][0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (move_list[i][1]);
+            int newIndexX = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]);
+            int newIndexY = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]);
             if(newIndexX > 4 || newIndexX < 0) {
                 continue;
             }
@@ -133,5 +131,10 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         {
             Destroy(this.transform.GetChild(0).gameObject);
         }
+    }
+
+    public (int indexX, int indexY) getIndex()
+    {
+        return (transform.parent.GetComponent<CellController>().indexX, transform.parent.GetComponent<CellController>().indexY);
     }
 }

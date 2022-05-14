@@ -26,8 +26,8 @@ public class Archer : MonoBehaviour {
         GameObject move = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
         move.transform.SetParent(newCell.transform, false);
         move.transform.position = newCell.transform.position;
-        move.GetComponent<DotController>().parent = gameObject; 
-        move.GetComponent<DotController>().card = card;
+        move.GetComponent<MoveController>().parent = gameObject; 
+        move.GetComponent<MoveController>().card = card;
         return move;
     }
 
@@ -36,8 +36,8 @@ public class Archer : MonoBehaviour {
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < 3; i++) {
             for(int j = 1; j<attackRange; j++) {
-                int newX_strike = GetComponent<ChessPiece>().indexX + (move_list[i][0]*j);
-                int newY_strike = GetComponent<ChessPiece>().indexY + (move_list[i][1]*j);
+                int newX_strike = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]*j);
+                int newY_strike = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]*j);
                 
                 // Check the location is out of bound 
                 if(newX_strike > 4 || newX_strike < 0) {

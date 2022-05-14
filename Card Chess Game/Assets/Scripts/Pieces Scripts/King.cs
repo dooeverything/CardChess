@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEditor;
+using UnityEngine.SceneManagement;
 using Config;
+
 public class King : MonoBehaviour {
     public int defensePower = 1;
     public void createDots() {
@@ -13,8 +11,8 @@ public class King : MonoBehaviour {
         for (int i = 0; i < 8; i++) {
             //int newIndexX = indexX + (CardSave.position[i,0]);
             //int newIndexY = indexY + (CardSave.position[i,1]);
-            int newIndexX = GetComponent<ChessPiece>().indexX + (PieceConfig.move_list_surround[i,0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (PieceConfig.move_list_surround[i,1]);
+            int newIndexX = GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i,0]);
+            int newIndexY = GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i,1]);
 
             if(newIndexX > 4 || newIndexX < 0) {
                 continue;
@@ -31,9 +29,19 @@ public class King : MonoBehaviour {
             GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
-            dot.GetComponent<DotController>().parent = gameObject; 
+            dot.GetComponent<MoveController>().parent = gameObject; 
             dots.Add(dot);
         }
         GameManager.dots = dots; 
     }
+
+
+    void OnDestory(){
+
+        PlayerPrefs.SetInt("winner", GetComponent<ChessPiece>().player == 1 ? 2 : 1);
+
+        int current = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(current+1);
+    }
+
 }

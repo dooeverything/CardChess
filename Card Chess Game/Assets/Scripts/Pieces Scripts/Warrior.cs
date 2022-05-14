@@ -15,8 +15,8 @@ public class Warrior : MonoBehaviour {
         // 검사-이동: 상하좌우 1칸
         List<GameObject> indicators = new List<GameObject>();
         for (int i = 0; i < 4; i++) {
-            int newIndexX = GetComponent<ChessPiece>().indexX + (PieceConfig.move_list_basic[i,0]);
-            int newIndexY = GetComponent<ChessPiece>().indexY + (PieceConfig.move_list_basic[i,1]);
+            int newIndexX = GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_basic[i,0]);
+            int newIndexY = GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_basic[i,1]);
             if(newIndexX > 4 || newIndexX < 0) {
                 continue;
             }

@@ -6,10 +6,12 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
 using Config;
+using static UnityEngine.Debug;
 
 public class GameManager
 {
-    public static float timer = 30;
+    public static float chess_time = 10;
+    public static float timer = 10;
     public static int turn = 1;
     public static bool executing = false;
     public static int init_deck_count = 13;
@@ -38,7 +40,13 @@ public class GameManager
     public static void endTurn() {
         switchTurn(); 
         GameManager player_data;
-        
+        destroyAllIndicators();
+        destroyAlldots();
+        foreach(CardController card in GameObject.Find("Canvas").GetComponentsInChildren<CardController>()) {
+            Log("return to initpos hand1");
+            card.returnToInitPos();
+        }
+
         if (GameManager.turn == 1)
         {
             player_data = GameManager.player1;
@@ -51,12 +59,11 @@ public class GameManager
         if(player_data.hand.Count < 4 && player_data.deck.Count > 0 ) {
             addCardToHand();
         }
-        
     }
     public static void switchTurn()
     {
         turn = (turn == 1 ? 2 : 1);
-        timer = 30;
+        timer = chess_time;
     }
     public static void addCardToHand()
     {
@@ -78,8 +85,8 @@ public class GameManager
         GameObject card_object = Config.Helper.cardToGameObject(card);
 
         card_object.transform.SetParent(hand.transform, true);
-        card_object.GetComponent<DragDrop>().player = GameManager.turn;
-        card_object.GetComponent<DragDrop>().init(GameManager.turn, player_data.hand.Count - 1, card);
+        card_object.GetComponent<CardController>().player = GameManager.turn;
+        card_object.GetComponent<CardController>().init(GameManager.turn, player_data.hand.Count - 1, card);
     }
     public static GameManager player1 = new GameManager();
     public static GameManager player2 = new GameManager();
@@ -149,7 +156,7 @@ public class GameManager
 
     public static void lastDotClicked(bool has_card) {
         if(has_card) {
-            GameManager.dots[0].GetComponent<SwapController>().deleteCard();
+            GameManager.dots[0].GetComponent<DotController>().deleteCard();
         }
 
         GameManager.destroyAlldots();

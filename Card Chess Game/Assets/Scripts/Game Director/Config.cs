@@ -66,7 +66,7 @@ namespace Config {
             card_object.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
             card_object.transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
 
-            card_object.GetComponent<DragDrop>().pieceType = CardConfig.card_dict[card].Item2;
+            card_object.GetComponent<CardController>().pieceType = CardConfig.card_dict[card].Item2;
             return card_object; 
         }
 

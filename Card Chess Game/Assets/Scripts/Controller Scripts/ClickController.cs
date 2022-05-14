@@ -17,6 +17,11 @@ public class ClickController : MonoBehaviour
         
     }
 
+    public void restartController()
+    {
+        SceneManager.LoadScene(1);
+
+    }
 
     public void sceneOneButtonController(){
         int current = SceneManager.GetActiveScene().buildIndex;
