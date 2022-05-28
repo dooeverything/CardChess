@@ -47,13 +47,12 @@ public class Archer : MonoBehaviour {
                     continue;
                 }
 
-                GameObject newCell_Stirke = PieceConfig.cells[newY_strike, newX_strike ];
-                if(newCell_Stirke.gameObject.transform.childCount > 0) {
-                    //if(newCell_Stirke.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
-                    
+                GameObject new_cell = PieceConfig.cells[newY_strike, newX_strike ];
+                if(new_cell.transform.childCount > 0) {
+
                     // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
-                    if(newCell_Stirke.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) { 
-                        dots.Add(createStrikeDot(newCell_Stirke, newCell_Stirke.transform.GetChild(0).gameObject, card, this.gameObject));
+                    if(new_cell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) { 
+                        dots.Add(createStrikeDot(new_cell, new_cell.transform.GetChild(0).gameObject, card, this.gameObject));
                         numEnemy++;
                     }
 
@@ -63,13 +62,13 @@ public class Archer : MonoBehaviour {
                 }else if(!onlyAttack){
                     // If there is no blocking piece on the location where archer can move to
                     if(j==1){
-                        dots.Add(createMoveDot(newCell_Stirke, card));
+                        dots.Add(createMoveDot(new_cell, card));
                     }
                 }
             }
         }
         ArrowController.numAttack = System.Math.Min(num_attack, numEnemy); 
-        Debug.Log(ArrowController.numAttack);
+        //Debug.Log(ArrowController.numAttack);
         onlyAttack = false;
         GameManager.dots = dots; 
     }

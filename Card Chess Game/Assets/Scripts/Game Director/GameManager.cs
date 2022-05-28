@@ -62,6 +62,8 @@ public class GameManager
     }
     public static void switchTurn()
     {
+        // 만약 king이 last_ditch_effort를 썼으면 3턴 후에 즉시 사망처리
+        
         turn = (turn == 1 ? 2 : 1);
         timer = chess_time;
     }
@@ -104,7 +106,7 @@ public class GameManager
             {
                 continue;
             }
-            if (piece.GetComponent<ChessPiece>().chessPieceType == type)
+            if (piece.GetComponent<ChessPiece>().piece_type == type)
             {
                 temp.Add(piece);
             }

@@ -5,6 +5,7 @@ using Config;
 
 public class King : MonoBehaviour {
     public int defensePower = 1;
+    public bool last_ditch_effort = false;
     public void createDots() {
         List<GameObject> dots = new List<GameObject>();
         // 왕-이동: 상하좌우대각선 1칸

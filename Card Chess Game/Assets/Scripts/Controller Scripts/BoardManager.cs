@@ -51,7 +51,7 @@ public class BoardManager : MonoBehaviour
                 piece.transform.SetParent(PieceConfig.cells[i, j].transform);
                 piece.transform.position = PieceConfig.cells[i, j].transform.position;
                 piece.GetComponent<ChessPiece>().player = 1;
-                piece.GetComponent<ChessPiece>().chessPieceType = type; 
+                piece.GetComponent<ChessPiece>().piece_type = type; 
                 piece.GetComponent<Outline>().enabled = false;
                 addPiece(piece, 1);
 
@@ -60,7 +60,7 @@ public class BoardManager : MonoBehaviour
                 piece2.transform.SetParent(PieceConfig.cells[7-i, j].transform);
                 piece2.transform.position = PieceConfig.cells[7-i, j].transform.position;
                 piece2.GetComponent<ChessPiece>().player = 2;
-                piece2.GetComponent<ChessPiece>().chessPieceType = type; 
+                piece2.GetComponent<ChessPiece>().piece_type = type; 
                 addPiece(piece2, 2);
             }
         }

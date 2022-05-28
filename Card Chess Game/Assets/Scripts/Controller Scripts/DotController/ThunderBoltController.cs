@@ -46,10 +46,10 @@ public class ThunderBoltController: DotController, IPointerDownHandler
                 }
 
                 ChessPiece piece = enemy.GetComponent<ChessPiece>();
-                int hp_enemy = piece.defensePower;
-                int st_self = parent.GetComponent<ChessPiece>().offensePower;
-                piece.defensePower = hp_enemy - st_self;
-                if(piece.defensePower <= 0) {
+                int hp_enemy = piece.defense_power;
+                int st_self = parent.GetComponent<ChessPiece>().offense_power;
+                piece.defense_power = hp_enemy - st_self;
+                if(piece.defense_power <= 0) {
                     List<GameObject> list = piece.player_data.piecesOnBoard;
                     int index = -1;
                     for (int j=0; j<list.Count; j++) {

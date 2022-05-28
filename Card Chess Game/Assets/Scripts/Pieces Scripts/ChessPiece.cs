@@ -7,9 +7,9 @@ using UnityEditor;
 using Config;
 public class ChessPiece : MonoBehaviour, IPointerDownHandler
 {
-    public int offensePower;
-    public int defensePower;
-    public Piece chessPieceType;
+    public int offense_power;
+    public int defense_power;
+    public Piece piece_type;
     public int player;
     public GameManager player_data;
     public List<GameObject> indicators = null;
@@ -19,9 +19,8 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 
     void Start()
     {
-
-        offensePower = 1;
-        defensePower = 1;
+        offense_power = 1;
+        defense_power = 1;
 
         basic_moves.Add(new int[]{-1, 0}); 
         basic_moves.Add(new int[]{1, 0}); 
@@ -58,9 +57,9 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 
         // create indicator around the piece itself
         addIndicator(); 
-        if(chessPieceType == Piece.King) {
+        if(piece_type == Piece.King) {
             GetComponent<King>().createDots(); // Speical move for King
-        } else if(chessPieceType == Piece.Archer){
+        } else if(piece_type == Piece.Archer){
             GetComponent<Archer>().numEnemy = 0;
             GetComponent<Archer>().createArrowArcher(basic_moves);
         }else {

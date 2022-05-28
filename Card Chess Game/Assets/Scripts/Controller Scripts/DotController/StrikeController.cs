@@ -12,11 +12,11 @@ public class StrikeController : DotController, IPointerDownHandler
 
         {
             ChessPiece piece = enemy.GetComponent<ChessPiece>();
-            int hp_enemy = piece.defensePower;
-            int st_self = parent.GetComponent<ChessPiece>().offensePower;
-            piece.defensePower = hp_enemy - st_self;
+            int hp_enemy = piece.defense_power;
+            int st_self = parent.GetComponent<ChessPiece>().offense_power;
+            piece.defense_power = hp_enemy - st_self;
 
-            if(piece.defensePower <= 0) {
+            if(piece.defense_power <= 0) {
                 List<GameObject> list = piece.player_data.piecesOnBoard;
                 int index = -1;
                 for (int i=0; i<list.Count; i++) {
@@ -32,8 +32,8 @@ public class StrikeController : DotController, IPointerDownHandler
             }
         }
 
-        if(parent.GetComponent<ChessPiece>().offensePower > 1) {
-            parent.GetComponent<ChessPiece>().offensePower--;
+        if(parent.GetComponent<ChessPiece>().offense_power > 1) {
+            parent.GetComponent<ChessPiece>().offense_power--;
         }
 
         GameManager.destroyAllIndicators();

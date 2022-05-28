@@ -15,10 +15,10 @@ public class DisarmController : DotController, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        target.GetComponent<ChessPiece>().offensePower = 1;
-        target.GetComponent<ChessPiece>().defensePower = 1;
+        target.GetComponent<ChessPiece>().offense_power = 1;
+        target.GetComponent<ChessPiece>().defense_power = 1;
 
-        if(target.GetComponent<ChessPiece>().chessPieceType == Piece.Archer) {
+        if(target.GetComponent<ChessPiece>().piece_type == Piece.Archer) {
 
             target.GetComponent<Archer>().attackRange = 4;
         }
