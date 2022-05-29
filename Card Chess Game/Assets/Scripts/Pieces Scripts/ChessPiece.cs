@@ -68,7 +68,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     }
 
     public GameObject createDot(GameObject cell, GameObject card) {
-        GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
+        GameObject dot = Helper.prefabNameToGameObject(Prefab.Move.ToString());
         dot.transform.SetParent(cell.transform, false);
         dot.transform.position = cell.transform.position;
         dot.GetComponent<MoveController>().parent = gameObject; 

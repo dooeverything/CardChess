@@ -23,7 +23,7 @@ public class Archer : MonoBehaviour {
     }
 
     public GameObject createMoveDot(GameObject newCell, GameObject card) {
-        GameObject move = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
+        GameObject move = Helper.prefabNameToGameObject(Prefab.Move.ToString());
         move.transform.SetParent(newCell.transform, false);
         move.transform.position = newCell.transform.position;
         move.GetComponent<MoveController>().parent = gameObject; 

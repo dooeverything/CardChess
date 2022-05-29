@@ -27,7 +27,7 @@ public class King : MonoBehaviour {
                 continue;
             }
 
-            GameObject dot = Helper.prefabNameToGameObject(Prefab.Dot_Move.ToString());
+            GameObject dot = Helper.prefabNameToGameObject(Prefab.Move.ToString());
             dot.transform.SetParent(newCell.transform, false);
             dot.transform.position = newCell.transform.position;
             dot.GetComponent<MoveController>().parent = gameObject; 

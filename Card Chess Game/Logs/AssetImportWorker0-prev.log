@@ -15,11 +15,11 @@ E:/Game Development/anygames/Card Chess Game
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-63829
+56025
 Successfully changed project path to: E:/Game Development/anygames/Card Chess Game
 E:/Game Development/anygames/Card Chess Game
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 43.42 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 37.39 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.11f1 (99c7afb366b3)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Resources/UnitySubsystems
@@ -35,270 +35,46 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56864
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56092
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.005701 seconds.
+Registered in 0.005817 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 35.38 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 36.02 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.037 seconds
+- Completed reload, in  2.177 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.007022 seconds.
+Registered in 0.003817 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 35.98 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 38.32 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.078 seconds
+- Completed reload, in  1.246 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
-Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2130 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 108.2 MB.
 System memory in use after: 108.3 MB.
 
 Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2586.
-Total: 2.169800 ms (FindLiveObjects: 0.185100 ms CreateObjectMapping: 0.078500 ms MarkObjects: 1.845200 ms  DeleteObjects: 0.060000 ms)
+Total: 2.448500 ms (FindLiveObjects: 0.226800 ms CreateObjectMapping: 0.098600 ms MarkObjects: 2.035900 ms  DeleteObjects: 0.085800 ms)
 
 ========================================================================
 Received Import Request.
   path: Assets/Scripts/Game Director/CardConfig.cs
   artifactKey: Guid(e300837ea5105ac40ae5ffc38eeaf187) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/Game Director/CardConfig.cs using Guid(e300837ea5105ac40ae5ffc38eeaf187) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e57bfb686d5ae7c977576e7adc430a1') in 0.182863 seconds
-  Import took 0.185812 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000220 seconds.
-  path: Assets/Scripts/Game Director/GameManager.cs
-  artifactKey: Guid(21a192b25ef366e47b1225aefe51d9f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/Game Director/GameManager.cs using Guid(21a192b25ef366e47b1225aefe51d9f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eb201a0e7571f91eb38dac3cf73bac48') in 0.002004 seconds
-  Import took 0.004566 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 59.427154 seconds.
-  path: Assets/Resources
-  artifactKey: Guid(9289ed7b8b0efbf408cf60164bcd7ee3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources using Guid(9289ed7b8b0efbf408cf60164bcd7ee3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '607e39e891e63cc38ccfca9da3725e44') in 0.002301 seconds
-  Import took 0.005586 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.450195 seconds.
-  path: Assets/Prefab/Arrow.prefab
-  artifactKey: Guid(894dfac93847c954799dbde529382e7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Arrow.prefab using Guid(894dfac93847c954799dbde529382e7b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af69919ee9bde673f9674c6cddc25e0d') in 0.041824 seconds
-  Import took 0.045469 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000210 seconds.
-  path: Assets/Prefab/Attacking.prefab
-  artifactKey: Guid(e3e6938f188ea9e4889e8289b23881a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Attacking.prefab using Guid(e3e6938f188ea9e4889e8289b23881a3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43c8d440da12ad6663e8783815ec81ad') in 0.004796 seconds
-  Import took 0.007551 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000226 seconds.
-  path: Assets/Prefab/Mulligan.prefab
-  artifactKey: Guid(107abb99695f7c645a0739ad83f283ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Mulligan.prefab using Guid(107abb99695f7c645a0739ad83f283ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9fae8fe62414f4c7b9f050d5636016db') in 0.009768 seconds
-  Import took 0.012746 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000208 seconds.
-  path: Assets/Prefab/Disarm.prefab
-  artifactKey: Guid(e3dbb1e9c6268034e8bceb7d3a449ae2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Disarm.prefab using Guid(e3dbb1e9c6268034e8bceb7d3a449ae2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b81d42ac1c9ba72f643aa27a98c02415') in 0.005181 seconds
-  Import took 0.008484 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000287 seconds.
-  path: Assets/Prefab/Selected_Indicator.prefab
-  artifactKey: Guid(83784963f8b69fd4d8c5eebf4ea9ca43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Selected_Indicator.prefab using Guid(83784963f8b69fd4d8c5eebf4ea9ca43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f28528a83357cc00d87dee36630b222a') in 0.005324 seconds
-  Import took 0.009389 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000251 seconds.
-  path: Assets/Prefab/Swap.prefab
-  artifactKey: Guid(3eab5a26eebd1f04db2e404156d03828) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Swap.prefab using Guid(3eab5a26eebd1f04db2e404156d03828) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bf250424b478f603536200d4bcdcbdf5') in 0.006676 seconds
-  Import took 0.009706 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000277 seconds.
-  path: Assets/Prefab/Card.prefab
-  artifactKey: Guid(7c656303fddf38448942f9fbd012e50b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Card.prefab using Guid(7c656303fddf38448942f9fbd012e50b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b60bbcf354c2137f1b8e8817a7e0d35') in 0.004815 seconds
-  Import took 0.007774 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000241 seconds.
-  path: Assets/Prefab/Thunder_Bolt.prefab
-  artifactKey: Guid(7bc4b580dd2e9d24f9e16467b28e238a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/Thunder_Bolt.prefab using Guid(7bc4b580dd2e9d24f9e16467b28e238a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6aa65b4079793481f6636750c73e7df0') in 0.005580 seconds
-  Import took 0.009051 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000309 seconds.
-  path: Assets/Prefab/dot_move.prefab
-  artifactKey: Guid(2774ba46297e2204e91410f7af412b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/dot_move.prefab using Guid(2774ba46297e2204e91410f7af412b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f9c3b36263aaebee61cc35ecaf4ce4f') in 0.005592 seconds
-  Import took 0.008598 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.285970 seconds.
-  path: Assets/Prefab/chess_piece
-  artifactKey: Guid(f7d1ecbf6695720499364d81313cc77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece using Guid(f7d1ecbf6695720499364d81313cc77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '013ea8cd020acb2e26793e8400901395') in 0.002488 seconds
-  Import took 0.005624 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001085 seconds.
-  path: Assets/Prefab/chess_piece
-  artifactKey: Guid(f7d1ecbf6695720499364d81313cc77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece using Guid(f7d1ecbf6695720499364d81313cc77a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '013ea8cd020acb2e26793e8400901395') in 0.002192 seconds
-  Import took 0.005418 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.067031 seconds.
-  path: Assets/Prefab/chess_piece/Archer.prefab
-  artifactKey: Guid(69d24b94b40d4684780f0c0312c4ac82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/Archer.prefab using Guid(69d24b94b40d4684780f0c0312c4ac82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16771672185a08c3225c30f8b8a1bc4b') in 0.004377 seconds
-  Import took 0.007531 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000279 seconds.
-  path: Assets/Prefab/chess_piece/Mage.prefab
-  artifactKey: Guid(383a6c9058c02a942a3a3117d79491c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/Mage.prefab using Guid(383a6c9058c02a942a3a3117d79491c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '812cae4dce9343f576c07d521573ea49') in 0.004127 seconds
-  Import took 0.007017 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000275 seconds.
-  path: Assets/Prefab/chess_piece/Warrior.prefab
-  artifactKey: Guid(0406746588ec7fd478797a954a44fc04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/Warrior.prefab using Guid(0406746588ec7fd478797a954a44fc04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd873e12f69be73cd15b52f40ef9bb871') in 0.018460 seconds
-  Import took 0.021545 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000265 seconds.
-  path: Assets/Prefab/chess_piece/King.prefab
-  artifactKey: Guid(2333afc58478a664e92d86fbaf62c8ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/King.prefab using Guid(2333afc58478a664e92d86fbaf62c8ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd4fe5f2b44c603afca28740e1792dff') in 0.005686 seconds
-  Import took 0.009473 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 481.777771 seconds.
-  path: Assets/Resources/Sprites/Arrow_Of_Madness.jpg
-  artifactKey: Guid(5f7daae168aa5c4438fe7d338d032629) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Sprites/Arrow_Of_Madness.jpg using Guid(5f7daae168aa5c4438fe7d338d032629) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '804087a1a765cca49d3e50ae75415272') in 0.157885 seconds
-  Import took 0.162477 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000237 seconds.
-  path: Assets/Image/attack_archer.png
-  artifactKey: Guid(86928ced4bceac8469546f5afbbb0e01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Image/attack_archer.png using Guid(86928ced4bceac8469546f5afbbb0e01) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3d037294c68a96ebf5340e155f345430') in 0.015513 seconds
-  Import took 0.019746 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000198 seconds.
-  path: Assets/Resources/Sprites/Arrow_Of_Madness.jpg
-  artifactKey: Guid(5f7daae168aa5c4438fe7d338d032629) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Resources/Sprites/Arrow_Of_Madness.jpg using Guid(5f7daae168aa5c4438fe7d338d032629) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '804087a1a765cca49d3e50ae75415272') in 0.022373 seconds
-  Import took 0.025440 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000212 seconds.
-  path: Assets/Image/arrowAttacking.png
-  artifactKey: Guid(2bb2e0a774f7e8b45977c393512d44b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Image/arrowAttacking.png using Guid(2bb2e0a774f7e8b45977c393512d44b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e87a664935ef65fd1cededc316e6e68f') in 0.011333 seconds
-  Import took 0.015272 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.004822 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.42 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.003 seconds
-Platform modules already initialized, skipping
-Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
-Refreshing native plugins compatible for Editor in 0.42 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2110 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 109.2 MB.
-System memory in use after: 109.3 MB.
-
-Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 2602.
-Total: 2.430000 ms (FindLiveObjects: 0.236300 ms CreateObjectMapping: 0.097300 ms MarkObjects: 2.076800 ms  DeleteObjects: 0.018700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
-========================================================================
-Received Import Request.
-  Time since last request: 1462.257935 seconds.
-  path: Assets/Prefab/chess_piece/Mage.prefab
-  artifactKey: Guid(383a6c9058c02a942a3a3117d79491c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/Mage.prefab using Guid(383a6c9058c02a942a3a3117d79491c7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de41f1cd04a75a11e1106f7d63759255') in 0.027500 seconds
-  Import took 0.030708 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000219 seconds.
-  path: Assets/Prefab/chess_piece/Archer.prefab
-  artifactKey: Guid(69d24b94b40d4684780f0c0312c4ac82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/Archer.prefab using Guid(69d24b94b40d4684780f0c0312c4ac82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '938e5d51eba5be75a11c29ff6a3ec2cf') in 0.003868 seconds
-  Import took 0.006738 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000231 seconds.
-  path: Assets/Prefab/chess_piece/Warrior.prefab
-  artifactKey: Guid(0406746588ec7fd478797a954a44fc04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/Warrior.prefab using Guid(0406746588ec7fd478797a954a44fc04) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b69ec0e6f056afb00d2d0b220aedfd0b') in 0.003965 seconds
-  Import took 0.006819 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000201 seconds.
-  path: Assets/Prefab/chess_piece/King.prefab
-  artifactKey: Guid(2333afc58478a664e92d86fbaf62c8ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefab/chess_piece/King.prefab using Guid(2333afc58478a664e92d86fbaf62c8ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '749c959c8052dd445b389103bbb979e5') in 0.003700 seconds
-  Import took 0.006430 seconds .
+Start importing Assets/Scripts/Game Director/CardConfig.cs using Guid(e300837ea5105ac40ae5ffc38eeaf187) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89c9d99586b6e90080eac1a687544367') in 0.100844 seconds
+  Import took 0.104245 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

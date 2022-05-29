@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.UI;
 namespace Config {
     enum Prefab {
-        Dot_Move, 
+        Move, 
         Thunder_Bolt, 
         Cell, 
         Card, 
@@ -15,6 +15,7 @@ namespace Config {
         Arrow,
         Swap,
         Disarm,
+        Demolition,
     }
 
     enum Constants {
@@ -27,8 +28,6 @@ namespace Config {
         public const string prefab_base_path = "Assets/Prefab"; 
         public const string sprite_base_path = "Sprites"; 
         public static class Prefab {
-            public const string dot_move = "Dot_Move";
-            public const string thunder_bolt = "Thunder_Bolt"; 
             public const string cell = "Board/Cell"; 
             public const string card = "Card"; 
             public const string king = "Chess_Piece/King";
@@ -36,11 +35,14 @@ namespace Config {
             public const string archer = "Chess_Piece/Archer"; 
             public const string warrior = "Chess_Piece/Warrior"; 
             public const string mulligan = "Mulligan";
-            public const string attacking = "Attacking";
+            public const string move = "Dots/Move";
+            public const string attacking = "Dots/Attacking";
+            public const string arrow = "Dots/Arrow";
+            public const string swap = "Dots/Swap";
+            public const string disarm = "Dots/Disarm";
+            public const string thunder_bolt = "Dots/Thunder_Bolt"; 
+            public const string demolition = "Dots/Demolition";
             public const string selected_indicator = "Selected_Indicator";
-            public const string arrow = "Arrow";
-            public const string swap = "Swap";
-            public const string disarm = "Disarm";
             
         }
     }
@@ -78,6 +80,20 @@ namespace Config {
         public static bool isEnemy(GameObject me, GameObject other)
         {
             return me.GetComponent<ChessPiece>().player != other.GetComponent<ChessPiece>().player;
+        }
+
+
+        public static bool outOfBoard(int x, int y)
+        {
+
+            if(x > 4 || y < 0) {
+                return true;
+            }
+            if(x > 7 || y < 0 ) {
+                return true;
+            }
+
+            return false;
         }
     }
 }
