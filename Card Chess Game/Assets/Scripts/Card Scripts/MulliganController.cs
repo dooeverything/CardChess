@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine.EventSystems;
 
 using Config; 
-public class MulliganController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class MulliganController : MonoBehaviour, IPointerDownHandler
 {
     Vector3 startPos;
     public int index;
@@ -16,7 +16,8 @@ public class MulliganController : MonoBehaviour, IBeginDragHandler, IDragHandler
     private GameObject trashCan;
     private int player; 
     public GameManager player_data;
-    private bool lock_dragging = false;
+    //private bool lock_dragging = false;
+    private bool is_clicked = false;
     void Start() {
         startPos = transform.position;
         trashCan = GameObject.Find("TrashCan");
@@ -44,7 +45,7 @@ public class MulliganController : MonoBehaviour, IBeginDragHandler, IDragHandler
     private void changeCard() {
         this.card = player_data.replaceCard(index);
         createNewCard();
-        lock_dragging = true;
+        //lock_dragging = true;
         GetComponent<Outline>().enabled = true;
     }
 
@@ -54,22 +55,58 @@ public class MulliganController : MonoBehaviour, IBeginDragHandler, IDragHandler
         transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
     }
 
-    public void OnBeginDrag(PointerEventData eventData) 
+    public void OnPointerDown(PointerEventData eventData)
     {
-    }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        if(lock_dragging) return;
-        transform.position = eventData.position;
-    }
+        if(!is_clicked){ // If a mulligan is not clicked before 
+            
+            // Unselect all mulligans
+            foreach( Transform child in transform.parent) {
+                child.GetComponent<MulliganController>().is_clicked = false;
+                child.GetComponent<Outline>().enabled = false;
+            }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if(GetComponent<BoxCollider2D>().IsTouching(trashCan.GetComponent<BoxCollider2D>())) {
-            changeCard();
+            is_clicked = true;
+            GetComponent<Outline>().enabled = true;
+
+            if(player == 1) {
+                //Debug.Log("Player1 start card: " + index);
+                GameManager.selected_mulligan_player1 = index;
+            }else{
+                //Debug.Log("Player2 start card: " + index);
+                GameManager.selected_mulligan_player2 = index;
+            }
+            
+        }else { // If a mulligan is clicked before
+            is_clicked = false;
+            GetComponent<Outline>().enabled = false;
+
+            if(player == 1) {
+                //Debug.Log("Player1 start card: " + index);
+                GameManager.selected_mulligan_player1 = -1;
+            }else{
+                //Debug.Log("Player2 start card: " + index);
+                GameManager.selected_mulligan_player2 = -1;
+            }
         }
-        
-        transform.position = startPos;
     }
+
+    // public void OnBeginDrag(PointerEventData eventData) 
+    // {
+    // }
+
+    // public void OnDrag(PointerEventData eventData)
+    // {
+    //     if(lock_dragging) return;
+    //     transform.position = eventData.position;
+    // }
+
+    // public void OnEndDrag(PointerEventData eventData)
+    // {
+    //     if(GetComponent<BoxCollider2D>().IsTouching(trashCan.GetComponent<BoxCollider2D>())) {
+    //         changeCard();
+    //     }
+        
+    //     transform.position = startPos;
+    // }
 }

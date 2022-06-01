@@ -21,7 +21,7 @@ public class WheelController : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Log("clicked!");
+        //Log("clicked!");
         if(clicked) return; 
         decay_factor = Random.Range(0.9942f, 0.9943f);
         rot_speed = Random.Range(3.0f, 3.15f);

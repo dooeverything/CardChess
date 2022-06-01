@@ -5,13 +5,14 @@ using UnityEditor;
 using UnityEngine.UI;
 namespace Config {
     enum Prefab {
+        Cell, 
+        Mulligan,
+        Card, 
+        Selected_Indicator,
+        Mana,
         Move, 
         Thunder_Bolt, 
-        Cell, 
-        Card, 
         Attacking,
-        Selected_Indicator,
-        Mulligan,
         Arrow,
         Swap,
         Disarm,
@@ -29,12 +30,14 @@ namespace Config {
         public const string sprite_base_path = "Sprites"; 
         public static class Prefab {
             public const string cell = "Board/Cell"; 
+            public const string mulligan = "Mulligan";
             public const string card = "Card"; 
+            public const string selected_indicator = "Selected_Indicator";
+            public const string mana = "Mana";
             public const string king = "Chess_Piece/King";
             public const string mage = "Chess_Piece/Mage"; 
             public const string archer = "Chess_Piece/Archer"; 
             public const string warrior = "Chess_Piece/Warrior"; 
-            public const string mulligan = "Mulligan";
             public const string move = "Dots/Move";
             public const string attacking = "Dots/Attacking";
             public const string arrow = "Dots/Arrow";
@@ -42,7 +45,6 @@ namespace Config {
             public const string disarm = "Dots/Disarm";
             public const string thunder_bolt = "Dots/Thunder_Bolt"; 
             public const string demolition = "Dots/Demolition";
-            public const string selected_indicator = "Selected_Indicator";
             
         }
     }
@@ -51,13 +53,9 @@ namespace Config {
     public static class Helper {
         // Creates And Returns GameObject Based On Prefab Name As String
         public static GameObject prefabNameToGameObject(string prefab_name){
-            //Debug.Log(prefab_name.ToLower());
             string path = typeof(Path.Prefab).GetField(prefab_name.ToLower()).GetValue(null) as string;
-            //Debug.Log(path);
-            //Debug.Log($"{Path.prefab_base_path}/{path}");
             Object prefab = AssetDatabase.LoadAssetAtPath($"{Path.prefab_base_path}/{path}.prefab", typeof(GameObject));
             return GameObject.Instantiate(prefab) as GameObject;
-
         }
 
 
@@ -82,14 +80,12 @@ namespace Config {
             return me.GetComponent<ChessPiece>().player != other.GetComponent<ChessPiece>().player;
         }
 
-
         public static bool outOfBoard(int x, int y)
         {
-
-            if(x > 4 || y < 0) {
+            if(x > 4 || x < 0) {
                 return true;
             }
-            if(x > 7 || y < 0 ) {
+            if(y > 7 || y < 0 ) {
                 return true;
             }
 

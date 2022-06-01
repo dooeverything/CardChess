@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using Config;
 using UnityEngine.UI;
 
-public class DemolitionController : DotController, MonoBehaviour
+public class DemolitionController : DotController, IPointerDownHandler
 {
     public GameObject target;
 

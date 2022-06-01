@@ -36,18 +36,13 @@ public class Archer : MonoBehaviour {
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < 3; i++) {
             for(int j = 1; j<attackRange; j++) {
-                int newX_strike = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]*j);
-                int newY_strike = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]*j);
+                int newX = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]*j);
+                int newY = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]*j);
                 
                 // Check the location is out of bound 
-                if(newX_strike > 4 || newX_strike < 0) {
-                    continue;
-                }
-                if(newY_strike > 7 || newY_strike < 0 ) {
-                    continue;
-                }
+                if(Helper.outOfBoard(newX, newY)) continue;
 
-                GameObject new_cell = PieceConfig.cells[newY_strike, newX_strike ];
+                GameObject new_cell = PieceConfig.cells[newY, newX];
                 if(new_cell.transform.childCount > 0) {
 
                     // The enemy's Piece is located within the range of archer's attack, then create a strike dot    

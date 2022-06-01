@@ -18,6 +18,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     private List<GameObject> target_pieces = null;
     private int indexSelected = -1;
     public int hand_index = -1;
+    public int n_mana_required = 0;
     void Start()
     {
         if (player == 1)
@@ -36,13 +37,14 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     }
     public void init(int player, int hand_index, Card card)
     {
+        this.hand_index = hand_index;
         this.card = card;
         this.player = player;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(GameManager.turn != player) return;
+        if(GameManager.turn != player || !isManaEnough() ) return;
 
         hand_index = findHandIndex();
 
@@ -61,6 +63,8 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
             color.a = 1;
             card.color = color;
         }
+
+
 
         foreach (GameObject obj in GameManager.dots)
         {
@@ -83,6 +87,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void OnDrag(PointerEventData eventData)
     {
+
+        if(!isManaEnough()) return;
+
         if(GameManager.turn != player) {
             returnToInitPos();
             return;
@@ -102,23 +109,24 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
                 }
             }
         }
-        if(GameManager.indicators == null) {
-        }
+
         foreach(GameObject indicator in GameManager.indicators) {
             indicator.GetComponent<Image>().color = Color.red;
         }
         if(indexSelected >= 0) {
             GameObject target_piece = target_pieces[indexSelected]; 
-            move_available = CardConfig.card_dict[card].Item1(target_piece, gameObject); 
+            move_available = CardConfig.card_dict[card].Item1(target_piece, gameObject);
             if(move_available) {
-                GameManager.indicators[indexSelected].GetComponent<Image>().color = Color.blue;
+                GameManager.indicators[indexSelected].GetComponent<Image>().color = Color.black;
             }
         }
+
+
     }    
     
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(GameManager.turn != player) return;
+        if(GameManager.turn != player || !isManaEnough() ) return;
 
         // Create a dot
         if(indexSelected >= 0  && move_available) {
@@ -163,9 +171,9 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
     }
     public void returnToInitPos(){
         if(transform.parent == hand) return;
-        Debug.Log("returnToInitPos");
+        //Debug.Log("returnToInitPos");
         transform.SetParent(hand);
-        Debug.Log($"hand_index is: {hand_index}");
+        //Debug.Log($"hand_index is: {hand_index}");
         transform.SetSiblingIndex(hand_index);
     }
     public int findHandIndex(){
@@ -177,4 +185,30 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         }
         return -1;
     }
+
+    public bool isManaEnough()
+    {
+        n_mana_required = (int)CardConfig.card_dict[card].Item3;
+
+        int n_curr_mana = player_data.mana.Count;
+
+        return (n_curr_mana >= n_mana_required);
+    }
+
+    public void destroyMana(int n_mana)
+    {
+        //Debug.Log("Destroy Card: " + n_mana);
+
+        // Delete a number of mana that is used for executing a card
+        for(int i = 0; i<n_mana; i++){
+            //Debug.Log("Destory Mana at " + i);
+            Destroy(player_data.mana[i]);
+        }
+        
+        for(int i=0; i<n_mana; i++){
+            //Debug.Log("Remove Mana at " + i);
+            player_data.mana.RemoveAt(0);
+        }
+    }
+
 }

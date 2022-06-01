@@ -13,11 +13,14 @@ public class DotController : MonoBehaviour
         if (card) {
             int hand_index = card.GetComponent<CardController>().hand_index;
             card.GetComponent<CardController>().player_data.hand.RemoveAt(hand_index);
+            int n_mana = card.GetComponent<CardController>().n_mana_required;
+            card.GetComponent<CardController>().destroyMana(n_mana);
             Destroy(card);
         }
     }
 
-    public void moveParent(){
+    public void moveParent()
+    {
             Transform cellTransform = gameObject.transform.parent; // parent is a Cell gameobject
 
             parent.transform.SetParent(cellTransform); // selected piece의 부모는 selected piece가 이동할 cell

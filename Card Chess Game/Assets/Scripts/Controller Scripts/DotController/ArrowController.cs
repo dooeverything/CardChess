@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ArrowController : DotController, IPointerDownHandler
+public class ArrowController : StrikeController, IPointerDownHandler
 {
-    public GameObject enemy;
-    public bool moveWhenAttack = true;
+    //public GameObject enemy;
+    //public bool moveWhenAttack = true;
     public static int numAttack = default;
 
-    public void OnPointerDown(PointerEventData eventData) {
+    public override void OnPointerDown(PointerEventData eventData) {
         deleteCard();
-
+        
         {
             ChessPiece piece = enemy.GetComponent<ChessPiece>();
             int hp_enemy = piece.defense_power;
@@ -29,8 +29,10 @@ public class ArrowController : DotController, IPointerDownHandler
                 }
                 list.RemoveAt(index);
                 numAttack--;
+                isKingDead();
                 Destroy(gameObject);
-                Destroy(enemy); 
+                Destroy(enemy);
+                //GameManager.
             }
         }
 

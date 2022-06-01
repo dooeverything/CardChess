@@ -30,13 +30,16 @@ public class ClickController : MonoBehaviour
 
     public void sceneThreeButtonController(){
 
+
+
         int player = PlayerPrefs.GetInt("player");
         int current = SceneManager.GetActiveScene().buildIndex;
 
-        if(player == 1) {
+        if(player == 1 && GameManager.selected_mulligan_player1 >= 0) {
             PlayerPrefs.SetInt("player", 2);
             SceneManager.LoadScene(current);
-        }else {
+        }
+        else if (player ==2 && GameManager.selected_mulligan_player2 >= 0){
             SceneManager.LoadScene(current+1);
         }
 

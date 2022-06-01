@@ -34,16 +34,15 @@ public class MulliganGenerator : MonoBehaviour
     {
         GameManager player = (this.player == 1) ? GameManager.player1 : GameManager.player2; 
         for(int i = 0; i < num_cards; i++) {
-            Card card_drawn = player.drawCard(); 
+            Card card_drawn = player.drawMullgan();//player.drawCard(); 
             GameObject card = Helper.prefabNameToGameObject(Prefab.Mulligan.ToString()); 
             MulliganController component = card.GetComponent<MulliganController>();
             card.transform.SetParent(card_base.transform, true);
             component.init(card_drawn, this.player, i);
             int center_x = 0; 
             float displacement = 250f; 
-            card.transform.position = card_base.transform.position + new Vector3(center_x - ((num_cards-0.75f) / 2) * displacement + (i * displacement), 0, 0);
-        
-        
+            card.transform.position = card_base.transform.position 
+                                        + new Vector3(center_x - ((num_cards-0.75f) / 2) * displacement + (i * displacement), 0, 0);
         }
     }
 }

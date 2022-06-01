@@ -37,12 +37,13 @@ public class King : MonoBehaviour {
     }
 
 
-    void OnDestory(){
+    // void OnDestory(){
 
-        PlayerPrefs.SetInt("winner", GetComponent<ChessPiece>().player == 1 ? 2 : 1);
+    //     Debug.Log("My King is dead, you win....");
+    //     PlayerPrefs.SetInt("winner", GetComponent<ChessPiece>().player == 1 ? 2 : 1);
 
-        int current = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(current+1);
-    }
+    //     int current = SceneManager.GetActiveScene().buildIndex;
+    //     SceneManager.LoadScene(current+1);
+    // }
 
 }

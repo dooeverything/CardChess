@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEditor;
 
-public class ThunderBoltController: DotController, IPointerDownHandler
+public class ThunderBoltController: StrikeController
 {
-    public GameObject enemy;
+    //public GameObject enemy;
     public int enemy_player;
 
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class ThunderBoltController: DotController, IPointerDownHandler
         enemy_player = enemy.GetComponent<ChessPiece>().player;
     }
 
-    public void OnPointerDown(PointerEventData eventData) {
+    public override void OnPointerDown(PointerEventData eventData) {
 
         deleteCard();
 
@@ -59,6 +59,7 @@ public class ThunderBoltController: DotController, IPointerDownHandler
                         }
                     }
                     list.RemoveAt(index);
+                    isKingDead();
                     DestroyImmediate(enemy); 
                 }
                 if(next_targets.Count == 0) break; 

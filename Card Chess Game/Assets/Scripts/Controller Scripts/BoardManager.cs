@@ -47,13 +47,13 @@ public class BoardManager : MonoBehaviour
             for(int j = 0; j < 5; j++) {
                 Piece type = PieceConfig.pieces_on_board[i, j]; 
                 //Chesspiece for player1
-                GameObject piece = Helper.prefabNameToGameObject(type.ToString()); 
-                piece.transform.SetParent(PieceConfig.cells[i, j].transform);
-                piece.transform.position = PieceConfig.cells[i, j].transform.position;
-                piece.GetComponent<ChessPiece>().player = 1;
-                piece.GetComponent<ChessPiece>().piece_type = type; 
-                piece.GetComponent<Outline>().enabled = false;
-                addPiece(piece, 1);
+                GameObject piece1 = Helper.prefabNameToGameObject(type.ToString()); 
+                piece1.transform.SetParent(PieceConfig.cells[i, j].transform);
+                piece1.transform.position = PieceConfig.cells[i, j].transform.position;
+                piece1.GetComponent<ChessPiece>().player = 1;
+                piece1.GetComponent<ChessPiece>().piece_type = type; 
+                piece1.GetComponent<Outline>().enabled = false;
+                addPiece(piece1, 1);
 
                 //Chesspiece for player2
                 GameObject piece2 = Helper.prefabNameToGameObject(type.ToString()); 
