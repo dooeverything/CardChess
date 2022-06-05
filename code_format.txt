@@ -26,3 +26,7 @@ event driven gameobject creation pattern
 2. removeAll and GenerateAll design pattern
 
 add constructor-like initializer function 
+
+
+
+pascal case search regex: \b\w+(([A-Z]\w+)+|[A-Z])\b

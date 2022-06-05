@@ -20,7 +20,7 @@ public class DisarmController : DotController, IPointerDownHandler
 
         if(target.GetComponent<ChessPiece>().piece_type == Piece.Archer) {
 
-            target.GetComponent<Archer>().attackRange = 4;
+            target.GetComponent<Archer>().attack_range = 4;
         }
         
 

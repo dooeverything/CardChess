@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEditor;
-
+using Config;
 public class ThunderBoltController: StrikeController
 {
     //public GameObject enemy;
@@ -38,9 +38,9 @@ public class ThunderBoltController: StrikeController
                     GameObject newCell_Strike = Config.PieceConfig.cells[newY_strike, newX_strike];
                     if(newCell_Strike.transform.childCount > 0) {
                         if(newCell_Strike.transform.GetChild(0) == null) continue; 
-                        GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;
-                        if(enemyPiece.GetComponent<ChessPiece>() && enemyPiece.GetComponent<ChessPiece>().player == enemy_player) {
-                            next_targets.Add(enemyPiece); 
+                        GameObject enemy = newCell_Strike.transform.GetChild(0).gameObject;
+                        if(enemy.GetComponent<ChessPiece>() && enemy.GetComponent<ChessPiece>().player == enemy_player) {
+                            next_targets.Add(enemy); 
                         }
                     }
                 }
@@ -59,13 +59,13 @@ public class ThunderBoltController: StrikeController
                         }
                     }
                     list.RemoveAt(index);
-                    isKingDead();
+                    enemy.BroadcastMessage(EventName.DestroyKing.ToString(), SendMessageOptions.DontRequireReceiver);
                     DestroyImmediate(enemy); 
                 }
                 if(next_targets.Count == 0) break; 
 
-                int randomIndex = Random.Range(0, next_targets.Count);
-                enemy = next_targets[randomIndex];
+                int random_index = Random.Range(0, next_targets.Count);
+                enemy = next_targets[random_index];
                 
 
             }

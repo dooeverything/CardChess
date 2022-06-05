@@ -10,9 +10,6 @@ public class WheelController : MonoBehaviour, IPointerDownHandler
     float rot_speed;
     bool clicked = false;
     float decay_factor = 0;
-    void Start() {
-
-    }
     void Update()
     {
         transform.Rotate(0, 0, this.rot_speed);

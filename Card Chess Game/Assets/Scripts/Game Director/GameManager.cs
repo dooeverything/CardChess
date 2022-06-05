@@ -24,7 +24,6 @@ public class GameManager
     public static List<GameObject> dots = new List<GameObject>();
     public static List<GameObject> indicators = new List<GameObject>();
     public static GameObject[] kings = new GameObject[2];
-    public static bool[] kingDead = {false, false}; 
 
     /********** Information for each player **********/
     public GameObject selected_card;
@@ -46,7 +45,6 @@ public class GameManager
             deck.Insert(Random.Range(0, index), card);
             if (index == init_deck_count) break;
         }
-        //Debug.Log("Number of Deck: " + deck.Count);
     }
 
     public static void destroyAllIndicators()
@@ -71,10 +69,11 @@ public class GameManager
         dots = new List<GameObject>();
     }
     public static void endTurn() {
-        switchTurn(); 
         GameManager player_data;
         destroyAllIndicators();
         destroyAlldots();
+        switchTurn(); 
+        
         foreach(CardController card in GameObject.Find("Canvas").GetComponentsInChildren<CardController>()) {
             //Log("return to initpos hand1");
             card.returnToInitPos();
@@ -89,20 +88,15 @@ public class GameManager
             player_data = GameManager.player2;
         }
 
+        GameObject.Find("Canvas").BroadcastMessage(Config.EventName.EndTurn.ToString(), SendMessageOptions.DontRequireReceiver);;        
+
         if(player_data.hand.Count < 4 && player_data.deck.Count > 0 ) {
             addCardToHand();
         }
 
         if(player_data.mana.Count > 0 || player_data.mana.Count < 9) {
-            //Debug.Log("Create Mana!");
             createMana();
         }       
-
-        if(isKingDead()) {
-            int current = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(current+1);
-        }
-        
     }
     public static void switchTurn()
     {
@@ -130,8 +124,6 @@ public class GameManager
 
         GameObject card_object = Config.Helper.cardToGameObject(card);
 
-        //Debug.Log(" Player has "  + player_data.hand.Count);
-
         card_object.transform.SetParent(hand.transform, true);
         card_object.GetComponent<CardController>().player = GameManager.turn;
         card_object.GetComponent<CardController>().init(GameManager.turn, player_data.hand.Count-1, card);
@@ -156,8 +148,6 @@ public class GameManager
     public Card drawCard()
     {
         // Draw A Card From The Deck
-        
-        //Debug.Log("Draw Card!");
         Card card = deck[0];
         deck.RemoveAt(0);
         hand.Add(card);
@@ -179,15 +169,14 @@ public class GameManager
         deck.RemoveAt(index_deck);
 
         hand.Insert(index, card);
-        //Debug.Log(deck.Count);
         return card;
     }
     public void pushBackCard(int index)
     {
-        //Debug.Log("Push Back " + deck.Count);
         deck.Insert(Random.Range(0, deck.Count + 1), mulligan[index]);
     }
-    public static void lastDotClicked(bool has_card) {
+    public static void lastDotClicked(bool has_card) 
+    {
         if(has_card) {
             GameManager.dots[0].GetComponent<DotController>().deleteCard();
         }
@@ -218,25 +207,5 @@ public class GameManager
 
         player_data.mana.Add(new_mana);
         new_mana.transform.SetParent(mana_stack.transform, true);
-        //Debug.Log("Create Mana: " +  player_data.mana.Count);
-    }
-    
-    public static bool isKingDead()
-    {
-
-        bool king_dead = false;
-
-        if(GameManager.kingDead[1]){
-            Debug.Log("Player 2 King is dead, player 1 win....");
-            PlayerPrefs.SetInt("winner", 1);
-            king_dead = true;
-        }else if(GameManager.kingDead[0]){
-            Debug.Log("Player 1 King is dead, player 2 win....");
-            PlayerPrefs.SetInt("winner", 2);
-            king_dead = true;
-        }
-
-        return king_dead;
-        //PlayerPrefs.SetInt("winner", GetComponent<ChessPiece>().player == 1 ? 2 : 1);
     }
 }

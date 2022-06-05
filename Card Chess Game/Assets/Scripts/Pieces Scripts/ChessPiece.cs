@@ -60,7 +60,7 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         if(piece_type == Piece.King) {
             GetComponent<King>().createDots(); // Speical move for King
         } else if(piece_type == Piece.Archer){
-            GetComponent<Archer>().numEnemy = 0;
+            GetComponent<Archer>().num_enemy = 0;
             GetComponent<Archer>().createArrowArcher(basic_moves);
         }else {
             createDots(basic_moves); 
@@ -80,26 +80,26 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < move_list.Count; i++) {
             int[] coordinates = move_list[i]; 
-            int newIndexX = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]);
-            int newIndexY = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]);
-            if(newIndexX > 4 || newIndexX < 0) {
+            int new_x = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]);
+            int new_y = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]);
+            if(new_x > 4 || new_x < 0) {
                 continue;
             }
-            if(newIndexY > 7 || newIndexY < 0 ) {
+            if(new_y > 7 || new_y < 0 ) {
                 continue;
             }
-            GameObject newCell = PieceConfig.cells[newIndexY, newIndexX];
+            GameObject new_cell = PieceConfig.cells[new_y, new_x];
             
-            if(newCell.gameObject.transform.childCount > 0) {
+            if(new_cell.gameObject.transform.childCount > 0) {
                 //if(newCell.gameObject.transform.GetChild(0).name == "dot_move(Clone)" ) continue;
                 // 말이 적일 경우
-                if(newCell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
-                    dots.Add(createStrike(newCell, newCell.transform.GetChild(0).gameObject, card));
+                if(new_cell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) {
+                    dots.Add(createStrike(new_cell, new_cell.transform.GetChild(0).gameObject, card));
                 }
                 continue;
             }
 
-            dots.Add(createDot(newCell, card));
+            dots.Add(createDot(new_cell, card));
         }
         GameManager.dots = dots; 
     }
@@ -113,7 +113,6 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
     }
 
     public GameObject createStrike(GameObject cell, GameObject enemy, GameObject card) {
-        //Debug.Log("CreateStrike Called"); 
         GameObject attacking = Helper.prefabNameToGameObject(Prefab.Attacking.ToString());
         attacking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
         attacking.transform.position = cell.transform.position;
@@ -134,6 +133,6 @@ public class ChessPiece : MonoBehaviour, IPointerDownHandler
 
     public (int indexX, int indexY) getIndex()
     {
-        return (transform.parent.GetComponent<CellController>().indexX, transform.parent.GetComponent<CellController>().indexY);
+        return (transform.parent.GetComponent<CellController>().index_x, transform.parent.GetComponent<CellController>().index_y);
     }
 }

@@ -8,15 +8,15 @@ using Config;
 
 public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public static GameObject selectedPiece = null;
-    public Piece pieceType;
+    public static GameObject selected_piece = null;
+    public Piece piece_type;
     public int player = 1;
     public GameManager player_data;
     public Card card; 
     private bool move_available = false; 
     private Transform hand;
     private List<GameObject> target_pieces = null;
-    private int indexSelected = -1;
+    private int index_selected = -1;
     public int hand_index = -1;
     public int n_mana_required = 0;
     void Start()
@@ -33,7 +33,7 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         hand = this.transform.parent;
 
         // Get information about a card
-        target_pieces = player_data.filterList(pieceType); 
+        target_pieces = player_data.filterList(piece_type); 
     }
     public void init(int player, int hand_index, Card card)
     {
@@ -48,11 +48,11 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         hand_index = findHandIndex();
 
-        target_pieces = player_data.filterList(pieceType); 
+        target_pieces = player_data.filterList(piece_type); 
         player_data.selected_card = null; 
 
-        if(selectedPiece) {
-            selectedPiece.GetComponent<ChessPiece>().activated = false;
+        if(selected_piece) {
+            selected_piece.GetComponent<ChessPiece>().activated = false;
         }
 
         foreach (Image card in transform.parent.GetComponentsInChildren<Image>())
@@ -63,8 +63,6 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
             color.a = 1;
             card.color = color;
         }
-
-
 
         foreach (GameObject obj in GameManager.dots)
         {
@@ -96,16 +94,16 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         }
 
         GameManager.destroyAlldots();
-        indexSelected = -1;
+        index_selected = -1;
         transform.position = eventData.position;
-        float minDistance = float.MaxValue;
+        float min_distance = float.MaxValue;
         
         for(int i=0; i<target_pieces.Count; i++) {
             if(GetComponent<Collider2D>().IsTouching(target_pieces[i].GetComponent<Collider2D>())) {
             float dist = Vector2.Distance(target_pieces[i].transform.position, gameObject.transform.position);
-                if(minDistance > dist) {
-                    minDistance = dist;
-                    indexSelected = i;
+                if(min_distance > dist) {
+                    min_distance = dist;
+                    index_selected = i;
                 }
             }
         }
@@ -113,15 +111,14 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         foreach(GameObject indicator in GameManager.indicators) {
             indicator.GetComponent<Image>().color = Color.red;
         }
-        if(indexSelected >= 0) {
-            GameObject target_piece = target_pieces[indexSelected]; 
+
+        if(index_selected >= 0) {
+            GameObject target_piece = target_pieces[index_selected]; 
             move_available = CardConfig.card_dict[card].Item1(target_piece, gameObject);
             if(move_available) {
-                GameManager.indicators[indexSelected].GetComponent<Image>().color = Color.black;
+                GameManager.indicators[index_selected].GetComponent<Image>().color = Color.black;
             }
         }
-
-
     }    
     
     public void OnEndDrag(PointerEventData eventData)
@@ -129,10 +126,11 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         if(GameManager.turn != player || !isManaEnough() ) return;
 
         // Create a dot
-        if(indexSelected >= 0  && move_available) {
-            GameObject target_piece = target_pieces[indexSelected]; 
+        if(index_selected >= 0  && move_available) {
+            GameObject target_piece = target_pieces[index_selected]; 
             target_piece.GetComponent<ChessPiece>().activated = true; 
             GameObject temp = null;
+
             // Clear all indicators(except the selected chesspiece) and dots
             foreach ( GameObject obj in target_pieces ) {
                 if(obj.GetComponent<ChessPiece>().activated == true) {
@@ -148,9 +146,10 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
                     break;
                 }
             }
+
             GameManager.destroyAllIndicators();
             GameManager.indicators.Add(temp);
-            
+
             Color color = gameObject.GetComponent<Image>().color; // make a card transparency which means the card is dragged and applied to the piece
             color.a = 0.5f;
             gameObject.GetComponent<Image>().color = color;            
@@ -164,16 +163,14 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
         returnToInitPos();
     }
 
-    public void destoryCard() {
+    public void destroyCard() {
         CardController temp = GetComponent<CardController>(); 
         temp.player_data.hand.RemoveAt(hand_index);
         Destroy(gameObject); 
     }
     public void returnToInitPos(){
         if(transform.parent == hand) return;
-        //Debug.Log("returnToInitPos");
         transform.SetParent(hand);
-        //Debug.Log($"hand_index is: {hand_index}");
         transform.SetSiblingIndex(hand_index);
     }
     public int findHandIndex(){
@@ -184,6 +181,15 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
             }
         }
         return -1;
+    }
+
+
+    public void EndTurn() 
+    {
+        Debug.Log("Set color after end turn");
+        Color color = gameObject.GetComponent<Image>().color; // make a card transparency which means the card is dragged and applied to the piece
+        color.a = 1.0f;
+        gameObject.GetComponent<Image>().color = color;  
     }
 
     public bool isManaEnough()
@@ -197,16 +203,12 @@ public class CardController : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
     public void destroyMana(int n_mana)
     {
-        //Debug.Log("Destroy Card: " + n_mana);
-
         // Delete a number of mana that is used for executing a card
         for(int i = 0; i<n_mana; i++){
-            //Debug.Log("Destory Mana at " + i);
             Destroy(player_data.mana[i]);
         }
         
         for(int i=0; i<n_mana; i++){
-            //Debug.Log("Remove Mana at " + i);
             player_data.mana.RemoveAt(0);
         }
     }

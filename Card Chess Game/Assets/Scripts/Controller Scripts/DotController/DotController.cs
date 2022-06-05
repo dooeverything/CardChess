@@ -21,9 +21,9 @@ public class DotController : MonoBehaviour
 
     public void moveParent()
     {
-            Transform cellTransform = gameObject.transform.parent; // parent is a Cell gameobject
+            Transform cell_transform = gameObject.transform.parent; // parent is a Cell gameobject
 
-            parent.transform.SetParent(cellTransform); // selected piece의 부모는 selected piece가 이동할 cell
-            parent.transform.position = cellTransform.position; // 위치 조정   
+            parent.transform.SetParent(cell_transform); // selected piece의 부모는 selected piece가 이동할 cell
+            parent.transform.position = cell_transform.position; // 위치 조정   
     }
 }

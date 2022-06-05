@@ -34,7 +34,7 @@ public class MulliganGenerator : MonoBehaviour
     {
         GameManager player = (this.player == 1) ? GameManager.player1 : GameManager.player2; 
         for(int i = 0; i < num_cards; i++) {
-            Card card_drawn = player.drawMullgan();//player.drawCard(); 
+            Card card_drawn = player.drawMullgan();
             GameObject card = Helper.prefabNameToGameObject(Prefab.Mulligan.ToString()); 
             MulliganController component = card.GetComponent<MulliganController>();
             card.transform.SetParent(card_base.transform, true);

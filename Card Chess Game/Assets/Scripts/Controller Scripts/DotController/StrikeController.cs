@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.SceneManagement;
+using Config;
 public class StrikeController : DotController, IPointerDownHandler
 {
     public GameObject enemy;
@@ -28,7 +29,7 @@ public class StrikeController : DotController, IPointerDownHandler
                 list.RemoveAt(index);
                 Destroy(gameObject);
                 Destroy(enemy);
-                isKingDead();
+                enemy.BroadcastMessage(EventName.DestroyKing.ToString(), SendMessageOptions.DontRequireReceiver);
                 moveParent();
             }
         }
@@ -42,20 +43,5 @@ public class StrikeController : DotController, IPointerDownHandler
         // Switch turn after strike
         GameManager.endTurn();
         
-    }
-
-    public void isKingDead()
-    {                        
-        if(enemy.GetComponent<ChessPiece>().player == 1 &&
-           enemy.GetComponent<ChessPiece>().piece_type == Config.Piece.King){
-            
-            GameManager.kingDead[0] = true;
-        }
-        
-        if(enemy.GetComponent<ChessPiece>().player == 2 && 
-           enemy.GetComponent<ChessPiece>().piece_type == Config.Piece.King){
-           
-            GameManager.kingDead[1] = true;
-        }
     }
 }

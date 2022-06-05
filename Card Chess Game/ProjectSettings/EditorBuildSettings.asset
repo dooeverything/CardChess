@@ -9,18 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Scene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/HeadTail Scene.unity
+    path: Assets/Scenes/Wheel Scene.unity
     guid: 01f0f7fcfc95e114d99952675c4ea898
   - enabled: 1
-    path: Assets/Scenes/Choose Card Scene.unity
+    path: Assets/Scenes/Mulligan Scene.unity
     guid: 69873615b0e87194686652782b7d040d
-  - enabled: 0
-    path: Assets/Scenes/testScene/Choose Card Scene_2.unity
-    guid: b75d4046e67bdae4899c31a6bdf36456
-  - enabled: 0
-    path: Assets/Scenes/testScene/Choose Card Scene_3.unity
-    guid: f1d1a04cc6b7cab44b9f0df425c5b32f
   - enabled: 1
-    path: Assets/Scenes/InGame Scene.unity
+    path: Assets/Scenes/In Game Scene.unity
     guid: 163e77232c40b1d4fa4269e78ae6522c
+  - enabled: 1
+    path: Assets/Scenes/End Game Scene.unity
+    guid: df6e2c99491b10e41ba32e93f3b6c41e
   m_configObjects: {}

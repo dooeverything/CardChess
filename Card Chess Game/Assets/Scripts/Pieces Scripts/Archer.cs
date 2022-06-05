@@ -6,11 +6,9 @@ using UnityEngine.EventSystems;
 using UnityEditor;
 using Config;
 public class Archer : MonoBehaviour {
-    public int offensePower = 1;
-    public int defensePower = 1;
-    public int attackRange = 4;
-    public int numEnemy = 0;
-    public bool onlyAttack = false;
+    public int attack_range = 4;
+    public int num_enemy = 0;
+    public bool only_attack = false;
     public GameObject createStrikeDot(GameObject cell, GameObject enemy, GameObject card, GameObject parent) {
         GameObject striking = Helper.prefabNameToGameObject(Prefab.Arrow.ToString());
         striking.transform.SetParent(cell.transform, false); // Parent is Cell GameObject
@@ -22,10 +20,10 @@ public class Archer : MonoBehaviour {
         return striking;
     }
 
-    public GameObject createMoveDot(GameObject newCell, GameObject card) {
+    public GameObject createMoveDot(GameObject new_cell, GameObject card) {
         GameObject move = Helper.prefabNameToGameObject(Prefab.Move.ToString());
-        move.transform.SetParent(newCell.transform, false);
-        move.transform.position = newCell.transform.position;
+        move.transform.SetParent(new_cell.transform, false);
+        move.transform.position = new_cell.transform.position;
         move.GetComponent<MoveController>().parent = gameObject; 
         move.GetComponent<MoveController>().card = card;
         return move;
@@ -35,26 +33,27 @@ public class Archer : MonoBehaviour {
     {
         List<GameObject> dots = new List<GameObject>();
         for (int i = 0; i < 3; i++) {
-            for(int j = 1; j<attackRange; j++) {
-                int newX = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]*j);
-                int newY = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]*j);
+            for(int j = 1; j<attack_range; j++) {
+                int new_x = GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0]*j);
+                int new_y = GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1]*j);
                 
                 // Check the location is out of bound 
-                if(Helper.outOfBoard(newX, newY)) continue;
+                if(Helper.outOfBoard(new_x, new_y)) continue;
 
-                GameObject new_cell = PieceConfig.cells[newY, newX];
+                GameObject new_cell = PieceConfig.cells[new_y, new_x];
                 if(new_cell.transform.childCount > 0) {
 
-                    // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
-                    if(new_cell.transform.GetChild(0).GetComponent<ChessPiece>().player != GetComponent<ChessPiece>().player ) { 
-                        dots.Add(createStrikeDot(new_cell, new_cell.transform.GetChild(0).gameObject, card, this.gameObject));
-                        numEnemy++;
+                    // The enemy's Piece is located within the range of archer's attack, then create a strike dot  
+                    GameObject enemy = new_cell.transform.GetChild(0).gameObject;
+                    if(Helper.isEnemy(gameObject, enemy) ) {
+                        dots.Add(createStrikeDot(new_cell, enemy, card, this.gameObject));
+                        num_enemy++;
                     }
 
                     // If there is any blocking piece, then further iteration is no needed 
                     // (the piece further than blocking piece cannot be attacked)
                     break; 
-                }else if(!onlyAttack){
+                }else if(!only_attack){
                     // If there is no blocking piece on the location where archer can move to
                     if(j==1){
                         dots.Add(createMoveDot(new_cell, card));
@@ -62,9 +61,8 @@ public class Archer : MonoBehaviour {
                 }
             }
         }
-        ArrowController.numAttack = System.Math.Min(num_attack, numEnemy); 
-        //Debug.Log(ArrowController.numAttack);
-        onlyAttack = false;
+        ArrowController.num_attack = System.Math.Min(num_attack, num_enemy); 
+        only_attack = false;
         GameManager.dots = dots; 
     }
 

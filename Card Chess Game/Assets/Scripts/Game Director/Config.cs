@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 namespace Config {
+
+
+    enum EventName {
+        DestroyKing,
+        EndTurn,
+    }
     enum Prefab {
         Cell, 
         Mulligan,
@@ -66,13 +72,13 @@ namespace Config {
             card_object.transform.GetChild(0).GetComponent<Image>().sprite = sprite;
             card_object.transform.GetChild(1).GetComponent<Text>().text = card.ToString(); 
 
-            card_object.GetComponent<CardController>().pieceType = CardConfig.card_dict[card].Item2;
+            card_object.GetComponent<CardController>().piece_type = CardConfig.card_dict[card].Item2;
             return card_object; 
         }
 
         public static Sprite generateSprite(params string[] path_list) {
-            string fileLocation = $"{Config.Path.sprite_base_path}/{string.Join("/", path_list)}";
-            return Resources.Load<Sprite>(fileLocation);
+            string file_location = $"{Config.Path.sprite_base_path}/{string.Join("/", path_list)}";
+            return Resources.Load<Sprite>(file_location);
         }
 
         public static bool isEnemy(GameObject me, GameObject other)

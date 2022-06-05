@@ -29,8 +29,8 @@ public class BoardManager : MonoBehaviour
                 prefab_board_cell.name = ("Cell(x, y): "+ xpos + " " + ypos);
                 prefab_board_cell.transform.position = new Vector2( 150 * x, 150 * y - 75 );
                 prefab_board_cell.transform.SetParent(gameObject.transform, false);
-                prefab_board_cell.GetComponent<CellController>().indexX = xpos;
-                prefab_board_cell.GetComponent<CellController>().indexY = ypos;
+                prefab_board_cell.GetComponent<CellController>().index_x = xpos;
+                prefab_board_cell.GetComponent<CellController>().index_y = ypos;
                 PieceConfig.cells[ypos, xpos] = prefab_board_cell;
                 if((x + y + 5) % 2 == 0) {
                     prefab_board_cell.GetComponent<Image>().color =  cell_Brown; //Color.black;

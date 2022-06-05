@@ -10,10 +10,4 @@ public class WinnerController : MonoBehaviour
     {
         GetComponent<Text>().text = $"Winner is Player {PlayerPrefs.GetInt("winner").ToString()}!!";
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

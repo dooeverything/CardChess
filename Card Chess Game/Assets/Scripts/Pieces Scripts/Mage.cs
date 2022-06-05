@@ -8,7 +8,4 @@ using UnityEditor;
 
 public class Mage : MonoBehaviour {
 
-    public int offensePower = 1;
-    public int defensePower = 1;
-
 }

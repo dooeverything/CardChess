@@ -45,51 +45,6 @@ namespace Config
     };
 
     public delegate bool CardFunction(GameObject piece, GameObject card);
-
-    public static class CardFunctions
-    {
-        public static bool rageAttack(GameObject piece, GameObject card)
-        {
-            if (!GameManager.executing)
-            {
-                bool move_available = false;
-                List<GameObject> dots = new List<GameObject>();
-
-                int newX = piece.GetComponent<ChessPiece>().getIndex().indexX;
-                int newY = piece.GetComponent<ChessPiece>().getIndex().indexY + piece.GetComponent<ChessPiece>().move_dir;
-
-                if(Helper.outOfBoard(newX, newY)) return move_available;
-
-                GameObject new_cell = PieceConfig.cells[newY, newX];
-                if (new_cell.transform.childCount > 0)
-                {
-                    GameObject enemy = new_cell.transform.GetChild(0).gameObject;
-                    dots.Add(piece.GetComponent<ChessPiece>().createStrike(new_cell, enemy, card));
-                    move_available = true;
-                }
-                GameManager.dots = dots;
-                return move_available;
-            }
-            else
-            {
-                if (GameManager.dots.Count > 0)
-                {
-                    GameManager.dots[0].GetComponent<StrikeController>().deleteCard();
-                    foreach (GameObject strike_dot in GameManager.dots)
-                    {
-                        strike_dot.GetComponent<StrikeController>().moveParent();
-                        UnityEngine.Object.Destroy(strike_dot.transform.parent.GetChild(0).gameObject);
-                    }
-                    GameManager.destroyAlldots();
-                    GameManager.destroyAllIndicators();
-                    GameManager.endTurn();
-                    return true;
-                }
-                return false;
-            }
-        }
-
-    }
     public class CardConfig
     {
         public static Dictionary<Card, (CardFunction, Piece, CardGrade)> card_dict = new Dictionary<Card, (CardFunction, Piece, CardGrade)>()
@@ -111,17 +66,17 @@ namespace Config
                                 {
                                     for (int k = 0; k < move_list_core.GetLength(0); k++)
                                     {
-                                        int diffX = move_list_core[k, 0];
-                                        int diffY = move_list_core[k, 1];
+                                        int diff_x = move_list_core[k, 0];
+                                        int diff_y = move_list_core[k, 1];
                                         if (i == 1)
                                         {
-                                            diffX *= -1;
+                                            diff_x *= -1;
                                         }
                                         if (j == 1)
                                         {
-                                            diffY *= -1;
+                                            diff_y *= -1;
                                         }
-                                        move_list.Add(new int[] { diffX, diffY });
+                                        move_list.Add(new int[] { diff_x, diff_y });
                                     }
                                 }
                             }
@@ -145,17 +100,17 @@ namespace Config
                             {
                                 for (int j = 1; j < 8; j++)
                                 {
-                                    int newX_strike = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i, 0] * j);
-                                    int newY_strike = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i, 1] * j);
+                                    int new_x_strike = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i, 0] * j);
+                                    int new_y_strike = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i, 1] * j);
 
                                     // Check the location is out of bound 
-                                    if(Helper.outOfBoard(newX_strike, newY_strike)) continue;
-
-                                    GameObject newCell_Stirke = PieceConfig.cells[newY_strike, newX_strike];
-                                    if (newCell_Stirke.gameObject.transform.childCount > 0)
+                                    if(Helper.outOfBoard(new_x_strike, new_y_strike)) continue;
+                                    GameObject new_cell_stirke = PieceConfig.cells[new_y_strike, new_x_strike];
+                                    if (new_cell_stirke.gameObject.transform.childCount > 0)
                                     {
                                         // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
-                                        dots.Add(piece.GetComponent<ChessPiece>().createStrike(newCell_Stirke, newCell_Stirke.transform.GetChild(0).gameObject, card));
+                                        GameObject enemy = new_cell_stirke.transform.GetChild(0).gameObject;
+                                        dots.Add(piece.GetComponent<ChessPiece>().createStrike(new_cell_stirke, enemy, card));
 
                                         break; // If there is any blocking piece, then further iteration is no needed (the piece further than the blocking piece cannot be attacked)
                                     }
@@ -168,16 +123,16 @@ namespace Config
                             GameManager.dots[0].GetComponent<StrikeController>().deleteCard();
                             foreach (GameObject strike_dot in GameManager.dots)
                             {
-                                GameObject destoryPiece = strike_dot.transform.parent.GetChild(0).gameObject;
+                                GameObject destroy_piece = strike_dot.transform.parent.GetChild(0).gameObject;
                                 int st_self = piece.GetComponent<ChessPiece>().offense_power;
-                                int hp_enemy = destoryPiece.GetComponent<ChessPiece>().defense_power;
+                                int hp_enemy = destroy_piece.GetComponent<ChessPiece>().defense_power;
                                 if (st_self < hp_enemy)
                                 {
-                                    destoryPiece.GetComponent<ChessPiece>().defense_power = hp_enemy - st_self;
+                                    destroy_piece.GetComponent<ChessPiece>().defense_power = hp_enemy - st_self;
                                     continue;
                                 }
-                                strike_dot.GetComponent<StrikeController>().isKingDead();
-                                UnityEngine.Object.Destroy(destoryPiece);
+                                destroy_piece.BroadcastMessage(EventName.DestroyKing.ToString(), SendMessageOptions.DontRequireReceiver);
+                                UnityEngine.Object.Destroy(destroy_piece);
                             }
                             GameManager.destroyAlldots();
                             GameManager.destroyAllIndicators();
@@ -201,14 +156,14 @@ namespace Config
                         {
                             for (int i = 1; i < 4; i++)
                             {
-                                int newX_strike = piece.GetComponent<ChessPiece>().getIndex().indexX;
-                                int newY_strike = piece.GetComponent<ChessPiece>().getIndex().indexY + i * piece.GetComponent<ChessPiece>().move_dir;
+                                int new_x_strike = piece.GetComponent<ChessPiece>().getIndex().indexX;
+                                int new_y_strike = piece.GetComponent<ChessPiece>().getIndex().indexY + i * piece.GetComponent<ChessPiece>().move_dir;
 
                                 // Check the location is out of bound 
-                                if(Helper.outOfBoard(newX_strike, newY_strike)) continue;
+                                if(Helper.outOfBoard(new_x_strike, new_y_strike)) continue;
 
                                 move_available = true;
-                                GameObject new_cell = PieceConfig.cells[newY_strike, newX_strike];
+                                GameObject new_cell = PieceConfig.cells[new_y_strike, new_x_strike];
 
                                 if (new_cell.transform.childCount > 0)
                                 {
@@ -233,8 +188,9 @@ namespace Config
 
                                     strike_dot.GetComponent<StrikeController>()?.moveParent();
                                     strike_dot.GetComponent<MoveController>()?.moveParent();
-                                    strike_dot.GetComponent<StrikeController>().isKingDead();
-                                    UnityEngine.Object.Destroy(strike_dot.transform.parent.GetChild(0).gameObject);
+                                    GameObject destroy_piece = strike_dot.transform.parent.GetChild(0).gameObject;
+                                    destroy_piece.BroadcastMessage(EventName.DestroyKing.ToString(), SendMessageOptions.DontRequireReceiver);
+                                    UnityEngine.Object.Destroy(destroy_piece);
                                 }
                             }
                             GameManager.destroyAlldots();
@@ -257,7 +213,7 @@ namespace Config
                             piece.GetComponent<ChessPiece>().offense_power++;
                             piece.GetComponent<ChessPiece>().defense_power++;
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Epic);
                             GameManager.endTurn();
                         }
@@ -314,22 +270,22 @@ namespace Config
                         {
                             for (int i = 0; i < 8; i++)
                             {
-                                int newX_strike = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i, 0]);
-                                int newY_strike = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i, 1]);
+                                int new_x_strike = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i, 0]);
+                                int new_y_strike = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i, 1]);
                                 // Check the location is out of bound 
-                                if(Helper.outOfBoard(newX_strike, newY_strike)) continue;
-                                
+                                if(Helper.outOfBoard(new_x_strike, new_y_strike)) continue;
+
                                 move_available = true;
 
-                                GameObject newCell_Strike = PieceConfig.cells[newY_strike, newX_strike];
-                                if (newCell_Strike.transform.childCount > 0)
+                                GameObject new_cell_Strike = PieceConfig.cells[new_y_strike, new_x_strike];
+                                if (new_cell_Strike.transform.childCount > 0)
                                 {
-                                    GameObject enemyPiece = newCell_Strike.transform.GetChild(0).gameObject;
-                                    if (Helper.isEnemy(piece, enemyPiece))
+                                    GameObject enemy = new_cell_Strike.transform.GetChild(0).gameObject;
+                                    if (Helper.isEnemy(piece, enemy))
                                     {
                                         GameObject dot = Helper.prefabNameToGameObject(Prefab.Thunder_Bolt.ToString());
-                                        dot.transform.SetParent(newCell_Strike.transform, false);
-                                        dot.transform.position = newCell_Strike.transform.position;
+                                        dot.transform.SetParent(new_cell_Strike.transform, false);
+                                        dot.transform.position = new_cell_Strike.transform.position;
                                         dot.GetComponent<ThunderBoltController>().parent = piece;
                                         dot.GetComponent<ThunderBoltController>().card = card;
                                         dots.Add(dot);
@@ -350,7 +306,43 @@ namespace Config
                 (
                     (GameObject piece, GameObject card) => { // Card Logic
                         // Rage Attack(분노의 일격): 방어력을 무시하고 공격
-                        return CardFunctions.rageAttack(piece, card);
+                        if (!GameManager.executing)
+                        {
+                            bool move_available = false;
+                            List<GameObject> dots = new List<GameObject>();
+
+                            int new_x = piece.GetComponent<ChessPiece>().getIndex().indexX;
+                            int new_y = piece.GetComponent<ChessPiece>().getIndex().indexY + piece.GetComponent<ChessPiece>().move_dir;
+
+                            if(Helper.outOfBoard(new_x, new_y)) return move_available;
+
+                            GameObject new_cell = PieceConfig.cells[new_y, new_x];
+                            if (new_cell.transform.childCount > 0)
+                            {
+                                GameObject enemy = new_cell.transform.GetChild(0).gameObject;
+                                dots.Add(piece.GetComponent<ChessPiece>().createStrike(new_cell, enemy, card));
+                                move_available = true;
+                            }
+                            GameManager.dots = dots;
+                            return move_available;
+                        }
+                        else
+                        {
+                            if (GameManager.dots.Count > 0)
+                            {
+                                GameManager.dots[0].GetComponent<StrikeController>().deleteCard();
+                                foreach (GameObject strike_dot in GameManager.dots)
+                                {
+                                    strike_dot.GetComponent<StrikeController>().moveParent();
+                                    UnityEngine.Object.Destroy(strike_dot.transform.parent.GetChild(0).gameObject);
+                                }
+                                GameManager.destroyAlldots();
+                                GameManager.destroyAllIndicators();
+                                GameManager.endTurn();
+                                return true;
+                            }
+                            return false;
+                        }
                     },
                     Piece.Warrior, // Card Target 
                     CardGrade.Epic // Card Grade
@@ -362,27 +354,27 @@ namespace Config
                     (GameObject piece, GameObject card) => { // Card Logic
                         //Morale Boost(사기증진): 자신 주변 3x3 범위안에 있는 아군한테 모두 공격력 +1 부여
                         if(GameManager.executing) {
-                            int currX = piece.GetComponent<ChessPiece>().getIndex().indexX;
-                            int currY = piece.GetComponent<ChessPiece>().getIndex().indexY;
+                            int curr_x = piece.GetComponent<ChessPiece>().getIndex().indexX;
+                            int curr_y = piece.GetComponent<ChessPiece>().getIndex().indexY;
 
                             for(int i=0; i<8; i++) {
-                                int newX = currX + (PieceConfig.move_list_surround[i, 0]);
-                                int newY = currY + (PieceConfig.move_list_surround[i, 1]);
+                                int new_x = curr_x + (PieceConfig.move_list_surround[i, 0]);
+                                int new_y = curr_y + (PieceConfig.move_list_surround[i, 1]);
 
                                 // Check the location is out of bound 
-                                if(Helper.outOfBoard(newX, newY)) continue;
+                                if(Helper.outOfBoard(new_x, new_y)) continue;
 
-                                GameObject newCell = PieceConfig.cells[newY, newX];
+                                GameObject new_cell = PieceConfig.cells[new_y, new_x];
 
-                                if(newCell.transform.childCount > 0) {
-                                    GameObject ally = newCell.transform.GetChild(0).gameObject;
+                                if(new_cell.transform.childCount > 0) {
+                                    GameObject ally = new_cell.transform.GetChild(0).gameObject;
                                     if(!Helper.isEnemy(piece, ally)) {
                                         ally.GetComponent<ChessPiece>().offense_power++;
                                     }
                                 }
                             }
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Legendary);
                             GameManager.endTurn();
                         }
@@ -398,9 +390,9 @@ namespace Config
                     (GameObject piece, GameObject card) => { // Card Logic
                         //Clairvoyant(천리안): 장착효과, 사거리 무한대로 증가
                         if(GameManager.executing) {
-                            piece.GetComponent<Archer>().attackRange = 8;
+                            piece.GetComponent<Archer>().attack_range = 8;
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Legendary);
                             GameManager.endTurn();
                         }
@@ -425,13 +417,13 @@ namespace Config
                             for(int i=1; i<4; i++) {
 
                                 for(int j = -i; j<i+1; j+=i){
-                                    int newX = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[2, 0]) + j;
-                                    int newY = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[2, 1])*i;
+                                    int new_x = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[2, 0]) + j;
+                                    int new_y = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[2, 1])*i;
 
                                     // Check the location is out of bound 
-                                    if(Helper.outOfBoard(newX, newY)) continue;
+                                    if(Helper.outOfBoard(new_x, new_y)) continue;
 
-                                    GameObject new_cell = PieceConfig.cells[newY, newX];
+                                    GameObject new_cell = PieceConfig.cells[new_y, new_x];
                                     if(new_cell.transform.childCount > 0) {
                                         GameObject enemy = new_cell.transform.GetChild(0).gameObject;
                                         if( Helper.isEnemy(piece, enemy) ) { 
@@ -444,25 +436,21 @@ namespace Config
                             }
                             GameManager.dots = dots;
                         }
-                        else 
+                        else
                         {
                             foreach(GameObject strike_dot in GameManager.dots) {
-                                GameObject destory_piece = strike_dot.transform.parent.GetChild(0).gameObject;
+                                GameObject destroy_piece = strike_dot.transform.parent.GetChild(0).gameObject;
                                 int st_self = piece.GetComponent<ChessPiece>().offense_power;
-                                int hp_enemy = destory_piece.GetComponent<ChessPiece>().defense_power;
+                                int hp_enemy = destroy_piece.GetComponent<ChessPiece>().defense_power;
                                 if(st_self < hp_enemy) {
-                                    destory_piece.GetComponent<ChessPiece>().defense_power = hp_enemy - st_self;
+                                    destroy_piece.GetComponent<ChessPiece>().defense_power = hp_enemy - st_self;
                                     continue;
                                 }
-                                strike_dot.GetComponent<StrikeController>().isKingDead();
-                                UnityEngine.Object.Destroy(destory_piece);
+                                destroy_piece.BroadcastMessage(EventName.DestroyKing.ToString(), SendMessageOptions.DontRequireReceiver);
+                                UnityEngine.Object.Destroy(destroy_piece);
                             }
 
                             GameManager.lastDotClicked(true);
-                            // GameManager.dots[0].GetComponent<StrikeController>().deleteCard();
-                            // GameManager.destroyAlldots();
-                            // GameManager.destroyAllIndicators();
-                            // GameManager.endTurn();
                             return true;
                         }
                         return move_available;
@@ -477,13 +465,13 @@ namespace Config
                     (GameObject piece, GameObject card) => { // Card Logic
                         //Double Shot(더블 샷): 가로세로 방향중 두 방향으로 한발씩 쏨. 
                         if(GameManager.executing) {
-                            piece.GetComponent<Archer>().numEnemy = 0;
+                            piece.GetComponent<Archer>().num_enemy = 0;
                             List<int[]> basic_moves = piece.GetComponent<ChessPiece>().basic_moves;
-                            piece.GetComponent<Archer>().onlyAttack = true;
+                            piece.GetComponent<Archer>().only_attack = true;
                             piece.GetComponent<Archer>().createArrowArcher(basic_moves, card, 2);
                             //ArrowController.numAttack = 2;
                         }
-                        return ArrowController.numAttack>0;
+                        return ArrowController.num_attack>0;
                     },
                     Piece.Archer, // Card Target 
                     CardGrade.Epic // Card Grade
@@ -497,7 +485,7 @@ namespace Config
                         if(GameManager.executing){
                             piece.GetComponent<ChessPiece>().offense_power++;
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Epic);
                             GameManager.endTurn();
                         }
@@ -524,16 +512,16 @@ namespace Config
                                         continue;
                                     }
 
-                                    if(piece.GetComponent<ChessPiece>().getIndex().indexX == j && 
+                                    if(piece.GetComponent<ChessPiece>().getIndex().indexX == j &&
                                        piece.GetComponent<ChessPiece>().getIndex().indexY == i) continue;
 
-                                    GameObject otherPiece = cell.transform.GetChild(0).gameObject;
-                                    if(!Helper.isEnemy(piece, otherPiece)) {
+                                    GameObject other_piece = cell.transform.GetChild(0).gameObject;
+                                    if(!Helper.isEnemy(piece, other_piece)) {
                                         GameObject swap = Helper.prefabNameToGameObject(Prefab.Swap.ToString());
                                         swap.transform.SetParent(cell.transform, false);
                                         swap.transform.position = cell.transform.position;
                                         swap.GetComponent<SwapController>().mage = piece;
-                                        swap.GetComponent<SwapController>().target = otherPiece;
+                                        swap.GetComponent<SwapController>().target = other_piece;
                                         swap.GetComponent<SwapController>().card = card;
                                         dots.Add(swap);
                                     }
@@ -564,12 +552,12 @@ namespace Config
 
                                     if(piece.GetComponent<ChessPiece>().getIndex().indexX == j && piece.GetComponent<ChessPiece>().getIndex().indexY == i) continue;
 
-                                    GameObject otherPiece = cell.transform.GetChild(0).gameObject;
-                                    if(Helper.isEnemy(piece, otherPiece)) {
+                                    GameObject other_piece = cell.transform.GetChild(0).gameObject;
+                                    if(Helper.isEnemy(piece, other_piece)) {
                                         GameObject disarm = Helper.prefabNameToGameObject(Prefab.Disarm.ToString());
                                         disarm.transform.SetParent(cell.transform, false);
                                         disarm.transform.position = cell.transform.position;
-                                        disarm.GetComponent<DisarmController>().target = otherPiece;
+                                        disarm.GetComponent<DisarmController>().target = other_piece;
                                         disarm.GetComponent<DisarmController>().card = card;
                                         dots.Add(disarm);
                                     }
@@ -589,28 +577,28 @@ namespace Config
                     (GameObject piece, GameObject card) => { // Card Logic
                         //
                         if(GameManager.executing) {
-                            int currX = piece.GetComponent<ChessPiece>().getIndex().indexX;
-                            int currY = piece.GetComponent<ChessPiece>().getIndex().indexY;
+                            int curr_x = piece.GetComponent<ChessPiece>().getIndex().indexX;
+                            int curr_y = piece.GetComponent<ChessPiece>().getIndex().indexY;
 
                             for(int i=0; i<8; i++) {
-                                int newX = currX + (PieceConfig.move_list_surround[i, 0]);
-                                int newY = currY + (PieceConfig.move_list_surround[i, 1]);
+                                int new_x = curr_x + (PieceConfig.move_list_surround[i, 0]);
+                                int new_y = curr_y + (PieceConfig.move_list_surround[i, 1]);
 
                                 // Check the location is out of bound 
-                                if(Helper.outOfBoard(newX, newY)) continue;
+                                if(Helper.outOfBoard(new_x, new_y)) continue;
 
-                                GameObject newCell = PieceConfig.cells[newY, newX];
-                                if(newCell.transform.childCount > 0) 
+                                GameObject new_cell = PieceConfig.cells[new_y, new_x];
+                                if(new_cell.transform.childCount > 0)
                                 {
-                                    GameObject ally = newCell.transform.GetChild(0).gameObject;
-                                    if(!Helper.isEnemy(piece, ally)) 
+                                    GameObject ally = new_cell.transform.GetChild(0).gameObject;
+                                    if(!Helper.isEnemy(piece, ally))
                                     {
                                         ally.GetComponent<ChessPiece>().defense_power++;
                                     }
                                 }
                             }
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Legendary);
                             GameManager.endTurn();
                         }
@@ -631,17 +619,17 @@ namespace Config
                             List<GameObject> dots = new List<GameObject>();
                             for (int i = 0; i < 8; i++)
                             {
-                                int newX = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i, 0]);
-                                int newY = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i, 1]);
+                                int new_x = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_list_surround[i, 0]);
+                                int new_y = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_list_surround[i, 1]);
 
                                 // Check the location is out of bound 
-                                if(Helper.outOfBoard(newX, newY)) continue;
+                                if(Helper.outOfBoard(new_x, new_y)) continue;
 
 
-                                GameObject new_cell = PieceConfig.cells[newY, newX];
+                                GameObject new_cell = PieceConfig.cells[new_y, new_x];
                                 if (new_cell.gameObject.transform.childCount > 0)
                                 {
-                                    GameObject enemy = new_cell.transform.GetChild(0).gameObject;    
+                                    GameObject enemy = new_cell.transform.GetChild(0).gameObject;
                                     if(Helper.isEnemy(piece, enemy)){
                                         dots.Add(piece.GetComponent<ChessPiece>().createStrike(new_cell, enemy , card));
                                         move_available = true;
@@ -663,20 +651,20 @@ namespace Config
 
                         bool move_available = false;
                         if(!GameManager.executing){
-                            
+
                             List<GameObject> dots = new List<GameObject>();
-                            int attackRange = piece.GetComponent<Archer>().attackRange;
-                            
+                            int attack_range = piece.GetComponent<Archer>().attack_range;
+
                             for (int i = 0; i < 3; i++) {
-                                for(int j = 1; j<attackRange; j++) {
-                                
-                                    int newX = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_diagonal[i, 0]*j);
-                                    int newY = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_diagonal[i, 1]*j);
+                                for(int j = 1; j<attack_range; j++) {
+
+                                    int new_x = piece.GetComponent<ChessPiece>().getIndex().indexX + (PieceConfig.move_diagonal[i, 0]*j);
+                                    int new_y = piece.GetComponent<ChessPiece>().getIndex().indexY + (PieceConfig.move_diagonal[i, 1]*j);
                                     
                                     // Check the location is out of bound 
-                                    if(Helper.outOfBoard(newX, newY)) continue;
+                                    if(Helper.outOfBoard(new_x, new_y)) continue;
 
-                                    GameObject new_cell = PieceConfig.cells[newY, newX];
+                                    GameObject new_cell = PieceConfig.cells[new_y, new_x];
                                     if(new_cell.transform.childCount > 0) {                                        
                                         // The enemy's Piece is located within the range of archer's attack, then create a strike dot    
                                         GameObject enemy = new_cell.transform.GetChild(0).gameObject;
@@ -705,22 +693,22 @@ namespace Config
 
                         bool move_available = false;
                         if(!GameManager.executing){
-                            
+
                             int num_piece = 0;
                             List<GameObject> dots = new List<GameObject>();
-                            int attackRange = piece.GetComponent<Archer>().attackRange;
+                            int attack_range = piece.GetComponent<Archer>().attack_range;
                             List<int[]> move_list = piece.GetComponent<ChessPiece>().basic_moves;
-                            
+
                             for(int i=0; i<3; ++i) {
-                                for(int j=0; j<attackRange; ++j){
+                                for(int j=0; j<attack_range; ++j){
 
                                     // Get an index of cell where to attack
-                                    int newX = piece.GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0] * j);
-                                    int newY = piece.GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1] * j);
-                                    
-                                    if(Helper.outOfBoard(newX, newY)) continue;
+                                    int new_x = piece.GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0] * j);
+                                    int new_y = piece.GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1] * j);
 
-                                    GameObject new_cell = PieceConfig.cells[newY, newX];
+                                    if(Helper.outOfBoard(new_x, new_y)) continue;
+
+                                    GameObject new_cell = PieceConfig.cells[new_y, new_x];
                                     if(new_cell.transform.childCount > 0 && num_piece < 3) {
 
                                         // If the enemy's Piece is located within the range of archer's attack, 
@@ -728,7 +716,7 @@ namespace Config
                                         // If the numEnemy is less than 3 (Longbow shot can shot any enemy blocked by piece)
                                         // then create a strike dot
                                         GameObject enemy = new_cell.transform.GetChild(0).gameObject;
-                                        if(Helper.isEnemy(piece, enemy) ) { 
+                                        if(Helper.isEnemy(piece, enemy) ) {
                                             dots.Add(piece.GetComponent<Archer>().createStrikeDot(new_cell, enemy, card, piece));
                                             num_piece++;
                                             move_available = true;
@@ -748,7 +736,7 @@ namespace Config
                 Card.Spear_Throw,
                 (
                     (GameObject piece, GameObject card) => {
-                        
+
                         bool move_available = false;
                         if(!GameManager.executing){
 
@@ -759,19 +747,19 @@ namespace Config
                                 for(int j=1; j<3; j++) {
 
                                     // Get an index of cell where to attack
-                                    int new_indexX = piece.GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0] * j);
-                                    int new_indexY = piece.GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1] * j);
+                                    int new_x = piece.GetComponent<ChessPiece>().getIndex().indexX + (move_list[i][0] * j);
+                                    int new_y = piece.GetComponent<ChessPiece>().getIndex().indexY + (move_list[i][1] * j);
 
-                                    if(new_indexX > 4 || new_indexX < 0) {
+                                    if(new_x > 4 || new_x < 0) {
                                         continue;
                                     }
-                                    if(new_indexX > 7 || new_indexY < 0 ) {
+                                    if(new_x > 7 || new_y < 0 ) {
                                         continue;
                                     }
 
-                                    GameObject new_cell = PieceConfig.cells[new_indexY, new_indexX];
+                                    GameObject new_cell = PieceConfig.cells[new_y, new_x];
                                     if(new_cell.transform.childCount > 0 && num_piece < 2) {
-                                        
+
                                         GameObject enemy = new_cell.transform.GetChild(0).gameObject;
                                         if(Helper.isEnemy(piece, enemy)){
                                             dots.Add(piece.GetComponent<Warrior>().createStrike(new_cell, enemy, card, piece));
@@ -797,7 +785,7 @@ namespace Config
                         if(GameManager.executing){
                             piece.GetComponent<ChessPiece>().defense_power++;
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Epic);
                             GameManager.endTurn();
                         }
@@ -811,7 +799,7 @@ namespace Config
                 Card.Demotion_Punishment,
                 (
                     (GameObject piece, GameObject card) => {
-                        
+
                         if(!GameManager.executing) {
                             List<GameObject> dots = new List<GameObject>();
                             for(int i=0; i<8; i++) {
@@ -822,7 +810,7 @@ namespace Config
                                     }
 
 
-                                    if(piece.GetComponent<ChessPiece>().getIndex().indexX == j && 
+                                    if(piece.GetComponent<ChessPiece>().getIndex().indexX == j &&
                                        piece.GetComponent<ChessPiece>().getIndex().indexY == i) continue;
 
                                     GameObject ally = cell.transform.GetChild(0).gameObject;
@@ -848,11 +836,11 @@ namespace Config
                 Card.Last_Ditch_Effort,
                 (
                     (GameObject piece, GameObject card) => {
-                        
+
                         if(GameManager.executing) {
                             piece.GetComponent<King>().last_ditch_effort = true;
                             GameManager.destroyAllIndicators();
-                            card.GetComponent<CardController>().destoryCard();
+                            card.GetComponent<CardController>().destroyCard();
                             card.GetComponent<CardController>().destroyMana((int)CardGrade.Epic);
                             GameManager.endTurn();
                         }
